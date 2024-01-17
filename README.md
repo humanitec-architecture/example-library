@@ -21,11 +21,11 @@ Individual parts of this library can therefore be displayed on different pages t
 
 ## Content guidelines
 
-The goal of the example library is to **explain** how to achieve a goal, rather than provide a multitude of sample file for all possible variations. Examples should enable users to **understand and adapt**, rather than being ready for **copy and paste**.
+The goal of the example library is to **explain** how to achieve a goal, rather than provide a plethora of sample files for all possible variations. Examples should enable users to **understand and adapt**, rather than being ready for **copy and paste**.
 
 Keep examples **simple** and feel free to **omit** parts not needed to drive the point home. Indicate what you left out, and focus on the relevant items.
 
-Favor `humctl` CLI YAML over all other formats, such as Terraform. The CLI is the universal language of Humanitec platform orchestration, and also the most concise and easiest to read.
+Where applicable, favor `humctl` CLI YAML over all other formats. The CLI is the universal language of Humanitec platform orchestration, and also the most concise and easiest to read. Feel free to provide additional formats, such as Terraform, as well.
 
 ## No configuration required
 
