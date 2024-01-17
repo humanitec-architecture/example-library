@@ -1,0 +1,8 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  containers: 
+    demo:
+      liveness_probe:
+        type: tcp
+        port: 7001

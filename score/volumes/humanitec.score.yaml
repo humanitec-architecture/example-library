@@ -1,0 +1,10 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  # Volume declaration. Not required if the volume mount
+  # references an externally declared volume,
+  # i.e. one provisioned via the Platform Orchestrator
+  # Resources system.
+  volumes:
+    tmp-pod:
+      type: emptyDir

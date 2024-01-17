@@ -1,0 +1,31 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-workload
+entity:
+  name: custom-workload
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+            - op: add
+              path: /spec/labels
+              value:
+                {{- range $key, $val := .resource.spec.labels }}
+                {{ $key }}: {{ $val | quote }}
+                {{- end }}
+                testtest: testtest
+                substream_id: ${resources.base-env.outputs.substream_id}
+            - op: add
+              path: /spec/service/labels
+              value:
+                {{- range $key, $val := .resource.spec.service.labels }}
+                {{ $key }}: {{ $val | quote }}
+                {{- end }}
+                testtest: testtest
+                substream_id: ${resources.base-env.outputs.substream_id}
+  criteria:
+    - {}

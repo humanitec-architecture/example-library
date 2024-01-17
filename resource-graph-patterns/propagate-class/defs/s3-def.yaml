@@ -1,0 +1,16 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-s3
+entity:
+  criteria:
+    - class: one
+      app_id: example-propagate-class
+    - class: two
+      app_id: example-propagate-class
+  driver_inputs:
+    values:
+      bucket: ${resources.config#example.outputs.name}
+  driver_type: humanitec/echo
+  name: example-s3
+  type: s3

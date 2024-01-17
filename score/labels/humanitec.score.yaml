@@ -1,0 +1,8 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  labels:
+    labelkey: labelvalue
+  service:
+    labels:
+      servicelabelkey: servicelabelvalue

@@ -1,0 +1,1 @@
+A `route` resource defines how to route traffic to the Workload. See [Routes and Ingress](https://developer.humanitec.com/score/working-with/routes-and-ingress/) for details.

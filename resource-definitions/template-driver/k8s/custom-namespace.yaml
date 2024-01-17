@@ -1,0 +1,28 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-namespace
+entity:
+  name: custom-namespace2
+  type: k8s-namespace
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        # Use any combination of placeholders and characters to configure your naming scheme
+        init: |
+          name: ${context.env.id}-${context.app.id}
+        manifests: |-
+          namespace.yaml:
+            location: cluster
+            data:
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                labels:
+                  pod-security.kubernetes.io/enforce: restricted
+                name: {{ .init.name }}
+        outputs: |
+          namespace: {{ .init.name }}
+  criteria:
+    - {}

@@ -1,0 +1,17 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-aws-role
+entity:
+  criteria:
+    - app_id: example-break-a-loop-additional-resource
+  driver_inputs:
+    values:
+      role_arn: ${resources["config.sa-name-role-id"].outputs.role_arn}
+      sa_name: ${resources["config.sa-name-role-id"].outputs.sa_name}
+      templates:
+        outputs: |
+          arn: {{ .drivers.role_arn }}
+  driver_type: humanitec/template
+  name: example-aws-role
+  type: aws-role

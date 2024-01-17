@@ -1,0 +1,4 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  serviceAccountName: data-access-service-account

@@ -1,0 +1,11 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  containers: 
+    demo:
+      liveness_probe:
+        type: command
+        command:
+          - "bash"
+          - "-c"
+          - "/app/is_alive.sh"

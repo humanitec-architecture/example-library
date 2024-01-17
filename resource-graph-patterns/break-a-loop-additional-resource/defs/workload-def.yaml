@@ -1,0 +1,22 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-workload
+entity:
+  criteria:
+    - app_id: example-break-a-loop-additional-resource
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update: 
+          - op: add
+            path: /spec/serviceAccountName
+            {{/*
+              The resource reference does not specify ID or class so the ID and
+              class of the workload being provisioned will be used.
+            *//}
+            value: ${resources.k8s-service-account.outputs.name}
+  driver_type: humanitec/template
+  name: example-workload
+  type: workload

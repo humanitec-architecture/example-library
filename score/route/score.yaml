@@ -1,0 +1,33 @@
+# Example Score file for a Workload that has three routes from one DNS name
+apiVersion: score.dev/v1b1
+metadata:
+  name: routes-example
+service:
+  ports:
+    www:
+      port: 80
+      targetPort: 8080
+containers:
+  webserver:
+    image: my-webservice:latest
+resources:
+  api-dns:
+    type: dns
+  users-route:
+    type: route
+    params:
+      host: ${resources.api-dns.host}
+      path: /users
+      port: 80
+  products-route:
+    type: route
+    params:
+      host: ${resources.api-dns.host}
+      path: /products
+      port: 80
+  checkout-route:
+    type: route
+    params:
+      host: ${resources.api-dns.host}
+      path: /checkout
+      port: 80

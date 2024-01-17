@@ -1,0 +1,1 @@
+Specify the [resources required](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/) for a container.

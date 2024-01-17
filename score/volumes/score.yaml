@@ -1,0 +1,13 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: my-workload
+
+containers:
+  demo:
+    image: registry/my-image:1.0.0
+    # Volume mount declaration referencing the volume from the Score extension.
+    volumes:
+      - source: "volumes.tmp-pod"
+        target: /mnt/data
+        sub_path: "" # Shown for illustration purposes. Must be a relative path.
+        read_only: true

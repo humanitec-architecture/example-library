@@ -1,0 +1,13 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: my-workload
+
+service:
+  ports:
+    http:
+      port: 80
+      targetPort: 8080
+
+containers:
+  demo:
+    image: registry/my-image:1.0.0

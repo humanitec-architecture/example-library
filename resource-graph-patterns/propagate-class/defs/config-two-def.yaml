@@ -1,0 +1,15 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-config-two
+entity:
+  criteria:
+    - class: two
+      res_id: example
+      app_id: example-propagate-class
+  driver_inputs:
+    values:
+      name: name-02
+  driver_type: humanitec/echo
+  name: example-config-two
+  type: config

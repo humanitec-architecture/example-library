@@ -1,0 +1,13 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: namespace-echo
+entity:
+  name: namespace-echo
+  type: k8s-namespace
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      namespace: "${context.app.id}-${context.env.id}"
+  criteria:
+    - {}

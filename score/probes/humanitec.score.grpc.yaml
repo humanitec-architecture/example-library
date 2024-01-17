@@ -1,0 +1,8 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  containers: 
+    demo:
+      liveness_probe:
+        type: grpc
+        port: 7001

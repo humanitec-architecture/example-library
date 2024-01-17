@@ -1,0 +1,1 @@
+Define [Labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) that will be added to Pods or Services generated for the Workload.

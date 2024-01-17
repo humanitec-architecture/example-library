@@ -1,0 +1,23 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-config-name-id
+entity:
+  criteria:
+    # We only match to class and not res_id because the res_id changes for
+    # each workload
+    - class: sa-name-role-id
+      app_id: example-break-a-loop-additional-resource
+  driver_inputs:
+    values:
+      res_id: ${context.res.id}
+      app_id: ${context.app.id}
+      templates:
+        init: |
+          workload_id: {{ .driver.values.res_id | splitList "." | last }}
+        outputs: |
+          role_arn: "arn:aws:iam::123456789012:role/{{ .driver.values.app_id }}/sa-role-{{ .init.workload_id }}"
+          sa_name: {{ .init.workload_id }}-sa
+  driver_type: humanitec/template
+  name: example-config-name-id
+  type: config

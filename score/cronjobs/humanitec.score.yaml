@@ -1,0 +1,12 @@
+apiVersion: humanitec.org/v1b1
+profile: humanitec/default-cronjob
+
+spec:
+  schedules:
+    6-hour-run:
+      containers:
+        main-container:
+          args:
+            - "--hours"
+            - "6"
+      schedule: "15 1,7,13,19 * * *"

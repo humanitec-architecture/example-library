@@ -1,0 +1,1 @@
+Define [Annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) that are added to Pods generated for the Workload.
