@@ -1,0 +1,1 @@
+Define [affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) rules that are added to Pods generated for the Workload.

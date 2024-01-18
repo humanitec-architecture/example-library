@@ -1,0 +1,1 @@
+Define [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) rules that are added to Pods generated for the Workload.

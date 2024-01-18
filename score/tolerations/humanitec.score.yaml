@@ -1,0 +1,7 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  tolerations:
+  - key: "my-example-key"
+    operator: "Exists"
+    effect: "NoSchedule"
