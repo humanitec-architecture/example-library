@@ -21,4 +21,5 @@ Usage notes:
 - If both files are shown, they must be used in conjunction.
 - If no Score file or no Score extension file is shown, no particular configuration is required through that file.
 - A Score extension file alone is never sufficient to perform a Workload Deployment. If no Score file is shown, you may choose one of your own, e.g. the [Hello World](https://developer.humanitec.com/score/getting-started/hello-world/) example.
+- A Score file is picked up automatically if present in the same directory and named `score.yaml`.
 - A Score extension file is picked up automatically if present in the same directory and named `humanitec.score.yaml`.
