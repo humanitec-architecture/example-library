@@ -59,4 +59,7 @@ Contributing content does not require defining any metadata or other configurati
 - Describe the purpose of the section (i.e. subfolder) this README belongs to.
 - List some or all example files and explain any details you consider relvant. Refer to files by their filename, e.g. `somefile.yaml`.
 - Refer to "_this section_" or "_this examples collection_" as opposed to "_this repo_". Remember that the content will be rendered into the developer docs and not be part of a repo in this context.
-- Explain complex examples by showing small code snippets as inline code blocks in the README, and explaning what happpens at this point.
+- Explain complex code examples by
+  - adding inline comments
+  - showing small code snippets as inline code blocks in the README, and explaning them there
+  - all of the above.
