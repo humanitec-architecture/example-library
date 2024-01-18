@@ -1,0 +1,21 @@
+# Add tolerations to the Workload by adding a value to the manifest at .spec.tolerations 
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: workload-toleration
+entity:
+  name: workload-toleration
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update: 
+          - op: add
+            path: /spec/tolerations
+            value:
+            - key: "example-key"
+              operator: "Exists"
+              effect: "NoSchedule"
+  criteria: []

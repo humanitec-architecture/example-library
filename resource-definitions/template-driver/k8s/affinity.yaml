@@ -1,0 +1,27 @@
+# Add affinity rules to the Workload by adding a value to the manifest at .spec.affinity 
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: workload-affinity
+entity:
+  name: workload-affinity
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+          - op: add
+            path: /spec/affinity
+            value: 
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 1
+                  preference:
+                    matchExpressions:
+                    - key: another-node-label-key
+                      operator: In
+                      values:
+                      - another-node-label-value
+  criteria: []
