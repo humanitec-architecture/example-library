@@ -1,3 +1,4 @@
 This section contains example Resource Definitions using the [Echo Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) for Kubernetes objects.
 
-* [`custom-namespace.yaml`](./custom-namespace.yaml): Shows how to use the Echo Driver to return the name of an externally managed namespace.
+* [`custom-namespace.yaml`](./custom-namespace.yaml): Shows how to use the Echo Driver to return the name of an externally managed namespace. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+* [`custom-namespace.tf`](./custom-namespace.tf): Shows how to use the Echo Driver to return the name of an externally managed namespace. This format is for use with the [Humanitec Terraform provider](https://registry.terraform.io/providers/humanitec/humanitec).
