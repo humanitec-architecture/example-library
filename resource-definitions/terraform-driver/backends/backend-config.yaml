@@ -4,9 +4,11 @@ metadata:
   id: tf-backend-config
 entity:
   criteria:
+    # This res_id is used in the resource reference in the s3-backend Resource Definition.
     - res_id: tf-backend
 
-  # Replace with your AWS Cloud Account
+  # The driver_account references a Cloud Account configured in the Platform Orchestrator.
+  # Replace with the name of your AWS Cloud Account.
   driver_account: aws-credentials
 
   driver_inputs:

@@ -4,14 +4,22 @@ metadata:
   id: s3-backend-example
 entity:
   driver_inputs:
-   secret_refs:
+    # We are using secret references to write the credentials using their "value" element.
+    # Using "secrets" instead would work too, but due to the placeholders in the values, the
+    # Platform Orchestrator will resolve them to the exact secret references used here
+    # in the resulting Resource Definition.
+    # This structure therefore represents the way the Platform Orchestrator manages the Resource Definition
+    # and is better suited to any round-trip engineering, if needed.
+    secret_refs:
       files:
         # Credentials for the AWS provider
         aws_creds:
+          # Using the resource ID "#aws-account" to fulfill the matching criteria of the "account-config-aws" config resource.  
           value: ${resources.config#aws-account.outputs.credentials_file}
         
         # In general, the credentials for the backend should be different from those of the provider
         backend_creds:
+          # Using the resource ID "#tf-backend" to fulfill the matching criteria of the "tf-backend-config" config resource.
           value: ${resources.config#tf-backend.outputs.credentials_file}
     values:
       script: |-
@@ -61,4 +69,4 @@ entity:
   type: s3
 
   # Supply matching criteria
-  criteria: {}
+  criteria: []
