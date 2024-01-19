@@ -4,6 +4,10 @@ This repository contains a curated set of example files covering a range of enti
 
 Examples are grouped by entity type, e.g. "Resource Definition", or topic, e.g. "resource graph patterns". Refer to the READMEs inside the individual folders for details regarding that topic.
 
+# Usage
+
+It is recommended that you fully review any code before you apply it to ensure you understand its impact on your environment. Humanitec does not take responsibility for any costs incurred or damage caused when using these examples.
+
 # Contributing
 
 ## Content guidelines
