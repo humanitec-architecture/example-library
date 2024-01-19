@@ -1,6 +1,6 @@
 # Humanitec example library
 
-This repository contains a curated set of example files covering a range of entities for working with the [Humanitec Platform Orchestrator](https://humanitec.com/products/platform-orchestrator).
+This repository contains a curated set of example files covering a range of entities for working with the [Humanitec Platform Orchestrator](https://developer.humanitec.com/platform-orchestrator/overview/).
 
 Examples are grouped by entity type, e.g. "Resource Definition", or topic, e.g. "resource graph patterns". Refer to the READMEs inside the individual folders for details regarding that topic.
 
