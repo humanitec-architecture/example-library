@@ -44,7 +44,8 @@ Contributing content does not require defining any metadata or other configurati
 
 - Organize content using directories.
   - Directories become section headings in the target page.
-  - Each section name is derived from the directory name by replacing "-" and "_" with spaces and capitalizing the first character. E.g. the directory `environment-variables` will become a heading "Environment variables".
+  - Each section name is derived from the directory name by replacing "-" and "_" with spaces and capitalizing the first character. E.g. the directory `resource-definitions` will become a heading "Resource definitions".
+  - Since directories will become headings, give them human-readble names (`resource-definitions` as opposed to `defs`).
 - We support a maximum directory depth of **three** counting from the repository root.
 - In each directory, you may optionally place a `README.md` (case sensitive) and any number of code files.
 - A `README.md`, if present, is rendered first in a section, followed by the rendered code files in lexicographical order.
@@ -56,7 +57,7 @@ Contributing content does not require defining any metadata or other configurati
 
 ## README guidelines
 
-- Describe the purpose of the section (i.e. subfolder) this README belongs to.
+- Describe the purpose of the section (i.e. subfolder) that individual README belongs to.
 - List some or all example files and explain any details you consider relvant. Refer to files by their filename, e.g. `somefile.yaml`.
 - Refer to "_this section_" or "_this examples collection_" as opposed to "_this repo_". Remember that the content will be rendered into the developer docs and not be part of a repo in this context.
 - Explain complex code examples by
