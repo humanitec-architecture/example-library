@@ -33,7 +33,7 @@ This example will result in a single Pod being deployed to a Kubernetes Cluster.
 2. Register the Resource Definitions:
 
    ```bash
-   humctl apply -f ./defs
+   humctl apply -f ./resource-definitions
    ```
 
 3. Deploy the Score Workload:
@@ -53,5 +53,5 @@ This example will result in a single Pod being deployed to a Kubernetes Cluster.
 2. Delete the Resource Definitions
 
    ```bash
-   humctl delete -f ./defs
+   humctl delete -f ./resource-definitions
    ```
