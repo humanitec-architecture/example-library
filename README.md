@@ -12,11 +12,11 @@ It is recommended that you fully review any code before you apply it to ensure y
 
 ## Content guidelines
 
-The goal of the example library is to **explain** how to achieve a goal, rather than provide a plethora of sample files for all possible variations. Examples should enable users to **understand and adapt**, rather than being ready for **copy and paste**.
+The goal of the example library is to **explain how** to achieve a goal, rather than provide a plethora of sample files for all possible variations. Examples should enable users to **understand and adapt**, rather than being ready to **copy and paste**.
 
 Keep examples **simple** and feel free to **omit** parts not needed to drive the point home. Indicate what you left out, and focus on the relevant items.
 
-Where applicable, favor [`humctl` CLI](https://developer.humanitec.com/platform-orchestrator/cli/) YAML over all other formats. The CLI is the universal language of Humanitec platform orchestration, and also the most concise and easiest to read. Feel free to provide additional formats, such as Terraform, as well.
+Where applicable, favor [`humctl` CLI](https://developer.humanitec.com/platform-orchestrator/cli/) YAML over all other formats. The CLI is the universal language of Humanitec platform orchestration, and also the most concise and easiest to read. Feel free to provide additional formats such as Terraform.
 
 ## No configuration required
 
@@ -25,7 +25,7 @@ There is no configuration or metadata required when adding content. Follow the c
 ## Creating pull requests
 
 - Perform one logical change per pull request.
-- Maintain a clean list of commits, squash them if necessary.
+- Maintain a clean list of commits and squash them if necessary.
 
 ## Organize content
 
@@ -52,9 +52,9 @@ Contributing content does not require defining any metadata or other configurati
 - List some or all example files and explain any details you consider relvant. Refer to files by their filename, e.g. `somefile.yaml`, so that readers can easily locate them.
 - Refer to "_this section_" or "_this examples collection_" as opposed to "_this repo_". Remember that the content will be rendered into the developer docs and not be part of a repo in this context.
 - Explain complex code examples by
-  - adding inline comments
-  - showing small code snippets as inline code blocks in the README, and explaning them there
-  - all of the above.
+  - Adding inline comments
+  - Showing small code snippets as inline code blocks in the README, and explaning them there
+  - All of the above
 
 # Displaying examples in the developer docs
 
@@ -64,7 +64,7 @@ There are two ways of integrating content:
 
 1. **A particular folder** (and all of its subfolders) is integrated **at a particular position inside a particular page** of the docs.
     - All folder content is recursively displayed on that page, with subfolders becoming section headers. See the [content organization rules](#organize-content) below for details.
-    - If you add content underneath folder that is already integrated into the docs, or modify content in that folder, then those changes - when merged into `main` - will be reflected in the developer docs in their next build.
+    - If you add content underneath a folder that's already integrated into the docs, or modify content in that folder, then those changes when merged into `main` will be reflected in the developer docs in their next build.
 2. **An individual example file** is integrated **at a particular position inside a particular page** of the docs.
 
-Individual parts of this library can therefore be displayed on different pages throughout the developer docs. It is also possible to display examples more than once, or to display just a specific subset (subfolder) as part of a page to help illustrate a point.
+Individual parts of this library can therefore be displayed on different pages throughout the developer docs. It's also possible to display examples more than once, or to display just a specific subset (subfolder) as part of a page to help illustrate a point.
