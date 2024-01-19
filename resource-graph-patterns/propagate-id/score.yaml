@@ -15,5 +15,3 @@ containers:
       # STDOUT every 15 seconds. This can be seen in the container logs in the
       # Humanitec UI.
       - "while true; do set; sleep 15; done"
-
-resources: {}

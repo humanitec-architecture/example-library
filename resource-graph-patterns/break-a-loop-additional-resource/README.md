@@ -2,7 +2,6 @@
 
 This example demonstrates how to break a loop where two resources have to both depend on each others outputs. 
 
-
 ## How the example works
 
 There is often a mutual loop assigning a principal to a Kubernetes service account to enable Workload Identity. The Kubernetes service account often needs to be annotated with the principal and the principal needs some policy to allow it to be used by the Kubernetes Service Account.
@@ -16,7 +15,7 @@ graph LR
     aws-role --> k8s-service-account
 ```
 
-The loop arises because it is necessary to generate both the Kubernetes service account name and the aws-role dynamically. This because these need to be unique for each workload in the application. Essentially, both resources require the same 2 pieces of information.
+The loop arises because it is necessary to generate both the Kubernetes service account name and the aws-role dynamically. This is because these need to be unique for each Workload in the Application. Essentially, both resources require the same two pieces of information.
 
 There are two ways to break the loop: 
 
@@ -30,7 +29,7 @@ There are two ways to break the loop:
 
    Both the `k8s-service-account` and `aws-role` resources get _both_ the service account name and role ID from a 3rd resource.
 
-   This approach ensure consistency, does not rely on convention and allows for complex scenarios like getting IDs from a 3rd party system.
+   This approach ensures consistency, does not rely on convention and allows for complex scenarios like getting IDs from a 3rd party system.
 
 ```mermaid
 graph LR
