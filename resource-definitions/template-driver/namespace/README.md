@@ -1,0 +1,4 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing Kubernetes [namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/).
+
+* [`custom-namespace.yaml`](./custom-namespace.yaml): Create Kubernetes namespaces with your own custom naming scheme. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+* [`custom-namespace.tf`](./custom-namespace.tf): Create Kubernetes namespaces with your own custom naming scheme. This format is for use with the [Humanitec Terraform provider](https://registry.terraform.io/providers/humanitec/humanitec).

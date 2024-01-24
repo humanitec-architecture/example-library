@@ -1,0 +1,3 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) on your Pods.
+
+* [`tolerations.yaml`](./tolerations.yaml): Add tolerations to the Workload. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
