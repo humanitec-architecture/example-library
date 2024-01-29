@@ -9,6 +9,7 @@ entity:
   driver_inputs:
     values:
       templates:
+        # Remove the /spec/service/labels part if there no "service" in your Score file.
         outputs: |
           update:
             - op: add

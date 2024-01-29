@@ -1,0 +1,3 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) on Kubernetes objects.
+
+* [`custom-workload-with-dynamic-labels.yaml`](./custom-workload-with-dynamic-labels.yaml): Add dynamic labels to your Workload. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).

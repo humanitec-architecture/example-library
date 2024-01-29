@@ -1,0 +1,3 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for the [affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) of Kubernetes Pods.
+
+* [`affinity.yaml`](./affinity.yaml): Add affinity rules to the Workload. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
