@@ -1,0 +1,35 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-workload
+entity:
+  name: custom-workload
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+            - op: add
+              path: /spec/securityContext
+              value:
+                fsGroup: 1000
+                runAsGroup: 1000
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+            {{- range $containerId, $value := .resource.spec.containers }}
+            - op: add
+              path: /spec/containers/{{ $containerId }}/securityContext
+              value:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                privileged: false
+                readOnlyRootFilesystem: true
+            {{- end }}
+  criteria:
+    - {}
