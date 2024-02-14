@@ -10,6 +10,9 @@ entity:
     values:
       templates:
         outputs: |
+          {{- /*
+              The "update" output is passed into the corresponding "update" output of the "workload" Resource Type.
+          */ -}}
           update:
             {{- /*
               Add the variable OTEL_EXPORTER_OTLP_ENDPOINT to all containers
