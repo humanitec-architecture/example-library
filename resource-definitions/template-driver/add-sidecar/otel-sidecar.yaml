@@ -1,0 +1,117 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: otel-sidecar
+entity:
+  name: otel-sidecar
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+            {{- /*
+              Add the variable OTEL_EXPORTER_OTLP_ENDPOINT to all containers
+            */ -}}
+            {{- range $containerId, $value := .resource.spec.containers }}
+            - op: add
+              path: /spec/containers/{{ $containerId }}/variables/OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://localhost:4317
+            {{- end }}
+        manifests:
+          sidecar.yaml:
+            location: containers
+            data: |
+              {{- /*
+                The Open Telemetry container as a sidecar in the workload
+              */ -}}
+              command:
+                - "/otelcol"
+                - "--config=/conf/otel-agent-config.yaml"
+              image: otel/opentelemetry-collector:0.94.0
+              name: otel-agent
+              resources:
+                limits:
+                  cpu: 500m
+                  memory: 500Mi
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
+              ports:
+              - containerPort: 55679 # ZPages endpoint.
+              - containerPort: 4317 # Default OpenTelemetry receiver port.
+              - containerPort: 8888  # Metrics.
+              env:
+                - name: MY_POD_IP
+                  valueFrom:
+                    fieldRef:
+                      apiVersion: v1
+                      fieldPath: status.podIP
+                - name: GOMEMLIMIT
+                  value: 400MiB
+              volumeMounts:
+              - name: otel-agent-config-vol
+                mountPath: /conf
+          sidecar-volume.yaml:
+            location: volumes
+            data: |
+              {{- /*
+                A volume that is used to surface the config file
+              */ -}}
+              configMap:
+                name: otel-agent-conf-{{ .id }}
+                items:
+                  - key: otel-agent-config
+                    path: otel-agent-config.yaml
+              name: otel-agent-config-vol
+          otel-config-map.yaml:
+            location: namespace
+            data: |
+              {{- /*
+                The config file for the Open Telemetry agent. Notice that it's name includes the GUResID
+              */ -}}
+              apiVersion: v1
+              kind: ConfigMap
+              metadata:
+                name: otel-agent-conf-{{ .id }}
+                labels:
+                  app: opentelemetry
+                  component: otel-agent-conf
+              data:
+                otel-agent-config: |
+                  receivers:
+                    otlp:
+                      protocols:
+                        grpc:
+                          endpoint: ${env:MY_POD_IP}:4317
+                        http:
+                          endpoint: ${env:MY_POD_IP}:4318
+                  exporters:
+                    otlp:
+                      endpoint: "otel-collector.default:4317"
+                      tls:
+                        insecure: true
+                      sending_queue:
+                        num_consumers: 4
+                        queue_size: 100
+                      retry_on_failure:
+                        enabled: true
+                  processors:
+                    batch:
+                    memory_limiter:
+                      # 80% of maximum memory up to 2G
+                      limit_mib: 400
+                      # 25% of limit up to 2G
+                      spike_limit_mib: 100
+                      check_interval: 5s
+                  extensions:
+                    zpages: {}
+                  service:
+                    extensions: [zpages]
+                    pipelines:
+                      traces:
+                        receivers: [otlp]
+                        processors: [memory_limiter, batch]
+                        exporters: [otlp]
+  criteria: []
