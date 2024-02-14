@@ -1,0 +1,3 @@
+# Add a sidecar to workloads using the workload resource
+
+The [workload](https://developer.humanitec.com/platform-orchestrator/reference/resource-types/#workload) Resource Type can be used to make updates to resources before they are deployed into the cluster. In this example, a Resource Definition implementing the `workload` Resource Type is used to inject the Open Telemetry agent as a sidecar into every workload. In addition to adding the sidecar, it also adds an environment variable called `OTEL_EXPORTER_OTLP_ENDPOINT` to each container running in the workload.
