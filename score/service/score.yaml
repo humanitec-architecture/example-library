@@ -11,6 +11,6 @@ service:
       port: 8080
       targetPort: 3001
     stream:
-      port: 90245
-      targetPort: 90245
+      port: 19245
+      targetPort: 19245
       protocol: UDP

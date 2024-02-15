@@ -8,7 +8,6 @@ containers:
     files:
       - target: /app/default.config
         mode: "0644"
-        content:
-          - |
-            [config]
-            key=value
+        content: |
+          [config]
+          key=value
