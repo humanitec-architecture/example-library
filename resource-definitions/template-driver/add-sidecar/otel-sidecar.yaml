@@ -46,11 +46,6 @@ entity:
               - containerPort: 4317 # Default OpenTelemetry receiver port.
               - containerPort: 8888  # Metrics.
               env:
-                - name: MY_POD_IP
-                  valueFrom:
-                    fieldRef:
-                      apiVersion: v1
-                      fieldPath: status.podIP
                 - name: GOMEMLIMIT
                   value: 400MiB
               volumeMounts:
@@ -87,9 +82,9 @@ entity:
                     otlp:
                       protocols:
                         grpc:
-                          endpoint: ${env:MY_POD_IP}:4317
+                          endpoint: localhost:4317
                         http:
-                          endpoint: ${env:MY_POD_IP}:4318
+                          endpoint: localhost:4318
                   exporters:
                     otlp:
                       endpoint: "otel-collector.default:4317"
