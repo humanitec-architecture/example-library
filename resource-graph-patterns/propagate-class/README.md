@@ -45,7 +45,7 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
 3. Deploy the score workload:
 
    ```bash
-   score-humanitec deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}"
+   score-humanitec delta --deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN}
    ```
 
 ### Play with the demo
@@ -57,7 +57,7 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
 3. Redeploy the Score file:
 
    ```bash
-   score-humanitec deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}"
+   score-humanitec delta --deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}"--token "${HUMANITEC_TOKEN}
    ```
 
 4. In the Humanitec UI, visit the running deployment and look in the container logs for the line starting with `BUCKET_NAME`. It should now have a value of `name-02`
