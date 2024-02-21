@@ -1,0 +1,64 @@
+name: Approval before Promotion
+
+on:
+  artefact:
+    type: workload
+    include:
+    - myProject/myWorkloadArtefact
+    ref: refs/heads/main
+
+permissions:
+  application: developer
+  env-types:
+    development: deployer
+    staging: deployer
+
+jobs:
+  deploy-to-dev:
+    steps:
+    - uses: actions/humanitec/create-delta
+      id: create
+      with:
+        env_id: development
+        workload_artefacts: ${{ inputs.workload_artefacts }}
+    - uses: actions/humanitec/apply
+      id: apply
+      with:
+        env_id: development
+        delta_id: ${{ steps.create.outputs.delta_id }}
+    - uses: actions/humanitec/deploy
+      with:
+        env_id: development
+        set_id: ${{ steps.apply.outputs.set_id }}
+        comment: Deploying ${{ inputs.workloads[0] }}
+
+  wait-for-approval:
+    # increase the timeout to 24 hours for this job
+    timeout-minutes: 1440
+    needs:
+    - deploy-to-dev
+    steps:
+    - uses: actions/humanitec/approve
+      with:
+        env_id: production
+        message: Promotion of ${{ inputs.workloads[0] }} to production
+
+  deploy-to-production:
+    needs:
+    - deploy-to-production
+    steps:
+    - uses: actions/humanitec/create-delta
+      id: create
+      with:
+        env_id: production
+        workloads: ${{ inputs.workloads }}
+    - uses: actions/humanitec/apply
+      id: apply
+      with:
+        env_id: production
+        delta_id: ${{ steps.create.outputs.delta_id }}
+    - uses: actions/humanitec/deploy
+      with:
+        env_id: production
+        set_id: ${{ steps.apply.outputs.set_id }}
+        comment: Deploying ${{ inputs.workloads[0] }}

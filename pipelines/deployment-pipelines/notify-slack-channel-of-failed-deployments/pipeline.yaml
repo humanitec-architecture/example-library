@@ -1,0 +1,51 @@
+name: Deployment with Notifications
+on:
+  deployment_request: {}
+
+# Inherit the permissions of the user triggering the deployment
+permissions:
+  run-as: inherit
+
+jobs:
+  deploy:
+    # This critical property ensures that we don't stop the pipeline when the initial deployment fails.
+    continue-on-error: true
+    steps:
+    - if: ${{ ! inputs.set_id }}
+      name: Create Deployment Set
+      id: create-deployment-set
+      uses: actions/humanitec/apply@v1
+      with:
+        delta_id: ${{ inputs.delta_id }}
+        env_id: ${{ inputs.environment }}
+
+    - name: Deploy Set To Environment
+      uses: actions/humanitec/deploy@v1
+      with:
+        set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
+        value_set_version_id: ${{ inputs.value_set_version_id }}
+        env_id: ${{ inputs.environment }}
+        message: ${{ inputs.comment }}
+
+  notify:
+    needs: ["deploy"]
+    steps:
+    - name: Notify Slack
+      uses: actions/humanitec/http@v1
+      with: 
+        method: POST
+        url: ${{ app.values.SLACK_WEBHOOK }}
+        headers:
+          "Content-Type": "application/json"
+        data:
+          text: |
+            Deployment to ${{ inputs environment }} ${{ needs.deploy.status }}.
+            Comment: ${{ inputs.comment }}
+            Link: "https://app.humanitec.io/orgs/${{ pipeline.org.id }}/apps/${{ pipeline.app.id }}/envs/${{ inputs.environment }}"
+
+    # Now fail the pipeline if the initial deployment failed
+    - name: Fail if failed
+      if: ${{ needs.deploy.status == 'failed' }}
+      uses: actions/humanitec/fail
+      with:
+        message: Deployment failed.
