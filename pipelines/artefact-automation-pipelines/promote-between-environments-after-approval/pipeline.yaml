@@ -5,7 +5,7 @@ on:
     type: workload
     include:
     - myProject/myWorkloadArtefact
-    ref: refs/heads/main
+    match-ref: refs/heads/main
 
 permissions:
   application: developer
