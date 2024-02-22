@@ -1,0 +1,18 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: s3-example-admin
+entity:
+  criteria:
+    - class: example-admin
+      app_id: example-proxy
+  driver_inputs:
+    values:
+      bucket: ${resources['s3.example'].outputs.bucket}
+  provision:
+    aws-policy.s3-example-admin:
+      is_dependent: false
+      match_dependents: true
+  driver_type: humanitec/echo
+  name: s3-example-admin
+  type: s3
