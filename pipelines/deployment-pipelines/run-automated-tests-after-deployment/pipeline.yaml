@@ -34,12 +34,12 @@ jobs:
         message: ${{ inputs.comment }}
 
     - name: Wait For Ready
-      uses: actions/humanitec/wait-for-readiness
+      uses: actions/humanitec/wait-for-readiness@v1
       with:
         env_id: ${{ inputs.environment }}
  
     - name: Run Tests
-      uses: actions/humanitec/github-workflow
+      uses: actions/humanitec/github-workflow@v1
       with:
         repo: my-github-organization/my-github-repository
         ref: main

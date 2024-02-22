@@ -16,7 +16,7 @@ concurrency:
 jobs:
   main:
     steps:
-    - uses: actions/humanitec/github-workflow
+    - uses: actions/humanitec/github-workflow@v1
       with:
         repo: my-github-organization/my-github-repository
         ref: main
@@ -25,14 +25,12 @@ jobs:
         access_token: "${{ app.values.github-token }}"
         inputs:
           environment: development
-
-    - uses: actions/humanitec/clone
+    - uses: actions/humanitec/clone@v1
       id: clone
       with:
         from_env_id: development
         to_env_id: production
-    
-    - uses: actions/humanitec/deploy
+    - uses: actions/humanitec/deploy@v1
       with:
         env_id: production
         set_id: ${{ steps.clone.outputs.set_id }}

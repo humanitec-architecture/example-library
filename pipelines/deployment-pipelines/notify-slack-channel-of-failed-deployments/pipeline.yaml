@@ -46,6 +46,6 @@ jobs:
     # Now fail the pipeline if the initial deployment failed
     - name: Fail if failed
       if: ${{ needs.deploy.status == 'failed' }}
-      uses: actions/humanitec/fail
+      uses: actions/humanitec/fail@v1
       with:
         message: Deployment failed.

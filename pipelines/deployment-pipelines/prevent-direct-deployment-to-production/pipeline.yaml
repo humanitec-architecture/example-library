@@ -6,6 +6,6 @@ permissions:
 jobs:
   log:
     steps:
-    - uses: actions/humanitec/fail
+    - uses: actions/humanitec/fail@v1
       with:
         message: Direct deployment to ${{ inputs.environment }} is not allowed.

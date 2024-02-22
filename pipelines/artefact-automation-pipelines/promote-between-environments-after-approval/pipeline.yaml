@@ -16,17 +16,17 @@ permissions:
 jobs:
   deploy-to-dev:
     steps:
-    - uses: actions/humanitec/create-delta
+    - uses: actions/humanitec/create-delta@v1
       id: create
       with:
         env_id: development
         workload_artefacts: ${{ inputs.workload_artefacts }}
-    - uses: actions/humanitec/apply
+    - uses: actions/humanitec/apply@v1
       id: apply
       with:
         env_id: development
         delta_id: ${{ steps.create.outputs.delta_id }}
-    - uses: actions/humanitec/deploy
+    - uses: actions/humanitec/deploy@v1
       with:
         env_id: development
         set_id: ${{ steps.apply.outputs.set_id }}
@@ -38,7 +38,7 @@ jobs:
     needs:
     - deploy-to-dev
     steps:
-    - uses: actions/humanitec/approve
+    - uses: actions/humanitec/approve@v1
       with:
         env_id: production
         message: Promotion of ${{ inputs.workloads[0] }} to production
@@ -47,17 +47,17 @@ jobs:
     needs:
     - deploy-to-production
     steps:
-    - uses: actions/humanitec/create-delta
+    - uses: actions/humanitec/create-delta@v1
       id: create
       with:
         env_id: production
         workloads: ${{ inputs.workloads }}
-    - uses: actions/humanitec/apply
+    - uses: actions/humanitec/apply@v1
       id: apply
       with:
         env_id: production
         delta_id: ${{ steps.create.outputs.delta_id }}
-    - uses: actions/humanitec/deploy
+    - uses: actions/humanitec/deploy@v1
       with:
         env_id: production
         set_id: ${{ steps.apply.outputs.set_id }}
