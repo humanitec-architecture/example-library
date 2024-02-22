@@ -1,0 +1,11 @@
+name: No deployment allowed
+on:
+  deployment_request: {}
+permissions:
+  application: viewer
+jobs:
+  log:
+    steps:
+    - uses: actions/humanitec/fail@v1
+      with:
+        message: Direct deployment to ${{ inputs.environment }} is not allowed.

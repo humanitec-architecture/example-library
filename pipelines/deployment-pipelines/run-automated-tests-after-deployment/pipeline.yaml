@@ -1,0 +1,52 @@
+name: Testing after deployment
+
+# This pipeline is a deployment request pipeline and runs for any deploy or re-deploy.
+on:
+  deployment_request: {}
+
+# This pipeline needs permissions to deploy to our development environments. We could add staging and production here too.
+permissions:
+  application: developer
+  env-types:
+    development: deployer
+
+# Because this pipeline runs tests, we're going to use concurrency controls to ensure only one deploy and test cycle is running at a time against the target environment.
+concurrency:
+  group: "${{ pipeline.id }}-${{ pipeline.app.id }}-${{ inputs.environment }}"
+
+jobs:
+  deploy:
+    steps:
+    - if: ${{ ! inputs.set_id }}
+      name: Create Deployment Set
+      id: create-deployment-set
+      uses: actions/humanitec/apply@v1
+      with:
+        delta_id: ${{ inputs.delta_id }}
+        env_id: ${{ inputs.environment }}
+
+    - name: Deploy Set To Environment
+      uses: actions/humanitec/deploy@v1
+      with:
+        set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
+        value_set_version_id: ${{ inputs.value_set_version_id }}
+        env_id: ${{ inputs.environment }}
+        message: ${{ inputs.comment }}
+
+    - name: Wait For Ready
+      uses: actions/humanitec/wait-for-readiness@v1
+      with:
+        env_id: ${{ inputs.environment }}
+ 
+    - name: Run Tests
+      uses: actions/humanitec/github-workflow@v1
+      with:
+        repo: my-github-organization/my-github-repository
+        ref: main
+        workflow: ".github/workflows/push.yml"
+        # Read access token from a secret Application value
+        access_token: "${{ app.values.github-token }}"
+        # Pass inputs to the pipeline that direct the tests to the target environment
+        inputs:
+          environment: ${{ inputs.environment }}
+        request_uid_input: request_uid

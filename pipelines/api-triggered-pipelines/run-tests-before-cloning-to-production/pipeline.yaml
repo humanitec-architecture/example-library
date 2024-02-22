@@ -1,0 +1,37 @@
+name: Promotion
+
+on:
+  pipeline_call:
+    inputs: {}
+
+permissions:
+  application: developer
+  env-types:
+    production: deployer
+
+# we don't want deployments to development happening while we are running tests there
+concurrency:
+  group: blocking-${{ pipeline.app.id }}-development
+
+jobs:
+  main:
+    steps:
+    - uses: actions/humanitec/github-workflow@v1
+      with:
+        repo: my-github-organization/my-github-repository
+        ref: main
+        workflow: ".github/workflows/push.yml"
+        # Read access token from a secret Application value
+        access_token: "${{ app.values.github-token }}"
+        inputs:
+          environment: development
+    - uses: actions/humanitec/clone@v1
+      id: clone
+      with:
+        from_env_id: development
+        to_env_id: production
+    - uses: actions/humanitec/deploy@v1
+      with:
+        env_id: production
+        set_id: ${{ steps.clone.outputs.set_id }}
+        comment: Copy of development
