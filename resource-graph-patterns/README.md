@@ -2,10 +2,6 @@
 
 This repo contains a set of examples of patterns that can be used when building [Resource Graphs](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/). Each pattern is explained along with use cases for when the pattern can be useful.
 
-## Example Patterns
-
-- [Propagate Class](./propagate-class/README.md): Having a single resource definition that can be parameterized by referencing another resource.
-
 ## Running the examples
 
 ### Prerequisites

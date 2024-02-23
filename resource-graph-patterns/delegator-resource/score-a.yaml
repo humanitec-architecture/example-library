@@ -1,0 +1,26 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: example-a
+
+containers:
+  busybox:
+    image: busybox:latest
+
+    command:
+      - /bin/sh
+    args:
+      - "-c"
+      # This will output all of the environment variables in the container to
+      # STDOUT every 15 seconds. This can be seen in the container logs in the
+      # Humanitec UI.
+      - "while true; do set; sleep 15; done"
+    variables:
+      BUCKET_NAME: ${resources.s3.bucket}
+
+resources:
+  s3:
+    metadata:
+      annotations:
+        score.humanitec.io/resId: shared.main-s3
+    type: s3
+    class: example-admin
