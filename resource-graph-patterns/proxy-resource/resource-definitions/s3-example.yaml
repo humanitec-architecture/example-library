@@ -4,8 +4,8 @@ metadata:
   id: s3-example
 entity:
   criteria:
-    - class: example
-      app_id: example-proxy
+    - app_id: example-proxy
+      class: example
   driver_inputs:
     values:
       bucket: example-bucket

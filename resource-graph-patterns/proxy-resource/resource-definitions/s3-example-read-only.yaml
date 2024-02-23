@@ -4,8 +4,8 @@ metadata:
   id: s3-example-read-only
 entity:
   criteria:
-    - class: example-read-only
-      app_id: example-proxy
+    - app_id: example-proxy
+      class: example-read-only
   driver_inputs:
     values:
       # This Resource reference to 's3.example' creates the dependency to the base resource

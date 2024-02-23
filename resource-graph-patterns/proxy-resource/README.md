@@ -17,9 +17,9 @@ and the resulting graph will look like:
 flowchart LR
     WL_A[Workload A] -->|score resource dependency| PROXY_RES_ADMIN(type: s3, id: s3-bucket, class: example-admin)
     WL_B[Workload B] -->|score resource dependency| PROXY_RES_READ_ONLY(type: s3, id: s3-bucket, class: example-read-only)
-    PROXY_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, class: example-admin)
+    PROXY_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, class: s3-example-admin)
     PROXY_RES_ADMIN -->|Resource Reference| BASE_RES(shared: s3-bucket, class: example)
-    PROXY_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, class: example-read-only)
+    PROXY_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, class: s3-example-read-only)
     PROXY_RES_READ_ONLY -->|Resource Reference| BASE_RES(type: s3, id: s3-bucket, class: example)
 
 ```

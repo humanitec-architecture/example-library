@@ -5,7 +5,7 @@ metadata:
 entity:
   criteria:
     - app_id: example-proxy
-      class: example-admin
+      class: s3-example-admin
   driver_inputs:
     values:
       arn: arn:aws:iam::aws:policy/AmazonS3FullAccess

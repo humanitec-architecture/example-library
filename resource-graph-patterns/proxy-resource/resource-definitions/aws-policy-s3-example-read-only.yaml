@@ -5,7 +5,7 @@ metadata:
 entity:
   criteria:
     - app_id: example-proxy
-      class: example-read-only
+      class: s3-example-read-only
   driver_inputs:
     values:
       arn: arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
