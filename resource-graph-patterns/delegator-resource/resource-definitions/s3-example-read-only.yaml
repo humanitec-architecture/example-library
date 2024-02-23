@@ -4,7 +4,7 @@ metadata:
   id: s3-example-read-only
 entity:
   criteria:
-    - app_id: example-proxy
+    - app_id: example-delegator
       class: example-read-only
   driver_inputs:
     values:

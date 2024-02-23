@@ -4,7 +4,7 @@ metadata:
   id: aws-policy-s3-example-admin
 entity:
   criteria:
-    - app_id: example-proxy
+    - app_id: example-delegator
       class: s3-example-admin
   driver_inputs:
     values:

@@ -1,13 +1,13 @@
-# Proxy Resource
+# Delegator Resource
 
-This example demonstrates how proxy [Resource Definitions](https://developer.humanitec.com/platform-orchestrator/resources/resource-definitions/) can be used to expose
+This example demonstrates how delegator [Resource Definitions](https://developer.humanitec.com/platform-orchestrator/resources/resource-definitions/) can be used to expose
 a shared base resource with different access policies.
 
 ## How the example works
 
 This example is made up of:
 
-* Two proxy `s3` Resource Definitions
+* Two delegator `s3` Resource Definitions
 * One base `s3` Resource Definition
 * Two `aws-policy` Resource Definitions
 
@@ -15,12 +15,12 @@ and the resulting graph will look like:
 
 ```mermaid
 flowchart LR
-    WL_A[Workload A] -->|score resource dependency| PROXY_RES_ADMIN(type: s3, id: s3-bucket, class: example-admin)
-    WL_B[Workload B] -->|score resource dependency| PROXY_RES_READ_ONLY(type: s3, id: s3-bucket, class: example-read-only)
-    PROXY_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, class: s3-example-admin)
-    PROXY_RES_ADMIN -->|Resource Reference| BASE_RES(shared: s3-bucket, class: example)
-    PROXY_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, class: s3-example-read-only)
-    PROXY_RES_READ_ONLY -->|Resource Reference| BASE_RES(type: s3, id: s3-bucket, class: example)
+    WL_A[Workload A] -->|score resource dependency| DELEGATOR_RES_ADMIN(type: s3, id: s3-bucket, class: example-admin)
+    WL_B[Workload B] -->|score resource dependency| DELEGATOR_RES_READ_ONLY(type: s3, id: s3-bucket, class: example-read-only)
+    DELEGATOR_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, class: s3-example-admin)
+    DELEGATOR_RES_ADMIN -->|Resource Reference| BASE_RES(shared: s3-bucket, class: example)
+    DELEGATOR_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, class: s3-example-read-only)
+    DELEGATOR_RES_READ_ONLY -->|Resource Reference| BASE_RES(type: s3, id: s3-bucket, class: example)
 
 ```
 
@@ -30,7 +30,7 @@ The `s3` Resource Definition [`s3-example.yaml`](./resource-definitions/s3-examp
 
 The `aws-policy` Resource Definitions [`aws-policy-s3-example-admin.yaml`](./resource-definitions/aws-policy-s3-example-admin.yaml) and [`aws-policy-s3-example-read-only.yaml`](./resource-definitions/aws-policy-s3-example-read-only.yaml) contain the different policies we want to make available. Those are matched as `example-admin` and `example-read-only`.
 
-The `s3` Resource Definitions [`s3-example-admin.yaml`](./resource-definitions/s3-example-admin.yaml) and [`s3-example-read-only.yaml`](./resource-definitions/s3-example-read-only.yaml) are proxy resources that have two functions:
+The `s3` Resource Definitions [`s3-example-admin.yaml`](./resource-definitions/s3-example-admin.yaml) and [`s3-example-read-only.yaml`](./resource-definitions/s3-example-read-only.yaml) are delegator resources that have two functions:
 
 * Co-provision the respective `aws-policy` Resource Definition.
 * Forward the outputs of the "base" resource using a [Resource Reference](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#resource-references).
@@ -47,7 +47,7 @@ As both workloads used the same `s3` resource id `shared.main-s3` via the annota
 
 See the [prerequisites section](../README.md#prerequisites) in the README at the root of this section.
 
-In addition, the environment variable `HUMANITEC_APP` should be set to `example-proxy`.
+In addition, the environment variable `HUMANITEC_APP` should be set to `example-delegator`.
 
 ### Cost
 

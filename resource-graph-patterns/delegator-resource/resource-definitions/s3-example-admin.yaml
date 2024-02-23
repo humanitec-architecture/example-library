@@ -4,7 +4,7 @@ metadata:
   id: s3-example-admin
 entity:
   criteria:
-    - app_id: example-proxy
+    - app_id: example-delegator
       class: example-admin
   driver_inputs:
     values:

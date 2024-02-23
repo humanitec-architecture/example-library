@@ -4,7 +4,7 @@ metadata:
   id: aws-policy-s3-example-read-only
 entity:
   criteria:
-    - app_id: example-proxy
+    - app_id: example-delegator
       class: s3-example-read-only
   driver_inputs:
     values:
