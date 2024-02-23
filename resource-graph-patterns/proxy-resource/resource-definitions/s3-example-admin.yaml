@@ -8,6 +8,7 @@ entity:
       app_id: example-proxy
   driver_inputs:
     values:
+      # This Resource reference to 's3.example' creates the dependency to the base resource
       bucket: ${resources['s3.example'].outputs.bucket}
   provision:
     aws-policy.s3-example-admin:
