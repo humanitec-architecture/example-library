@@ -1,0 +1,17 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: account-config-gcp
+entity:
+  criteria:
+    # This res_id is used in the resource reference in the gcp-file-credentials Resource Definition.
+    - res_id: gcp-account
+
+  # The driver_account references a Cloud Account configured in the Platform Orchestrator.
+  # Replace with the name your GCP Cloud Account.
+  driver_account: gcp-credentials
+
+  driver_inputs: {}
+  driver_type: humanitec/template
+  name: account-config-gcp
+  type: config
