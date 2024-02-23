@@ -6,15 +6,16 @@ Different [Terraform providers](https://developer.hashicorp.com/terraform/langua
 - Using a credentials file. The filename is supplied to the provider. We call this "file" credentials.
 - Via environment variables that the provider reads. We call this "environment" credentials.
 
-> **NOTE**: At this time, the [Humanitec Terraform driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/) only supports "provider" and "file" credentials.
 
-The general approach for working with providers is to reference the credentials from a `config` resource.  In this set of examples, we provide two `config` Resource Definitions for AWS and GCP.
+A powerful approach for working with different cloud accounts for the same resource definition is to reference the credentials from a `config` resource. By using matching criteria on the `config` resource, it is possible to specialize the account used in the terraform to different contexts. For example, there might be different AWS Accounts for `test` and `production` environments.  The same resource definition can be used to manage the terraform and 2 `config` resources can be created matching to the `staging` and `production` environments respectively.
+
+In this set of examples, we provide two `config` Resource Definitions for AWS and GCP.
 
 ## AWS
 
 - [Account config (`account-config-aws.yaml`)](./account-config-aws.yaml)
-- [File Credentials (`aws-file-credentials.yaml`)](./aws-file-credentials.yaml)
 - [Provider Credentials (`aws-provider-credentials.yaml`)](./aws-provider-credentials.yaml)
+- [Environment Credentials (`aws-environment-credentials.yaml`)](./aws-environment-credentials.yaml)
 
 ## GCP
 
