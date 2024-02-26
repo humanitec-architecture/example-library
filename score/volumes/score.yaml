@@ -9,5 +9,5 @@ containers:
     volumes:
       - source: "volumes.tmp-pod"
         target: /mnt/data
-        sub_path: "" # Shown for illustration purposes. Must be a relative path.
-        read_only: true
+        path: "" # Shown for illustration purposes. Must be a relative path.
+        readOnly: true
