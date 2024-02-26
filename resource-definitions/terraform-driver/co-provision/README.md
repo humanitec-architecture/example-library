@@ -8,12 +8,9 @@ In other words, an IAM Policy resource depends on a S3 resource, but it needs to
 Any time a Resource `R` references a S3 resource using this Resource Definition, an IAM Policy resource will be co-provisioned and reference the S3 resource. The resulting Resource Graph will look like this:
 
 ```mermaid
-flowchart TB
-  subgraph fig1 ["S3 co-provisions AWS Policy, AWS Policy has a reference to S3"]
-    direction LR
-    R1(R) --->|references| R2(S3)
-    N1(AWS Policy) --->|references| R2
-  end
+flowchart LR
+  R1(R) --->|references| R2(S3)
+  N1(AWS Policy) --->|references| R2
   classDef pClass stroke-width:1px
   classDef rClass stroke-width:2px
   classDef nClass stroke-width:2px,stroke-dasharray: 5 5
