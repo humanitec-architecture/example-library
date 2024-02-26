@@ -9,7 +9,7 @@ Any time a Resource `R` references a S3 resource using this Resource Definition,
 
 ```mermaid
 flowchart TB
-  subgraph fig1 ["<b>S3</b> co-provisions <b>AWS Policy</b>, <b>AWS Policy</b> has a reference to <b>S3</b>"]
+  subgraph fig1 ["S3 co-provisions AWS Policy, AWS Policy has a reference to S3"]
     direction LR
     R1(R) --->|references| R2(S3)
     N1(AWS Policy) --->|references| R2
@@ -20,6 +20,4 @@ flowchart TB
   class R1 pClass
   class R2 rClass
   class N1 nClass
-  classDef subgraphClass stroke-width:0,white-space:nowrap
-  class fig1 subgraphClass
 ```
