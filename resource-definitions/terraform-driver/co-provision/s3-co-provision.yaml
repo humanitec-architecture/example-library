@@ -46,4 +46,4 @@ entity:
   # Co-provision aws-policy resource
   provision:
     aws-policy:
-      is_dependent: true
+      is_dependent: false
