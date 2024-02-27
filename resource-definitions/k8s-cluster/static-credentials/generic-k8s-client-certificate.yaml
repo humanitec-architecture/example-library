@@ -1,0 +1,23 @@
+# Make sure all ${ENVIRONMENT_VARIABLES} are set when applying this Resource Definition.
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: generic-k8s-static-credentials
+entity:
+  name: generic-k8s-static-credentials
+  type: k8s-cluster
+  driver_type: humanitec/k8s-cluster
+  driver_inputs:
+    values:
+      name: my-generic-k8s-cluster
+      loadbalancer: 35.10.10.10
+      cluster_data:
+        server: https://35.11.11.11:6443
+        # Single line base64-encoded cluster CA data in the format "LS0t...ca-data....=="
+        certificate-authority-data: ${CLUSTER_CERTIFICATE_CA_DATA}
+    secrets:
+      credentials:
+        # Single line base64-encoded client certificate data in the format "LS0t...cert-data...=="
+        client-certificate-data: ${USER_CLIENT_CERTIFICATE_DATA}
+        # Single line base64-encoded client key data in the format "LS0t...key-data...=="
+        client-key-data: ${USER_CLIENT_KEY_DATA}
