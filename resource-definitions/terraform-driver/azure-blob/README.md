@@ -1,0 +1,3 @@
+Use the [Terraform Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/) to provision [Azure Blob storage](https://learn.microsoft.com/en-us/azure/storage/blobs/) resources.
+
+* [ssh-secret-refs.tf](ssh-secret-refs.tf): uses [secret references](https://developer.humanitec.com/platform-orchestrator/security/secret-references/) to obtain an SSH key from a secret store to connect to the  Git repo providing the Terraform code.
