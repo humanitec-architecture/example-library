@@ -29,9 +29,9 @@ resource "humanitec_resource_definition" "azure-blob" {
 
     values_string = jsonencode({
       source = {
-        path = var.tf_module_github_path
-        rev  = var.tf_module_github_ref
-        url  = var.tf_module_github_url
+        path = "azure-blob/terraform/"
+        rev  = "refs/heads/main"
+        url  = "git@my-domain.com:my-org/my-repo.git"
       }
 
       variables = {

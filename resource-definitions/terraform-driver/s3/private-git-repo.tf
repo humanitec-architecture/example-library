@@ -26,6 +26,7 @@ resource "humanitec_resource_definition" "aws_terraform_resource_s3_bucket" {
           path = "s3/terraform/bucket/"
           rev  = "refs/heads/main"
           url  = "https://my-domain.com/my-org/my-repo.git"
+          # url  = "git@my-domain.com:my-org/my-repo.git" # For SSH access instead of HTTPS
         }
       )
       "variables" = jsonencode(
