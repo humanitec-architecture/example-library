@@ -61,4 +61,4 @@ jobs:
       with:
         env_id: production
         set_id: ${{ steps.apply.outputs.set_id }}
-        comment: Deploying ${{ inputs.workloads[0] }}
+        comment: Deploying ${{ inputs.workload_artefacts[0] }}
