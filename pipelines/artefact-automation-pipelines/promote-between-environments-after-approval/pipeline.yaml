@@ -45,7 +45,7 @@ jobs:
 
   deploy-to-production:
     needs:
-    - deploy-to-production
+    - wait-for-approval
     steps:
     - uses: actions/humanitec/create-delta@v1
       id: create
