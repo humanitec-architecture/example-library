@@ -1,3 +1,4 @@
 This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for adding [Security Context on Kubernetes `Deployment`](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).
 
 * [`custom-workload-with-security-context.yaml`](./custom-workload-with-security-context.yaml): Add Security Context to your Workload. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+* [`custom-workload-with-security-context.tf`](./custom-workload-with-security-context.tf): Add Security Context to your Workload. This format is for use with the [Humanitec Terraform provider](https://registry.terraform.io/providers/humanitec/humanitec).
