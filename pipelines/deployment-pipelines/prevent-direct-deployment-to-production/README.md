@@ -2,10 +2,13 @@ In the "[promote between environments](../promote-between-environments-after-a-m
 
 First, create a [Pipeline](pipeline.yaml) that always fails with a log message.
 
-Then link this Pipeline to the production Environment with the following Matching Criteria:
+Then link this Pipeline to the production Environment with the following [Matching Criteria](https://developer.humanitec.com/integration-and-extensions/humanitec-pipelines/deployment-pipelines/#pipeline-matching-criteria):
 
 - `app_id`: `my-application`
 - `env_id`: `production`
+- `deployment_type`: `deploy`
+
+The `deployment_type`: `deploy` part effectively excludes the `re-deploy` situation because you still want to be able to rollback production to a previous release without re-promoting a change through the promotion pipeline. This can be relevant e.g. during an incident or other operational needs.
 
 Because this Pipeline is triggered by `deployment_request`, any direct deployments through the user interface and APIs will run through this Pipeline and fail before the deployment takes place.
 
