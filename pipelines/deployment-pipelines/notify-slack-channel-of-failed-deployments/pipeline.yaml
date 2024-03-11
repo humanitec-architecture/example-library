@@ -17,14 +17,14 @@ jobs:
       uses: actions/humanitec/apply@v1
       with:
         delta_id: ${{ inputs.delta_id }}
-        env_id: ${{ inputs.environment }}
+        env_id: ${{ inputs.env_id }}
 
     - name: Deploy Set To Environment
       uses: actions/humanitec/deploy@v1
       with:
         set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
         value_set_version_id: ${{ inputs.value_set_version_id }}
-        env_id: ${{ inputs.environment }}
+        env_id: ${{ inputs.env_id }}
         message: ${{ inputs.comment }}
 
   notify:
