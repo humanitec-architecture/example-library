@@ -8,3 +8,5 @@ spec:
   volumes:
     tmp-pod:
       type: emptyDir
+      source:
+        sizeLimit: "1024Mi"
