@@ -1,0 +1,16 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: my-workload
+
+containers:
+  demo:
+    image: registry/my-image:1.0.0
+    files:
+      - target: /app/default.config
+        mode: "0644"
+        # The content references the Shared Value APP_SETTINGS, available through the "env" resource declared below
+        content: "${resources.env.APP_SETTINGS}"
+resources:
+  env:
+    # The type "environment" is available per the Score specification
+    type: environment
