@@ -6,4 +6,8 @@ containers:
   demo:
     image: registry/my-image:1.0.0
     variables:
-      API_KEY: "${values.API_KEY}"
+      API_KEY: "${resources.env.API_KEY}"
+resources:
+  env:
+    # The type "environment" is available per the Score specification.
+    type: environment
