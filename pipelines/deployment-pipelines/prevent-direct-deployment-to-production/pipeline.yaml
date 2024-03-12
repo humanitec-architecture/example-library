@@ -8,4 +8,4 @@ jobs:
     steps:
     - uses: actions/humanitec/fail@v1
       with:
-        message: Direct deployment to ${{ inputs.environment }} is not allowed.
+        message: Direct deployment to ${{ inputs.env_id }} is not allowed.

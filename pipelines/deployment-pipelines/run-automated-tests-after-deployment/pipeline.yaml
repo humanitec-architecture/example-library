@@ -12,7 +12,7 @@ permissions:
 
 # Because this pipeline runs tests, we're going to use concurrency controls to ensure only one deploy and test cycle is running at a time against the target environment.
 concurrency:
-  group: "${{ pipeline.id }}-${{ pipeline.app.id }}-${{ inputs.environment }}"
+  group: "${{ pipeline.id }}-${{ pipeline.app.id }}-${{ inputs.env_id }}"
 
 jobs:
   deploy:
@@ -23,20 +23,20 @@ jobs:
       uses: actions/humanitec/apply@v1
       with:
         delta_id: ${{ inputs.delta_id }}
-        env_id: ${{ inputs.environment }}
+        env_id: ${{ inputs.env_id }}
 
     - name: Deploy Set To Environment
       uses: actions/humanitec/deploy@v1
       with:
         set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
         value_set_version_id: ${{ inputs.value_set_version_id }}
-        env_id: ${{ inputs.environment }}
+        env_id: ${{ inputs.env_id }}
         message: ${{ inputs.comment }}
 
     - name: Wait For Ready
       uses: actions/humanitec/wait-for-readiness@v1
       with:
-        env_id: ${{ inputs.environment }}
+        env_id: ${{ inputs.env_id }}
  
     - name: Run Tests
       uses: actions/humanitec/github-workflow@v1
@@ -48,5 +48,5 @@ jobs:
         access_token: "${{ app.values.github-token }}"
         # Pass inputs to the pipeline that direct the tests to the target environment
         inputs:
-          environment: ${{ inputs.environment }}
+          environment: ${{ inputs.env_id }}
         request_uid_input: request_uid
