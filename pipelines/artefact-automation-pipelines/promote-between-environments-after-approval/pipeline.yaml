@@ -7,6 +7,9 @@ on:
     - myProject/myWorkloadArtefact
     match-ref: refs/heads/main
 
+concurrency:
+  group: myGroup
+
 permissions:
   application: developer
   env-types:
