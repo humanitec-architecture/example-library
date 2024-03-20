@@ -4,6 +4,33 @@ It is possible to use the Drivers [`volume-nfs`](https://developer.humanitec.com
 
 The example setup will perform static provisioning for a Kubernetes [PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) of type [`nfs`](https://kubernetes.io/docs/concepts/storage/volumes/#nfs) and a corresponding [PersistentVolumeClaim](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims). The volume points to an existing NFS server endpoint. The endpoint shown is an in-cluster NFS service which can be set up using this [Kubernetes example](https://github.com/kubernetes/examples/tree/master/staging/volumes/nfs). Modify the endpoint to use your own NFS server, or substitute the data completely for a different [volume type](https://kubernetes.io/docs/concepts/storage/volumes/#volume-types).
 
+```mermaid
+flowchart TB
+  subgraph pod1[Pod]
+    direction TB
+    subgraph container1[Container]
+      volumeMount1(volumeMount\n/tmp/data):::codeComponent
+    end
+    volumeMount1 ---> volume1(volume):::codeComponent
+  end
+  subgraph pod2[Pod]
+    direction TB
+    subgraph container2[Container]
+      volumeMount2(volumeMount\n/tmp/data):::codeComponent
+    end
+    volumeMount2 ---> volume2(volume):::codeComponent
+  end
+  pvc1(PersistentVolumeClaim) --> pv1(PersistentVolume)
+  volume1 --> pvc1
+  pvc2(PersistentVolumeClaim) --> pv2(PersistentVolume)
+  volume2 --> pvc2
+  nfsServer[NFS Server]
+  pv1 --> nfsServer
+  pv2 --> nfsServer
+
+  classDef codeComponent font-family:Courier
+```
+
 To use the example, apply both Resource Definitions to your Organization and add the required [matching criteria](https://developer.humanitec.com/platform-orchestrator/resources/resource-definitions/#matching-criteria) to both so they are matched to your target Deployments.
 
 Note that this setup does _not_ require any `resource` to be requested via Score. The [_implicit_](https://developer.humanitec.com/platform-orchestrator/reference/resource-types/#resource-type-use) `workload` Resource, when matched to the Resource Definition of type `workload` of this example, will trigger the provisioning of the `volume` Resource through its own Resource reference.
