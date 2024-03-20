@@ -11,14 +11,14 @@ flowchart TB
     subgraph container1[Container]
       volumeMount1(volumeMount\n/tmp/data):::codeComponent
     end
-    volumeMount1 ---> volume1(volume):::codeComponent
+    volumeMount1 --> volume1(volume):::codeComponent
   end
   subgraph pod2[Pod]
     direction TB
     subgraph container2[Container]
       volumeMount2(volumeMount\n/tmp/data):::codeComponent
     end
-    volumeMount2 ---> volume2(volume):::codeComponent
+    volumeMount2 --> volume2(volume):::codeComponent
   end
   pvc1(PersistentVolumeClaim) --> pv1(PersistentVolume)
   volume1 --> pvc1
