@@ -23,7 +23,7 @@ resource "humanitec_resource_definition" "eks_resource_cluster" {
 }
 
 
-resource "humanitec_resource_definition_criteria" "aks_aad_resource_cluster" {
-  resource_definition_id = humanitec_resource_definition.aks_aad_resource_cluster.id
+resource "humanitec_resource_definition_criteria" "eks_resource_cluster" {
+  resource_definition_id = humanitec_resource_definition.eks_resource_cluster.id
   class                  = "runner"
 }
