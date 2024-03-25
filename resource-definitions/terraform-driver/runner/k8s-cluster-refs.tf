@@ -1,6 +1,6 @@
 resource "humanitec_resource_definition" "eks_resource_cluster" {
-  id          = "eks-enabled-cluster"
-  name        = "eks-enabled-cluster"
+  id          = "eks-cluster"
+  name        = "eks-cluster"
   type        = "k8s-cluster"
   driver_type = "humanitec/k8s-cluster-eks"
 
