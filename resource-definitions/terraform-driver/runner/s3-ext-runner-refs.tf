@@ -22,7 +22,7 @@ resource "humanitec_resource_definition" "aws_terraform_external_runner_resource
     }
 
     values = {
-      # This instructs the driver that the Runner must be ran in an external cluster.
+      # This instructs the driver that the Runner must run in an external cluster.
       runner_mode = "custom-kubernetes"
       # Non-secret info of the cluster where the Terraform Runner should run.
       # This references a k8s-cluster resource that will be matched by class `runner`.
