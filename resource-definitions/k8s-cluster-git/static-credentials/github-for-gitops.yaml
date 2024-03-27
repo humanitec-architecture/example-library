@@ -19,3 +19,5 @@ entity:
     secrets:
       credentials:
         ssh_key: ${GIT_SSH_KEY}
+        # Alternative to ssh_key: password or Personal Account Token
+        # password: ${GIT_PAT}
