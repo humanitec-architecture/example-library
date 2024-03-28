@@ -1,0 +1,23 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: github-for-gitops
+entity:
+  name: github-for-gitops
+  driver_type: humanitec/k8s-cluster-git
+  type: k8s-cluster
+  driver_inputs:
+    values:
+      # Git repository for pushing manifests
+      url: git@github.com:example-org/gitops-repo.git
+      # Branch in the git repository, optional. If not specified, the default branch is used.
+      branch: development
+      # Path in the git repository, optional. If not specified, the root is used.
+      path: "${context.app.id}/${context.env.id}"
+      # Load Balancer, optional. Though it's not related to the git, it's used to create ingress in the target K8s cluster.
+      loadbalancer: 35.10.10.10
+    secrets:
+      credentials:
+        ssh_key: ${GIT_SSH_KEY}
+        # Alternative to ssh_key: password or Personal Account Token
+        # password: ${GIT_PAT}
