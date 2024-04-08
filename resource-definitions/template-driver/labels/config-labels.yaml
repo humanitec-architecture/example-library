@@ -1,0 +1,18 @@
+# This "config" type Resource Definition provides the value for the sample label
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: app-config
+entity:
+  name: app-config
+  type: config
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        # Returns a sample output named "cost_center_id" to be used as a label
+        outputs: |
+          cost_center_id: my-example-id
+  # Match the resource ID "app-config" so that it can be requested via that ID
+  criteria:
+    - res_id: app-config
