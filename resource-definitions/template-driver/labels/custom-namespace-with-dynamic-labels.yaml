@@ -21,8 +21,8 @@ entity:
               kind: Namespace
               metadata:
                 labels:
-                  env_type: ${context.env.id}
-                  substream_id: ${resources['config.default#app-config'].outputs.substream_id}
+                  env_id: ${context.env.id}
+                  cost_center_id: ${resources['config.default#app-config'].outputs.cost_center_id}
                 name: {{ .init.name }}
         outputs: |
           namespace: {{ .init.name }}

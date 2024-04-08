@@ -10,9 +10,9 @@ entity:
   driver_inputs:
     values:
       templates:
-        # Returns a sample output named "substream_id" to be used as a label
+        # Returns a sample output named "cost_center_id" to be used as a label
         outputs: |
-          substream_id: my-example-id
-  # Set matching criteria as required
+          cost_center_id: my-example-id
+  # Match the resource ID "app-config" so that it can be requested via that ID
   criteria:
-    - {}
+    - res_id: app-config

@@ -20,16 +20,16 @@ entity:
                 {{- range $key, $val := .resource.spec.labels }}
                 {{ $key }}: {{ $val | quote }}
                 {{- end }}
-                env_type: ${context.env.id}
-                substream_id: ${resources['config.default#app-config'].outputs.substream_id}
+                env_id: ${context.env.id}
+                cost_center_id: ${resources['config.default#app-config'].outputs.cost_center_id}
             - op: add
               path: /spec/service/labels
               value:
                 {{- range $key, $val := .resource.spec.service.labels }}
                 {{ $key }}: {{ $val | quote }}
                 {{- end }}
-                env_type: ${context.env.id}
-                substream_id: ${resources['config.default#app-config'].outputs.substream_id}
+                env_id: ${context.env.id}
+                cost_center_id: ${resources['config.default#app-config'].outputs.cost_center_id}
   # Set matching criteria as required
   criteria:
     - {}
