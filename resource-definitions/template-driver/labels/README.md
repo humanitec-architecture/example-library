@@ -1,3 +1,7 @@
-This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) on Kubernetes objects.
+This section shows how to use the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) on Kubernetes objects.
 
+While it is also possible to [set labels via Score](https://developer.humanitec.com/examples/score/labels/), the approach shown here shifts the management of labels down to the Platform, ensuring consistency and relieving developers of the task to repeat common labels for each Workload in the Score extension file.
+
+* [`config-labels.yaml`](config-labels.yaml): Resource Definition of type [`config`](https://developer.humanitec.com/platform-orchestrator/reference/resource-types/#config) which defines the value for a sample label at a central place.
 * [`custom-workload-with-dynamic-labels.yaml`](./custom-workload-with-dynamic-labels.yaml): Add dynamic labels to your Workload. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+* [`custom-namespace-with-dynamic-labels.yaml`](custom-namespace-with-dynamic-labels.yaml): Add dynamic labels to your Namespace. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).

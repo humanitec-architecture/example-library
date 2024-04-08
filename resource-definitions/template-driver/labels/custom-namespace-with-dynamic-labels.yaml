@@ -1,0 +1,31 @@
+# This Resource Definition references the "config" resource to use its output as a label
+# and adds another label taken from the Deployment context
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-namespace-with-label
+entity:
+  name: custom-namespace-with-label
+  type: k8s-namespace
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          name: ${context.app.id}-${context.env.id}
+        manifests: |-
+          namespace.yaml:
+            location: cluster
+            data:
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                labels:
+                  env_type: ${context.env.id}
+                  substream_id: ${resources['config.default#app-config'].outputs.substream_id}
+                name: {{ .init.name }}
+        outputs: |
+          namespace: {{ .init.name }}
+  # Set matching criteria as required
+  criteria:
+    - {}
