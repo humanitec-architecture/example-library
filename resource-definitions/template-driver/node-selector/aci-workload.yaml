@@ -1,0 +1,30 @@
+# Add tolerations and nodeSelector to the Workload to make it runnable AKS virtual nodes
+# served through Azure Container Instances (ACI).
+# See https://learn.microsoft.com/en-us/azure/aks/virtual-nodes-cli
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: aci-workload
+entity:
+  name: aci-workload
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update: 
+          - op: add
+            path: /spec/tolerations
+            value:
+            - key: "virtual-kubelet.io/provider"
+              operator: "Exists"
+            - key: "azure.com/aci"
+              effect: "NoSchedule"
+          - op: add
+            path: /spec/nodeSelector
+            value:
+              kubernetes.io/role: agent
+              beta.kubernetes.io/os: linux
+              type: virtual-kubelet
+  criteria: []

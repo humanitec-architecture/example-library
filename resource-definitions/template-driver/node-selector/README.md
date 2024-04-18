@@ -1,0 +1,3 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for setting [nodeSelectors](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/) on your Pods.
+
+* [`aci-workload.yaml`](./aci-workload.yaml): Add the required node selector and tolerations to the Workload so it can be scheduled on an [Azure AKS virtual node](https://learn.microsoft.com/en-us/azure/aks/virtual-nodes). This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
