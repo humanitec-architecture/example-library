@@ -72,6 +72,12 @@ This example will result in one Pod being deployed.
    humctl score deploy
    ```
 
+4. Inspect the effective environment variables of your workload:
+
+- Open the portal at https://app.humanitec.io/orgs/${HUMANITEC_ORG}/apps/example-config-pattern/envs/development
+- Select the `example-config-pattern-workload` and inspect the log output of the `busybox` container.
+- Check the values of the `BUCKET_NAME` and or `BUCKET_REGION` variables.
+
 ## Explore the example
 
 1. Change the `name` and or `prefix` properties in [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml). Try adding `region`.
