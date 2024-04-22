@@ -1,0 +1,45 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: config-pattern-example-config-platform-defaults
+entity:
+  name: config-pattern-example-config-platform-defaults
+  type: config
+  criteria:
+  - app_id: example-config-pattern
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          defaults:
+            # These are values defined by the platform team to be used by the terraform module
+            prefix: ""
+            region: eu-central-1
+            name: {{ "${context.res.id}" | splitList "." | last }}-${context.app.id}-${context.org.id}
+            tags:
+              example: config-pattern-example
+              env: ${context.env.id}
+        outputs: |
+          {{- $overrides := .driver.values.overrides }}
+          # Loop through all the default keys - this way we don't introduce additional keys from
+          # the developer overrides.
+          {{- range $key, $val := .init.defaults }}
+
+            # Don't allow overrides of some keys
+            {{- if (list "region" "tags") | has $key }}
+
+          {{ $key }}: {{ $val | toRawJson }}
+
+            {{- else }}
+
+          {{ $key }}: {{ $overrides | dig $key $val | toRawJson }}
+
+            {{- end}}
+
+          {{- end }}
+
+          # Generate some additional keys
+          bucket_name: {{ $overrides.prefix | default .init.defaults.prefix }}{{ $overrides.name | default .init.defaults.name }}
+
+      overrides: ${resources["config.developer-overrides"].values}

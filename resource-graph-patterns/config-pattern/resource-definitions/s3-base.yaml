@@ -1,0 +1,21 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: config-pattern-example-s3-base
+entity:
+  name: config-pattern-example-s3-base
+  type: s3
+  criteria:
+  - app_id: example-config-pattern
+
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      # Placeholders of the form "${resources.config.outputs."" will
+      # automatically be provisioned with res_id and class equal to this
+      # instance that will be provisioned.
+      #
+      # See ../../propagate-id and ../../propagate-class for more details.
+
+      region: ${resources.config.outputs.region}
+      bucket: ${resources.config.outputs.bucket_name}
