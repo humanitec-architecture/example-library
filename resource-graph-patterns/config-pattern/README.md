@@ -7,7 +7,7 @@ This example demonstrates how `config` resources can be used to parameterize gen
 
 This example is made up of:
 
-* A single `s3` resource definition. (Implemented using the echo driver for simplicity for this example)
+* A single `s3` resource definition. (Implemented using the [Echo driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) for simplicity for this example)
 * A `config` resource that provides default configuration as specified by the platform team.
 * A `config` resource that can be used by developers to override some configuration values.
 
