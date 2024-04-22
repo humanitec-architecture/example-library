@@ -17,7 +17,7 @@ The [Resource Graph](https://developer.humanitec.com/platform-orchestrator/resou
 flowchart LR
     WL[Workload] -->|score resource dependency| S3(type: s3, id: s3-bucket, class: default)
     S3 --> CONF_S3(type: config, id: s3-bucket, class: default)
-    CONF_S3 --> CONF_S3_DEV_OVERRIDE(type: config, id: s3-bucket, class: developer-override)
+    CONF_S3 --> CONF_S3_DEV_OVERRIDE(type: config, id: s3-bucket, class: developer-overrides)
 
 ```
 
