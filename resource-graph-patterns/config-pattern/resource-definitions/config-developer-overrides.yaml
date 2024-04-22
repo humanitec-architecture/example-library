@@ -1,0 +1,16 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: config-pattern-example-config-developer-overrides
+entity:
+  name: config-pattern-example-config-developer-overrides
+  type: config
+  criteria:
+  - app_id: example-config-pattern
+    class: developer-overrides
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      # Here we only override prefix. But try also overriding "name" and "region".
+      # "name" will be used, "region" will be ignored.
+      prefix: overridden-

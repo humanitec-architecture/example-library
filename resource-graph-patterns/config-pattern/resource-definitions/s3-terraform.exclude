@@ -1,0 +1,47 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: config-pattern-example-s3-terraform
+entity:
+  name: config-pattern-example-s3-terraform
+  type: s3
+  criteria:
+  - app_id: example-config-pattern
+  driver_type: humanitec/terraform
+  # The driver_account references a Cloud Account of type "aws-role"
+  # which needs to be configured for your Organization.
+  driver_account: aws-example-role
+  driver_inputs:
+    values:
+      variables:
+        # Placeholders of the form "${resources.config.outputs."" will
+        # automatically be provisioned with res_id and class equal to this
+        # instance that will be provisioned.
+        #
+        # See ../../propagate-id and ../../propagate-class for more details.
+
+        region: ${resources.config.outputs.region}
+        bucket_name: ${resources.config.outputs.bucket_name}
+        tags: ${resources.config.outputs.tags}
+      # Use the credentials injected via the driver_account
+      # to set variables as expected by your Terraform code
+      credentials_config:
+        variables:
+          access_key: AccessKeyId
+          secret_key: SecretAccessKey
+          session_token: SessionToken
+      script: |-
+        # The script resolved to the overrides.tf file. It is the expected place
+        # to configure the provider
+        provider "aws" {
+          region     = var.region
+          access_key = var.access_key
+          secret_key = var.secret_key
+          token      = var.session_token
+        }
+
+        resource "aws_s3_bucket" "example" {
+          bucket = var.bucket_name
+          tags = jsondecode(var.tags)
+        }
+
