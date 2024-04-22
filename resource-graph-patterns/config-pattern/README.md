@@ -27,7 +27,7 @@ The example demonstrates how:
 
 There are 3 resource definitions:
 
-1. The `s3` Resource Definition [`s3-base.yaml`](./resource-definitions/s3-base.yaml) defines the underlying "base" resource. In this case it very simple - implemented using the echo driver. It takes 2 parameters - `region` and `bucket` - returning both of these.
+1. The `s3` Resource Definition [`s3-base.yaml`](./resource-definitions/s3-base.yaml) defines the underlying "base" resource. In this case it is very simple - implemented using the Echo Driver. It takes 2 parameters - `region` and `bucket` - returning both of these.
 
 2. The first `config` Resource Definitions [`config-platform-defaults.yaml`](./resource-definitions/config-platform-defaults.yaml) do two things:
 
