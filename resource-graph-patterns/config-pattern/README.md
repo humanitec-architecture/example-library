@@ -22,7 +22,7 @@ flowchart LR
 ```
 
 The example demonstrates how:
-- different configurations can be used in different environments while using the same terraform resource definition
+- different configurations can be used in different environments while using the same Terraform Resource Definition
 - developers can optionally provide overrides that can be controlled by the platform team.
 
 There are 3 resource definitions:
