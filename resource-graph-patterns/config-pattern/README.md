@@ -38,7 +38,7 @@ There are 3 resource definitions:
 
 3. The last `config` Resource Definition [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml) allows developers to provide their overrides that can tune the resource that they request.
 
-
+In practice, you may choose to maintain the Resource Definitions for the platform team and the developers in different git repositories to separate out access permissions.
 
 ## Run the demo
 
