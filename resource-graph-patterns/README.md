@@ -20,7 +20,7 @@ The environment must be configured with the following environment variables:
 | --- | --- |
 | `HUMANITEC_ORG` | The ID of the Humanitec Organization. |
 | `HUMANITEC_TOKEN` | The API Token for the service user with Administrator role on the Humanitec Organization |
-| `HUMANITEC_DEV` | This should be set to `development` | 
+| `HUMANITEC_ENV` | This should be set to `development` | 
 
 **NOTE:**
 
