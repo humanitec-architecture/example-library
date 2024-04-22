@@ -36,7 +36,7 @@ There are 3 resource definitions:
 
    These config also provide guardrails in that only certain values can be overridden. In this example, developers can override the `prefix` and the `name` properties but not `tags` or `region`.
 
-3. The last `config` Resource Definitions [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml) allows developers to provide their overrides that can tune the resource that they request.
+3. The last `config` Resource Definition [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml) allows developers to provide their overrides that can tune the resource that they request.
 
 
 
