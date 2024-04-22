@@ -10,7 +10,6 @@ In order to try out these examples, the following is necessary:
 
 - A Humanitec Organization.
 - The [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/)
-- The [score-humanitec CLI](https://github.com/score-spec/score-humanitec/releases/latest)
 - An [API Token for a Service User](https://developer.humanitec.com/platform-orchestrator/security/service-users) with the Administrator role on the Humanitec Organization.
 - A `k8s-cluster` Resource Definition that matches to the `development` environment of the `application` defined in each example.
 

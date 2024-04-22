@@ -4,17 +4,16 @@ The following examples show how to use [Score](https://developer.humanitec.com/s
 
 Each example highlights a particular use case and shows either a Score file (`score.yaml`), a Score extension file (`humanitec.score.yaml`), or both.
 
-To use any particular example, use the [`score-humanitec` CLI](https://developer.humanitec.com/score/installation/) and execute this command:
+To use any particular example, use the [`humctl` CLI](https://developer.humanitec.com/platform-orchestrator/cli/) and execute this command:
 
 ```bash
-score-humanitec delta \
+humctl score deploy \
               -f score.yaml \
               --extensions humanitec.score.yaml
               --app ${APP_ID} \
               --env ${ENV_ID} \
               --org ${HUMANITEC_ORG} \
               --token ${HUMANITEC_TOKEN} \
-              --deploy
 ```
 
 Usage notes:
