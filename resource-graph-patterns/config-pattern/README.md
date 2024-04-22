@@ -11,7 +11,7 @@ This example is made up of:
 * A `config` resource that provides default configuration as specified by the platform team.
 * A `config` resource that can be used by developers to override some configuration values.
 
-The resource graph for production with developer overrides would look like:
+The [Resource Graph](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph) for production with developer overrides would look like:
 
 ```mermaid
 flowchart LR
