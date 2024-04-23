@@ -9,5 +9,5 @@ containers:
       - target: /app/default.config
         mode: "0644"
         # The source references a locally available file
-        # It is read by the score-humanitec CLI when running "score-humanitec delta --deploy"
+        # It is read by the humctl CLI when running "humctl score deploy"
         source: "./appsettings.json"

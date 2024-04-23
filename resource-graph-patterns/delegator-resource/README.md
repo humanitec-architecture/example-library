@@ -70,13 +70,13 @@ This example will result in a two Pods being deployed to a Kubernetes cluster.
 3. Deploy the Score workload A:
 
    ```bash
-   score-humanitec delta --deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --retry --file score-a.yaml
+   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --file score-a.yaml
    ```
 
 4. Deploy the Score workload B:
 
    ```bash
-   score-humanitec delta --deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --retry --file score-b.yaml
+   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --file score-b.yaml
    ```
 
 ### Clean up the example
