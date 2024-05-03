@@ -10,6 +10,28 @@ It is recommended that you fully review any code before you apply it to ensure y
 
 # Contributing
 
+We appreciate your contributions!
+
+## Creating pull requests
+
+- Please fork this repo and submit a pull request to contribute new content or changes
+- Perform one logical change per pull request
+- Maintain a clean list of commits and squash them if necessary
+
+## Example usage in downstream sites
+
+All examples except the `resource-graph-patterns` are regularly transferred for display in the [Example Library](https://developer.humanitec.com/examples/) site for greater community reach.
+
+The Humanitec documentation team might choose to integrate selected examples into content pages of the [Humanitec developer docs](https://developer.humanitec.com/) to help illustrate specific concepts.
+
+By submitting a pull request, you agree to these types of use.
+
+The `main` branch is always used as the source.
+
+## Organize content
+
+Organize content using directories. Follow the directory structure of existing examples for correct processing in [downstream sites](#example-usage-in-downstream-sites).
+
 ## Content guidelines
 
 The goal of the example library is to **explain how** to achieve a goal, rather than provide a plethora of sample files for all possible variations. Examples should enable users to **understand and adapt**, rather than being ready to **copy and paste**.
@@ -20,20 +42,26 @@ Where applicable, favor [`humctl` CLI](https://developer.humanitec.com/platform-
 
 ## No configuration required
 
-There is no configuration or metadata required when adding content. Follow the conventions described in the [content organization rules](#organize-content) to help structure your files.
+There is no configuration or mandatory metadata required when adding content. Follow the conventions described in the [content organization rules](#organize-content) to structure your files.
 
-## Creating pull requests
+You may optionally assign "`features`" to an example which will become selectable in the [Example Library](https://developer.humanitec.com/examples) site. Add a metadata section to the example's `README.md` right at the top like this:
 
-- Perform one logical change per pull request.
-- Maintain a clean list of commits and squash them if necessary.
+```yaml
+---
+features:
+  - workload-identity
+  - some-other-feature
+---
 
-## Organize content
+... regular README content
+```
 
-The repository contents are transformed and displayed on regular pages in the Humanitec developer docs on [developer.humanitec.com](https://developer.humanitec.com). See [displaying examples](#displaying-examples-in-the-developer-docs) for details.
+Allowable characters for a feature name are lowercase letters, digits, dash ("-"), and space (" "), where the latter two will be considered equal (`workload-identity` = `workload identity`).
 
-Contributing content does not require defining any metadata or other configuration. Please be aware of these transformation rules for best results.
+## Displaying examples in the developer docs
 
-- Organize content using directories.
+When the Humanitec documentation team integrates examples into content pages, these patterns apply:
+
   - Directories become section headings in the target page.
   - Each section name is derived from the directory name by replacing "-" and "_" with spaces and capitalizing the first character. E.g. the directory `resource-definitions` will become a heading "Resource definitions".
   - Since directories will become headings, give them human-readble names (`resource-definitions` as opposed to `defs`).
@@ -49,16 +77,16 @@ Contributing content does not require defining any metadata or other configurati
 ## README guidelines
 
 - Add a `README.md` to a folder to provide explanations on its contents.
-- List some or all example files and explain any details you consider relvant. Refer to files by their filename, e.g. `somefile.yaml`, so that readers can easily locate them.
+- List some or all example files and explain any details you consider relevant. Refer to files by their filename, e.g. `somefile.yaml`, so that readers can easily locate them.
 - Refer to "_this section_" or "_this examples collection_" as opposed to "_this repo_". Remember that the content will be rendered into the developer docs and not be part of a repo in this context.
 - Explain complex code examples by
   - Adding inline comments
   - Showing small code snippets as inline code blocks in the README, and explaning them there
   - All of the above
 
-# Displaying examples in the developer docs
+## Displaying examples on developer docs pages
 
-The contents of this repo are selectively integrated into the Humanitec developer docs on [developer.humanitec.com](https://developer.humanitec.com). The `main` branch is used as the source.
+Some contents of this repo are selectively integrated into the Humanitec developer docs pages on [developer.humanitec.com](https://developer.humanitec.com).
 
 There are two ways of integrating content:
 
