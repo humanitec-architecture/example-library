@@ -15,31 +15,33 @@ and the resulting graph will look like:
 
 ```mermaid
 flowchart LR
-    WL_A[Workload A] -->|score resource dependency| DELEGATOR_RES_ADMIN(type: s3, id: s3-bucket, class: example-admin)
-    WL_B[Workload B] -->|score resource dependency| DELEGATOR_RES_READ_ONLY(type: s3, id: s3-bucket, class: example-read-only)
-    DELEGATOR_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, class: s3-example-admin)
-    DELEGATOR_RES_ADMIN -->|Resource Reference| BASE_RES(shared: s3-bucket, class: example)
-    DELEGATOR_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, class: s3-example-read-only)
-    DELEGATOR_RES_READ_ONLY -->|Resource Reference| BASE_RES(type: s3, id: s3-bucket, class: example)
+    WL_A[Workload A] -->|score resource dependency| DELEGATOR_RES_ADMIN(type: s3, id: shared.main-s3, class: admin)
+    WL_B[Workload B] -->|score resource dependency| DELEGATOR_RES_READ_ONLY(type: s3, id: shared.main-s3, class: read-only)
+    DELEGATOR_RES_ADMIN -->|co-provision| POL_ADMIN(type: aws-policy, id: shared.main-s3, class: s3-admin)
+    DELEGATOR_RES_ADMIN -->|Resource Reference| BASE_RES(type: s3, id: shared.main-s3, class: concrete)
+    DELEGATOR_RES_READ_ONLY -->|co-provision| POL_READ_ONLY(type: aws-policy, id: shared.main-s3, class: s3-read-only)
+    DELEGATOR_RES_READ_ONLY -->|Resource Reference| BASE_RES
 
 ```
 
-To keep the examples as simple as possible, the [`humanitec/echo`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) driver is used. Checkout [Resource Packs](https://developer.humanitec.com/platform-orchestrator/resources/resource-packs/), if you are interested in examples with Resource Definitions that also include provisioning.
+To keep the examples as simple as possible, the [`humanitec/echo`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) driver is used throughout. Check out the [Resource Packs](https://developer.humanitec.com/platform-orchestrator/resources/resource-packs/) if you are interested in examples with Resource Definitions that also include provisioning.
 
-The `s3` Resource Definition [`s3-example.yaml`](./resource-definitions/s3-example.yaml) defines the underlying "base" resource and is matched as `class: example`.
+The `s3` Resource Definition [`s3-concrete.yaml`](./resource-definitions/s3-concrete.yaml) defines the underlying "base" resource and is matched as `class: concrete`.
 
-The `aws-policy` Resource Definitions [`aws-policy-s3-example-admin.yaml`](./resource-definitions/aws-policy-s3-example-admin.yaml) and [`aws-policy-s3-example-read-only.yaml`](./resource-definitions/aws-policy-s3-example-read-only.yaml) contain the different policies we want to make available. Those are matched as `example-admin` and `example-read-only`.
+In a real-world setup, this Resource Definition is the only one that would actually provision the s3 bucket using a Driver other than Echo, e.g. the [Terraform Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/). The delegator resources will _not_ actually provision anything. Their purpose is the co-provisioning of the appropriate `aws-policy` resource based on their `class`.
 
-The `s3` Resource Definitions [`s3-example-admin.yaml`](./resource-definitions/s3-example-admin.yaml) and [`s3-example-read-only.yaml`](./resource-definitions/s3-example-read-only.yaml) are delegator resources that have two functions:
+The `aws-policy` Resource Definitions [`aws-policy-s3-admin.yaml`](./resource-definitions/aws-policy-s3-admin.yaml) and [`aws-policy-s3-read-only.yaml`](./resource-definitions/aws-policy-s3-read-only.yaml) contain the different policies we want to make available. Those are matched as `admin` and `read-only`.
+
+The `s3` Resource Definitions [`s3-admin.yaml`](./resource-definitions/s3-admin.yaml) and [`s3-read-only.yaml`](./resource-definitions/s3-read-only.yaml) are delegator resources that have two functions:
 
 * Co-provision the respective `aws-policy` Resource Definition.
 * Forward the outputs of the "base" resource using a [Resource Reference](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#resource-references).
 
-When the workload defined in [`score-a.yaml`](./score-a.yaml) now requests an `s3` resource with `class: example-admin`, the Humanitec Platform Orchestrator creates the "base" `s3` resource `class: example` and co-provisions the `aws-policy` resource `class: s3-example-admin`.
+When the workload defined in [`score-a.yaml`](./score-a.yaml) now requests an `s3` resource with `class: admin`, the Humanitec Platform Orchestrator creates the "delegator" `s3` resource `class: admin`, the "base" `s3` resource `class: concrete`, and co-provisions the `aws-policy` resource `class: s3-admin`.
 
-Similar to the first workload, [`score-b.yaml`](./score-a.yaml) requests an `s3` resource, but this time with `class: example-read-only` and here the Humanitec Platform Orchestrator creates the "base" `s3` resource `class: example` and co-provisions the `aws-policy` resource `class: s3-example-read-only`.
+Similar to the first workload, [`score-b.yaml`](./score-b.yaml) requests an `s3` resource, but this time with `class: read-only` and here the Humanitec Platform Orchestrator creates the "delegator" `s3` resource `class: read-only`, the "base" `s3` resource `class: concrete`, and co-provisions the `aws-policy` resource `class: s3-read-only`.
 
-As both workloads used the same `s3` resource id `shared.main-s3` via the annotation `score.humanitec.io/resId` in their Score files, they will use the same underlying s3 bucket, but each workload uses a different access policy. Look [here](https://developer.humanitec.com/score/working-with/annotations/#shared-resource-id) to learn more about this annotation.
+As both workloads used the same `s3` resource id `main-s3` via the `id` property on the `resource` objects in their Score files, they will use the same resource and thus the same underlying s3 bucket, but each workload uses a different access policy. The [Score schema reference](https://docs.score.dev/docs/score-specification/score-schema-reference/) has details on this property.
 
 ## Run the demo
 
@@ -47,7 +49,13 @@ As both workloads used the same `s3` resource id `shared.main-s3` via the annota
 
 See the [prerequisites section](../README.md#prerequisites) in the README at the root of this section.
 
-In addition, the environment variable `HUMANITEC_APP` should be set to `example-delegator`.
+In addition, set these environment variables:
+
+```bash
+export HUMANITEC_APP=example-delegator
+export HUMANITEC_ENV=development
+export HUMANITEC_ORG=<your-org-id>
+```
 
 ### Cost
 
@@ -55,28 +63,40 @@ This example will result in a two Pods being deployed to a Kubernetes cluster.
 
 ### Deploy the example
 
-1. Create a new app:
+1. Login to the Platform Orchestrator:
+
+   ```bash
+   humctl login
+   ```
+
+2. Create a new app:
 
    ```bash
    humctl create app "${HUMANITEC_APP}"
    ```
 
-2. Register the Resource Definitions:
+3. Register the Resource Definitions:
 
    ```bash
    humctl apply -f ./resource-definitions
    ```
 
-3. Deploy the Score workload A:
+4. Deploy the Score workload A:
 
    ```bash
-   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --file score-a.yaml
+   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --file score-a.yaml
    ```
 
-4. Deploy the Score workload B:
+5. Deploy the Score workload B:
 
    ```bash
-   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN} --file score-b.yaml
+   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --file score-b.yaml
+   ```
+
+6. Create the Resource Graph:
+
+   ```bash
+   humctl resources graph --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" > graph.dot
    ```
 
 ### Clean up the example

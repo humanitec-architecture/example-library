@@ -19,8 +19,6 @@ containers:
 
 resources:
   s3:
-    metadata:
-      annotations:
-        score.humanitec.io/resId: shared.main-s3
     type: s3
-    class: example-read-only
+    class: read-only
+    id: main-s3

@@ -1,0 +1,20 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: s3-admin
+entity:
+  criteria:
+    - app_id: example-delegator
+      class: admin
+  driver_inputs:
+    values:
+      # This Resource reference to 's3.concrete' creates the dependency to the base resource
+      bucket: ${resources['s3.concrete'].outputs.bucket}
+  provision:
+    # Co-provision a Resource of type "aws-policy" and class "s3-admin"
+    aws-policy.s3-admin:
+      is_dependent: false
+      match_dependents: true
+  driver_type: humanitec/echo
+  name: s3-admin
+  type: s3
