@@ -45,7 +45,7 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
 3. Deploy the score workload:
 
    ```bash
-  humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN}
+   humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN}
    ```
 
 ### Play with the demo

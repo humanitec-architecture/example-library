@@ -1,14 +1,15 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: aws-policy-s3-example-admin
+  id: aws-policy-s3-admin
 entity:
   criteria:
     - app_id: example-delegator
-      class: s3-example-admin
+      class: s3-admin
   driver_inputs:
     values:
       arn: arn:aws:iam::aws:policy/AmazonS3FullAccess
+  # In a real-world scenario, a different Driver would be used for this resource, e.g. Terraform
   driver_type: humanitec/echo
-  name: aws-policy-s3-example-admin
+  name: aws-policy-s3-admin
   type: aws-policy

@@ -1,0 +1,16 @@
+# This Resource Definition represents the concrete base resource of the Delegator pattern
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: s3-concrete
+entity:
+  criteria:
+    - app_id: example-delegator
+      class: concrete
+  driver_inputs:
+    values:
+      bucket: example-bucket
+  # In a real-world scenario, a different Driver would be used for the base resource, e.g. Terraform
+  driver_type: humanitec/echo
+  name: s3-concrete
+  type: s3
