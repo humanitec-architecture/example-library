@@ -11,6 +11,7 @@ resource "humanitec_resource_definition" "aks-agent" {
   driver_inputs = {
     values_string = jsonencode({
       "name"            = var.azure_aks_private_cluster_name
+      "loadbalancer"    = var.azure_aks_private_cluster_loadbalancer
       "resource_group"  = var.azure_aks_resource_group
       "subscription_id" = var.azure_subscription_id
       # Add this exact server_app_id for a cluster using AKS-managed Entra ID integration

@@ -10,8 +10,10 @@ resource "humanitec_resource_definition" "eks-agent" {
 
   driver_inputs = {
     values_string = jsonencode({
-      "name"   = var.eks_cluster_name
-      "region" = var.aws_region
+      "name"                     = var.eks_cluster_name
+      "region"                   = var.aws_region
+      "loadbalancer"             = var.eks_loadbalancer
+      "loadbalancer_hosted_zone" = var.eks_loadbalancer_hostedzone
     })
     # Setting the URL for the Humanitec Agent
     secrets_string = jsonencode({

@@ -10,9 +10,10 @@ resource "humanitec_resource_definition" "gke-agent" {
 
   driver_inputs = {
     values_string = jsonencode({
-      "name"       = var.gke_cluster_name
-      "project_id" = var.gcp_project_id
-      "zone"       = var.gcp_region
+      "name"         = var.gke_cluster_name
+      "loadbalancer" = var.gke_loadbalancer
+      "project_id"   = var.gcp_project_id
+      "zone"         = var.gcp_region
     })
     # Setting the URL for the Humanitec Agent
     secrets_string = jsonencode({
