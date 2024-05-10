@@ -1,4 +1,4 @@
-## Using dynamic credentials
+## Using the Humanitec Agent
 
 This section contains example Resource Definitions using the [Humanitec Agent](https://developer.humanitec.com/integration-and-extensions/humanitec-agent/overview/) for connecting to AKS clusters.
 
