@@ -1,4 +1,4 @@
-# GKE private cluster. It is using a Cloud Account with dynamic credentials
+# Connect to a GKE cluster using dynamic credentials defined via a Cloud Account
 resource "humanitec_resource_definition" "gke-dynamic" {
   id          = "gke-dynamic"
   name        = "gke-dynamic"

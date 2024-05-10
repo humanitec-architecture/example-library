@@ -1,4 +1,4 @@
-# EKS private cluster. It is to be accessed via the Humanitec Agent
+# GKE private cluster. It is to be accessed via the Humanitec Agent
 # It is using a Cloud Account with dynamic credentials
 resource "humanitec_resource_definition" "gke-agent" {
   id          = "gke-agent"

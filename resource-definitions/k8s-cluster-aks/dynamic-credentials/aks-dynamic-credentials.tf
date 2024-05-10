@@ -1,4 +1,4 @@
-# AKS private cluster. It is using a Cloud Account with dynamic credentials
+# Connect to an AKS cluster using dynamic credentials defined via a Cloud Account
 resource "humanitec_resource_definition" "aks-dynamic-credentials" {
   id          = "aks-dynamic-credentials"
   name        = "aks-dynamic-credentials"

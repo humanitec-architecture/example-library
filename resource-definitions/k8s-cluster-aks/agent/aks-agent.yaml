@@ -1,4 +1,5 @@
-# Connect to an AKS cluster using dynamic credentials defined via a Cloud Account
+# AKS private cluster. It is to be accessed via the Humanitec Agent
+# It is using a Cloud Account to obtain credentials
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:

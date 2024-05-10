@@ -1,4 +1,4 @@
-# EKS private cluster. It is using a Cloud Account with dynamic credentials
+# Connect to an EKS cluster using dynamic credentials defined via a Cloud Account
 resource "humanitec_resource_definition" "eks-dynamic-credentials" {
   id          = "eks-dynamic-credentials"
   name        = "eks-dynamic-credentials"
