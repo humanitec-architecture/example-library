@@ -1,0 +1,21 @@
+# EKS private cluster. It is to be accessed via the Humanitec Agent
+# It is using a Cloud Account with dynamic credentials
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: gke-agent
+entity:
+  name: gke-agent
+  type: k8s-cluster
+  # The driver_account is referring to a Cloud Account configured in your Organization
+  driver_account: gcp-dynamic-creds
+  driver_type: humanitec/k8s-cluster-gke
+  driver_inputs:
+    secrets:
+      # Setting the URL for the Humanitec Agent
+      agent_url: "${resources['agent#agent'].outputs.url}"
+    values:
+      loadbalancer: 35.10.10.10
+      name: demo-123
+      zone: europe-west2-a
+      project_id: my-gcp-project
