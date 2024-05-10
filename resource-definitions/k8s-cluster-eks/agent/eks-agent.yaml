@@ -1,0 +1,20 @@
+# Connect to an EKS cluster using dynamic credentials defined via a Cloud Account
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: eks-agent
+entity:
+  name: eks-agent
+  type: k8s-cluster
+  # The driver_account is referring to a Cloud Account configured in your Organization
+  driver_account: aws-temp-creds
+  driver_type: humanitec/k8s-cluster-eks
+  driver_inputs:
+    secrets:
+      # Setting the URL for the Humanitec Agent
+      agent_url: "${resources['agent#agent'].outputs.url}"
+    values:
+      region: eu-central-1
+      name: demo-123
+      loadbalancer: x111111xxx111111111x1xx1x111111x-x111x1x11xx111x1.elb.eu-central-1.amazonaws.com
+      loadbalancer_hosted_zone: ABC0DEF5WYYZ00
