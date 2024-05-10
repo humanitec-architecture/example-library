@@ -1,6 +1,6 @@
 # AKS private cluster. It is to be accessed via the Humanitec Agent
 # It is using a Cloud Account to obtain credentials
-resource "humanitec_resource_definition" "aks-private-dev-dynamic-credentials" {
+resource "humanitec_resource_definition" "aks-agent" {
   id          = "aks-agent"
   name        = "aks-agent"
   type        = "k8s-cluster"
