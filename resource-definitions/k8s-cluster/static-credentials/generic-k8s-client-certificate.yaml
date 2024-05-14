@@ -1,3 +1,4 @@
+# Resource Definition for a generic Kubernetes cluster
 # Make sure all ${ENVIRONMENT_VARIABLES} are set when applying this Resource Definition.
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
