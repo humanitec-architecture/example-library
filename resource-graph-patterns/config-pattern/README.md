@@ -1,4 +1,4 @@
-# Delegator Resource
+# Config Pattern
 
 This example demonstrates how `config` resources can be used to parameterize general purpose resource definitions. The `config` resource can be used to parameterize a Resource Definition for different contexts such as environment type and even be used by development teams to further specialize a resource for their purpose.
 
