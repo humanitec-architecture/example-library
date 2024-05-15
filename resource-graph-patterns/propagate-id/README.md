@@ -8,7 +8,7 @@ This example is made up of two Resource Definitions: one `workload` and two `k8s
 
 A resource of type `workload` is automatically provisioned for each Workload in an Application in Humanitec. The `workload` will have the _ID_ of `modules.<workload id>` and a class of `default`. This means that if an Application contains two workloads called `workload-one` and `workload-two`, two `workload` resources will be provisioned, one with _ID_ `modules.workload-one` and the other with _ID_ `modules.workload-two`.
 
-The `workload-def.yaml` Resource Definition has a reference to a `k8s-service-account` resource. The Resource Reference does not specify either the _class_ or the _ID_ of the resource. This means that the `k8s-service-account` resource is provisioned with the same _ID_ and class as the Workload.
+The `def-workload.yaml` Resource Definition has a reference to a `k8s-service-account` resource. The Resource Reference does not specify either the _class_ or the _ID_ of the resource. This means that the `k8s-service-account` resource is provisioned with the same _ID_ and class as the Workload.
 
 ## Run the example
 
@@ -33,6 +33,8 @@ This example will result in a single Pod being deployed to a Kubernetes Cluster.
 2. Register the Resource Definitions:
 
    ```bash
+   mkdir resource-definitions
+   cp def-*.yaml ./resource-definitions
    humctl apply -f ./resource-definitions
    ```
 
@@ -54,4 +56,5 @@ This example will result in a single Pod being deployed to a Kubernetes Cluster.
 
    ```bash
    humctl delete -f ./resource-definitions
+   rm -rf ./resource-definitions
    ```

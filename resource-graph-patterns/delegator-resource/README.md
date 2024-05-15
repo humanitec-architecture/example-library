@@ -26,13 +26,13 @@ flowchart LR
 
 To keep the examples as simple as possible, the [`humanitec/echo`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) driver is used throughout. Check out the [Resource Packs](https://developer.humanitec.com/platform-orchestrator/resources/resource-packs/) if you are interested in examples with Resource Definitions that also include provisioning.
 
-The `s3` Resource Definition [`s3-concrete.yaml`](./resource-definitions/s3-concrete.yaml) defines the underlying "base" resource and is matched as `class: concrete`.
+The `s3` Resource Definition [`def-s3-concrete.yaml`](./def-s3-concrete.yaml) defines the underlying "base" resource and is matched as `class: concrete`.
 
 In a real-world setup, this Resource Definition is the only one that would actually provision the s3 bucket using a Driver other than Echo, e.g. the [Terraform Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/). The delegator resources will _not_ actually provision anything. Their purpose is the co-provisioning of the appropriate `aws-policy` resource based on their `class`.
 
-The `aws-policy` Resource Definitions [`aws-policy-s3-admin.yaml`](./resource-definitions/aws-policy-s3-admin.yaml) and [`aws-policy-s3-read-only.yaml`](./resource-definitions/aws-policy-s3-read-only.yaml) contain the different policies we want to make available. Those are matched as `admin` and `read-only`.
+The `aws-policy` Resource Definitions [`def-aws-policy-s3-admin.yaml`](./def-aws-policy-s3-admin.yaml) and [`def-aws-policy-s3-read-only.yaml`](./def-aws-policy-s3-read-only.yaml) contain the different policies we want to make available. Those are matched as `admin` and `read-only`.
 
-The `s3` Resource Definitions [`s3-admin.yaml`](./resource-definitions/s3-admin.yaml) and [`s3-read-only.yaml`](./resource-definitions/s3-read-only.yaml) are delegator resources that have two functions:
+The `s3` Resource Definitions [`def-s3-admin.yaml`](./def-s3-admin.yaml) and [`dev-s3-read-only.yaml`](./def-s3-read-only.yaml) are delegator resources that have two functions:
 
 * Co-provision the respective `aws-policy` Resource Definition.
 * Forward the outputs of the "base" resource using a [Resource Reference](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#resource-references).
@@ -78,6 +78,8 @@ This example will result in a two Pods being deployed to a Kubernetes cluster.
 3. Register the Resource Definitions:
 
    ```bash
+   mkdir resource-definitions
+   cp def-*.yaml ./resource-definitions
    humctl apply -f ./resource-definitions
    ```
 
@@ -111,4 +113,5 @@ This example will result in a two Pods being deployed to a Kubernetes cluster.
 
    ```bash
    humctl delete -f ./resource-definitions
+   rm -rf ./resource-definitions
    ```
