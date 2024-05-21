@@ -5,3 +5,7 @@ Using a Cloud Account type that supports dynamic credentials, those credentials 
 ## AWS
 
 - [S3 bucket (`s3-dynamic-credentials.yaml`)](./s3-dynamic-credentials.yaml)
+
+## GCP
+
+- [Cloud Storage bucket (`gcs-dynamic-credentials.yaml`)](./gcs-dynamic-credentials.yaml)
