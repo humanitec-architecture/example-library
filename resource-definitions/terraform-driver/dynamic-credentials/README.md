@@ -9,3 +9,7 @@ Using a Cloud Account type that supports dynamic credentials, those credentials 
 ## GCP
 
 - [Cloud Storage bucket (`gcs-dynamic-credentials.yaml`)](./gcs-dynamic-credentials.yaml)
+
+## Azure
+
+- [Blob Storage container (`azure-blob-storage-dynamic-credentials.yaml`)](./azure-blob-storage-dynamic-credentials.yaml)
