@@ -6,7 +6,26 @@ spec:
   # i.e. one provisioned via the Platform Orchestrator
   # Resources system.
   volumes:
-    tmp-pod:
+    example-1:
       type: emptyDir
       source:
         sizeLimit: "1024Mi"
+    example-2:
+      type: projected
+      configMap:
+        items: 
+        - key: player_initial_lives
+          path: player_initial_lives.properties
+        - key: ui_properties_file_name
+          path: ui_properties_file_name.properties
+  extraVolumes:
+    - name: example-3
+      projected:
+        sources:
+          - configMap:
+              name: my-workload-configmap
+              items:
+                - key: player_initial_lives
+                  path: player_initial_lives.properties
+                - key: ui_properties_file_name
+                  path: ui_properties_file_name.properties
