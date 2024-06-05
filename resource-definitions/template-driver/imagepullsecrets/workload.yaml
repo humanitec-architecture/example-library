@@ -1,0 +1,19 @@
+# This workload Resource Definition adds an "imagePullSecrets" element to the Pod spec
+# It references a "config" type Resource to obtain the secret name
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-workload
+entity:
+  name: custom-workload
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+            - op: add
+              path: /spec/imagePullSecrets
+              value:
+                - name: \${resources["config.default#regcred"].outputs.secret_name}

@@ -1,0 +1,50 @@
+# This Resource Definition pulls credentials for a container image registry from a secret store
+# and creates a Kubernetes Secret of kubernetes.io/dockerconfigjson type
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: regcred-config
+entity:
+  driver_type: humanitec/template
+  name: regcred-config
+  type: config
+  criteria:
+  - class: default
+    # This res_id must be used from a referencing Resource Definition to request this config Resource
+    res_id: regcred
+  driver_inputs:
+    # These secret references read the credentials from a secret store
+    secret_refs:
+      password:
+        ref: regcred-password
+        store: FIXME
+      username:
+        ref: regcred-username
+        store: FIXME
+    values:
+      secret_name: regcred
+      # Define the container registry server
+      server: FIXME
+      templates:
+        # The init template is used to prepare the "dockerConfigJson" content
+        init: |
+          dockerConfigJson:
+            auths:
+              {{ .driver.values.server | quote }}:
+                username: {{ .driver.secrets.username | toRawJson }}
+                password: {{ .driver.secrets.password | toRawJson }}
+        manifests:
+          # The manifests template creates the Kubernetes Secret
+          # which can then be used in the workload "imagePullSecrets"
+          regcred-secret.yaml:
+            data: |
+              apiVersion: v1
+              kind: Secret
+              metadata:
+                name: {{ .driver.values.secret_name }}
+              data:
+                .dockerconfigjson: {{ .init.dockerConfigJson | toRawJson | b64enc }}
+              type: kubernetes.io/dockerconfigjson
+            location: namespace
+        outputs: |
+          secret_name: {{ .driver.values.secret_name }}
