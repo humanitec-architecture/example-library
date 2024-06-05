@@ -17,13 +17,15 @@ entity:
     secret_refs:
       password:
         ref: regcred-password
+        # Replace this value with the secret store id that's supplying the password
         store: FIXME
       username:
         ref: regcred-username
+        # Replace this value with the secret store id that's supplying the username
         store: FIXME
     values:
       secret_name: regcred
-      # Define the container registry server
+      # Replace this value with the servername of your registry
       server: FIXME
       templates:
         # The init template is used to prepare the "dockerConfigJson" content
