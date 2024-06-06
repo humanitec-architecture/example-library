@@ -16,4 +16,4 @@ entity:
             - op: add
               path: /spec/imagePullSecrets
               value:
-                - name: \${resources["config.default#regcred"].outputs.secret_name}
+                - name: ${resources["config.default#regcred"].outputs.secret_name}
