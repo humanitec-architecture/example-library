@@ -10,13 +10,14 @@ entity:
   driver_type: humanitec/k8s-cluster
   driver_inputs:
     values:
-      name: my-generic-k8s-cluster
       loadbalancer: 35.10.10.10
       cluster_data:
         server: https://35.11.11.11:6443
         # Single line base64-encoded cluster CA data in the format "LS0t...ca-data....=="
         certificate-authority-data: ${CLUSTER_CERTIFICATE_CA_DATA}
     secrets:
+      # Setting the URL for the Humanitec Agent. Remove the line if not used
+      agent_url: "${resources['agent#agent'].outputs.url}"
       credentials:
         # Single line base64-encoded client certificate data in the format "LS0t...cert-data...=="
         client-certificate-data: ${USER_CLIENT_CERTIFICATE_DATA}
