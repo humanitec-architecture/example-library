@@ -1,0 +1,12 @@
+# This Resource Definition provisions an Ingress object for the OpenShift Container Platform Ingress Operator
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: openshift-ingress
+entity:
+  name: openshift-ingress
+  type: ingress
+  driver_type: humanitec/ingress
+  driver_inputs:
+    values:
+      class: openshift-default

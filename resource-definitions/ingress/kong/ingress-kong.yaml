@@ -1,0 +1,16 @@
+# This Resource Definition provisions an Ingress object for the Kong Ingress Controller
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: kong-ingress
+entity:
+  name: kong-ingress
+  type: ingress
+  driver_type: humanitec/ingress
+  driver_inputs:
+    values:
+      annotations:
+        konghq.com/preserve-host: "false"
+        konghq.com/strip-path: "true"
+      api_version: v1
+      class: kong
