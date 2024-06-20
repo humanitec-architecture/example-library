@@ -1,0 +1,40 @@
+# This Resource Definition provisions an IngressRoute object for the Traefik Ingress Controller
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: ambassador-ingress
+entity:
+  name: ambassador-ingress
+  type: ingress
+  driver_type: template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          name: {{ .id }}-ingress
+          secretname: ${resources.tls-cert.outputs.tls_secret_name}
+          host: ${resources.dns.outputs.host}
+          namespace: ${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
+        manifests: |
+          ambassador-mapping.yaml:
+            data:
+              apiVersion: getambassador.io/v3alpha1
+              kind: Mapping
+              metadata:
+                name: {{ .init.name }}-mapping
+              spec:
+                host: {{ .init.host }}
+                prefix: /
+                service: my-service-name:8080
+            location: namespace
+          ambassador-tlscontext.yaml:
+            data:
+              apiVersion: getambassador.io/v3alpha1
+              kind: TLSContext
+              metadata:
+                name: {{ .init.name }}-tlscontext
+              spec:
+                hosts:
+                  - {{ .init.host }}
+                secret: {{ .init.secretname }}
+            location: namespace
