@@ -1,3 +1,5 @@
+# Credentials
+
 ## Using static credentials
 
 This section contains example Resource Definitions using static credentials for connecting to generic Kubernetes clusters.
