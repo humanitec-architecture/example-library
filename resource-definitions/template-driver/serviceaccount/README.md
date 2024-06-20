@@ -6,7 +6,15 @@ The [`workload` Resource Type](https://developer.humanitec.com/platform-orchestr
 
 This `workload` Resource Definition adds the `serviceAccountName` item to the Pod spec and references a [`k8s-service-account` type Resource](https://developer.humanitec.com/platform-orchestrator/reference/resource-types/#k8s-service-account), causing it to be provisioned. The `k8s-service-account` Resource Definition generates the Kubernetes manifest for the actual ServiceAccount.
 
-TODO: add diagram showing Resource Graph
+A Resource Graph for a Workload using those Resource Definitions will look like this:
+
+```mermaid
+flowchart LR
+  workloadVirtual[Workload &quot;my-workload&quot;] --> workload(id: modules.my-workload\ntype: workload\nclass: default)
+  workload --> serviceAccount(id: modules.my-workload\ntype: k8s-service-account\nclass: default)
+```
+
+Note that the resources' `id` is used in the Resource Definitions to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
 
 Example files:
 
