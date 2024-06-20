@@ -1,0 +1,7 @@
+workloads:
+  - name: example-service
+    specFile: ./score.example-service.yaml
+    extensionsFile: ./score.humanitec.yaml
+  - name: another-service
+    specFile: ./score.another-service.yaml
+    extensionsFile: ./score.humanitec.yaml
