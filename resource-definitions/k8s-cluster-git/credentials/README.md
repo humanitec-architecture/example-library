@@ -1,3 +1,5 @@
+# Credentials
+
 ## Using static credentials
 
 This section contains example Resource Definitions using static credentials for connecting to a Git repository in ([GitOps mode](https://developer.humanitec.com/integration-and-extensions/humanitec-operator/architecture/#modes-of-operation-humanitec-operator-with-gitops)).
