@@ -14,7 +14,7 @@ flowchart LR
   workload --> serviceAccount(id: modules.my-workload\ntype: k8s-service-account\nclass: default)
 ```
 
-Note that the resources' `id` is used in the Resource Definitions to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
+Note that the resource `id` is used in the `k8s-service-account` Resource Definition to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
 
 Example files:
 
