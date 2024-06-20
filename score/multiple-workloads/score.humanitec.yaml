@@ -1,0 +1,6 @@
+apiVersion: humanitec.org/v1b1
+spec:
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "256Mi"

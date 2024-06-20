@@ -1,0 +1,9 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: example-service
+
+containers:
+  demo:
+    image: registry/my-image:1.0.0
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do printenv && sleep 60; done"]
