@@ -1,0 +1,5 @@
+This section contains examlle Resource Definitions for handling Kubernetes ingress traffic using the [Ingress](https://developer.humanitec.com/integration-and-extensions/drivers/k8-drivers/ingress/) Driver.
+
+* [ingress-alb.tf](ingress-alb.tf): defines an `Ingress` annotated for an internet-facing [Amazon Application Load Balancer (ALB)](https://aws.amazon.com/elasticloadbalancing/application-load-balancer/). This format is for use with the [Humanitec Terraform Provider](https://registry.terraform.io/providers/humanitec/humanitec)
+* [ingress-kong.yaml](ingress-kong.yaml): defines an `Ingress` object annotated for the [Kong Ingress Controller](https://github.com/Kong/kubernetes-ingress-controller). This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/)
+* [ingress-openshift-operator.yaml](ingress-openshift-operator.yaml): defines an `Ingress` object annotated for the [OpenShift Container Platform Ingress Operator](https://docs.openshift.com/container-platform/latest/networking/ingress-operator.html). This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/)

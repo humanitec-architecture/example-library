@@ -1,0 +1,36 @@
+# This Resource Definition provisions an IngressRoute object for the Traefik Ingress Controller
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: traefik-ingress
+entity:
+  name: traefik-ingress
+  type: ingress
+  driver_type: template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          name: {{ .id }}-ir
+          secretname: ${resources.tls-cert.outputs.tls_secret_name}
+          host: ${resources.dns.outputs.host}
+          namespace: ${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
+        manifests: |
+          traefik-ingressroute.yaml:
+            data:
+              apiVersion: traefik.io/v1alpha1
+              kind: IngressRoute
+              metadata:
+                name: {{ .init.name }}
+              spec:
+                routes:
+                - match: Host(`{{ .init.host }}`) && PathPrefix(`/`)
+                  kind: Rule
+                  services:
+                  - name: my-service-name
+                    kind: Service
+                    port: 8080
+                    namespace: {{ .init.namespace }} 
+                tls:
+                  secretName: {{ .init.secretname }}
+            location: namespace
