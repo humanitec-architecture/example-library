@@ -1,3 +1,5 @@
+apiVersion: config.humanitec.io/v1b1
+kind: ScoreDeployConfig
 workloads:
   - name: example-service
     specFile: ./score.example-service.yaml
