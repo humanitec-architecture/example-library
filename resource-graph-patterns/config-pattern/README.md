@@ -27,16 +27,16 @@ The example demonstrates how:
 
 There are 3 resource definitions:
 
-1. The `s3` Resource Definition [`s3-base.yaml`](./resource-definitions/s3-base.yaml) defines the underlying "base" resource. In this case it is very simple - implemented using the Echo Driver. It takes 2 parameters - `region` and `bucket` - returning both of these.
+1. The `s3` Resource Definition [`def-s3-base.yaml`](./def-s3-base.yaml) defines the underlying "base" resource. In this case it is very simple - implemented using the Echo Driver. It takes 2 parameters - `region` and `bucket` - returning both of these.
 
-2. The first `config` Resource Definition [`config-platform-defaults.yaml`](./resource-definitions/config-platform-defaults.yaml) does two things:
+2. The first `config` Resource Definition [`def-config-platform-defaults.yaml`](./def-config-platform-defaults.yaml) does two things:
 
    - Provide default configuration values supplied by the platform team.
    - Reference the overrides that developers can supply via their own `config` Resource Definition.
 
    These config also provide guardrails in that only certain values can be overridden. In this example, developers can override the `prefix` and the `name` properties but not `tags` or `region`.
 
-3. The last `config` Resource Definition [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml) allows developers to provide their overrides that can tune the resource that they request.
+3. The last `config` Resource Definition [`def-config-developer-overrides.yaml`](./def-config-developer-overrides.yaml) allows developers to provide their overrides that can tune the resource that they request.
 
 In practice, you may choose to maintain the Resource Definitions for the platform team and the developers in different git repositories to separate out access permissions.
 
@@ -63,6 +63,8 @@ This example will result in one Pod being deployed.
 2. Register the Resource Definitions:
 
    ```bash
+   mkdir resource-definitions
+   cp def-*.yaml ./resource-definitions
    humctl apply -f ./resource-definitions
    ```
 
@@ -80,7 +82,7 @@ This example will result in one Pod being deployed.
 
 ## Explore the example
 
-1. Change the `name` and or `prefix` properties in [`config-developer-overrides.yaml`](./resource-definitions/config-developer-overrides.yaml). Try adding `region`.
+1. Change the `name` and or `prefix` properties in [`def-config-developer-overrides.yaml`](./def-config-developer-overrides.yaml). Try adding `region`.
 
 2. Redeploy:
 
@@ -102,4 +104,5 @@ This example will result in one Pod being deployed.
 
    ```bash
    humctl delete -f ./resource-definitions
+   rm -rf ./resource-definitions
    ```

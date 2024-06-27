@@ -6,15 +6,15 @@ This example demonstrates how [Resource classes](https://developer.humanitec.com
 
 This example is made up of 3 Resource Definitions: one `s3` and two `config` Resource Definitions. To keep the examples as simple as possible, the [`humanitec/echo`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/echo/) driver is used.
 
-The `s3` Resource Definition [`s3-def.yaml`](./resource-definitions/s3-def.yaml) is configured to match to two classes `one` and `two`. It outputs its `bucket` output based on the [Resource Reference](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#resource-references) `${resources.config#example.outputs.name}`. This Resource Reference will cause a new resource to be provisioned and be replaced with the `name` output of that newly provisioned resource. As the Resource Definition only defines the _type_ of the resource (`config`) and the _ID_ of the resource (`example`), the _class_ that the new resource will be provisioned with will be the same as the class of the `s3` resource.
+The `s3` Resource Definition [`def-s3.yaml`](./def-s3.yaml) is configured to match to two classes `one` and `two`. It outputs its `bucket` output based on the [Resource Reference](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#resource-references) `${resources.config#example.outputs.name}`. This Resource Reference will cause a new resource to be provisioned and be replaced with the `name` output of that newly provisioned resource. As the Resource Definition only defines the _type_ of the resource (`config`) and the _ID_ of the resource (`example`), the _class_ that the new resource will be provisioned with will be the same as the class of the `s3` resource.
 
-The one `config` Resource Definition ([`config-one-def.yaml`](./resource-definitions/config-one-def.yaml)) is configured to match the class `one` and the other [`config-two-def.yaml`](./resource-definitions/config-two-def.yaml) matches the class `two`.
+The one `config` Resource Definition ([`def-config-one.yaml`](./def-config-one.yaml)) is configured to match the class `one` and the other [`def-config-two.yaml`](./def-config-two.yaml) matches the class `two`.
 
 The [`score.yaml`](./score.yaml) file depends on a resource of type `s3` bucket with a class of `one`. It outputs the bucket name in the environment variable `BUCKET_NAME`.
 
-This means that an S3 bucket will be provisioned via the [`s3-def.yaml`](./resource-definitions/s3-def.yaml) Resource Definition and the bucket name will be pulled from the Resource Definition [`config-one-def.yaml`](./resource-definitions/config-one-def.yaml) is configured to match the class `one` and so will be `name-01`.
+This means that an S3 bucket will be provisioned via the [`def-s3.yaml`](./def-s3.yaml) Resource Definition and the bucket name will be pulled from the Resource Definition [`def-config-one.yaml`](./def-config-one.yaml) is configured to match the class `one` and so will be `name-01`.
 
-If the class on the `s3` resource is changed to `two` then the bucket name will be pulled from the Resource Definition [`config-two-def.yaml`](./resource-definitions/config-two-def.yaml) is configured to match the class `two` and so will be `name-02`.
+If the class on the `s3` resource is changed to `two` then the bucket name will be pulled from the Resource Definition [`def-config-two.yaml`](./def-config-two.yaml) is configured to match the class `two` and so will be `name-02`.
 
 ## Run the demo
 
@@ -39,6 +39,8 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
 2. Register the resource definitions:
 
    ```bash
+   mkdir resource-definitions
+   cp def-*.yaml ./resource-definitions
    humctl apply -f ./resource-definitions
    ```
 
@@ -74,4 +76,5 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
 
    ```bash
    humctl delete -f ./resource-definitions
+   rm -rf ./resource-definitions
    ```
