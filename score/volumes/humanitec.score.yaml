@@ -19,8 +19,8 @@ spec:
         - key: ui_properties_file_name
           path: ui_properties_file_name.properties
   extraVolumes:
+    # Using nfs as the example volume type
     - name: example-3
       nfs:
-        # URL for the NFS server
         server: my-nfs-server.example.com
         path: /my-nfs-volume
