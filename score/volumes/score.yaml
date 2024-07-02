@@ -7,7 +7,15 @@ containers:
     image: registry/my-image:1.0.0
     # Volume mount declaration referencing the volume from the Score extension.
     volumes:
-      - source: "volumes.tmp-pod"
-        target: /mnt/data
+      - source: "volumes.example-1"
+        target: /mnt/example-1
+        path: "" # Shown for illustration purposes. Must be a relative path.
+        readOnly: true
+      - source: "volumes.example-2"
+        target: /mnt/example-2
+        path: "" # Shown for illustration purposes. Must be a relative path.
+        readOnly: true
+      - source: "volumes.example-3"
+        target: /mnt/example-3
         path: "" # Shown for illustration purposes. Must be a relative path.
         readOnly: true
