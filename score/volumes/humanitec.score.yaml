@@ -20,12 +20,7 @@ spec:
           path: ui_properties_file_name.properties
   extraVolumes:
     - name: example-3
-      projected:
-        sources:
-          - configMap:
-              name: my-workload-configmap
-              items:
-                - key: player_initial_lives
-                  path: player_initial_lives.properties
-                - key: ui_properties_file_name
-                  path: ui_properties_file_name.properties
+      nfs:
+        # URL for the NFS server
+        server: my-nfs-server.example.com
+        path: /my-nfs-volume
