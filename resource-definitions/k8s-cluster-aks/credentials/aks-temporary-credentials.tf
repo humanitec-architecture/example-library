@@ -1,11 +1,11 @@
-# Connect to an AKS cluster using dynamic credentials defined via a Cloud Account
-resource "humanitec_resource_definition" "aks-dynamic-credentials" {
-  id          = "aks-dynamic-credentials"
-  name        = "aks-dynamic-credentials"
+# Connect to an AKS cluster using temporary credentials defined via a Cloud Account
+resource "humanitec_resource_definition" "aks-temporary-credentials" {
+  id          = "aks-temporary-credentials"
+  name        = "aks-temporary-credentials"
   type        = "k8s-cluster"
   driver_type = "humanitec/k8s-cluster-aks"
   # The driver_account is referring to a Cloud Account resource
-  driver_account = humanitec_resource_account.azure-dynamic.id
+  driver_account = humanitec_resource_account.azure-temporary.id
 
   driver_inputs = {
     values_string = jsonencode({

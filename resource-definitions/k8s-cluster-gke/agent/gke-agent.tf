@@ -1,12 +1,12 @@
 # GKE private cluster. It is to be accessed via the Humanitec Agent
-# It is using a Cloud Account with dynamic credentials
+# It is using a Cloud Account with temporary credentials
 resource "humanitec_resource_definition" "gke-agent" {
   id          = "gke-agent"
   name        = "gke-agent"
   type        = "k8s-cluster"
   driver_type = "humanitec/k8s-cluster-gke"
   # The driver_account is referring to a Cloud Account resource
-  driver_account = humanitec_resource_account.gcp-dynamic.id
+  driver_account = humanitec_resource_account.gcp-temporary.id
 
   driver_inputs = {
     values_string = jsonencode({

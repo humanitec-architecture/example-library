@@ -8,7 +8,7 @@ entity:
   name: aks-agent
   type: k8s-cluster
   # The driver_account is referring to a Cloud Account configured in your Organization
-  driver_account: azure-dynamic-creds
+  driver_account: azure-temporary
   driver_type: humanitec/k8s-cluster-aks
   driver_inputs:
     secrets:
