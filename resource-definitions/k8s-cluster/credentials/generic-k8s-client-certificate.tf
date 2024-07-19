@@ -18,7 +18,7 @@ resource "humanitec_resource_definition" "generic_cluster" {
     })
     secrets_string = jsonencode({
       # Setting the URL for the Humanitec Agent. Remove the line if not used
-      agent_url   = "$${resources['agent#agent'].outputs.url}"
+      agent_url = "$${resources['agent#agent'].outputs.url}"
       # The index [0] assumes the target user is the first user definition
       credentials = local.parsed_kubeconfig["users"][0]["user"]
     })
