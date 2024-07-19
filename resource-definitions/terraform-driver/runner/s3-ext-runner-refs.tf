@@ -21,12 +21,12 @@ resource "humanitec_resource_definition" "aws_terraform_external_runner_resource
       })
     }
 
-    values = {
+    values_string = jsonencode({
       # This instructs the driver that the Runner must run in an external cluster.
       runner_mode = "custom-kubernetes"
       # Non-secret info of the cluster where the Terraform Runner should run.
       # This references a k8s-cluster resource that will be matched by class `runner`.
-      runner = jsonencode({
+      runner = {
         cluster_type = "eks"
         cluster = {
           region                   = "$${resources['k8s-cluster.runner'].outputs.region}"
@@ -37,11 +37,11 @@ resource "humanitec_resource_definition" "aws_terraform_external_runner_resource
         # Service Account created following: https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/#runner-object
         service_account = "humanitec-tf-runner-sa"
         namespace       = "humanitec-tf-runner"
-      })
+      }
 
       # Configure the way we provide account credentials to the Terraform scripts in the referenced repository.
       # These credentials are related to the `driver_account` configured above.
-      credentials_config = jsonencode({
+      credentials_config = {
 
         # Terraform script Variables. 
         variables = {
@@ -54,23 +54,22 @@ resource "humanitec_resource_definition" "aws_terraform_external_runner_resource
           AWS_ACCESS_KEY_ID     = "AccessKeyId"
           AWS_SECRET_ACCESS_KEY = "SecretAccessKey"
         }
-      })
+      }
 
       # Connection information to the Git repo containing the Terraform code.
       # It will provide a backend configuration initialized via Environment Variables.
-      source = jsonencode({
+      source = {
         path = "s3/terraform/bucket/"
         rev  = "refs/heads/main"
         url  = "my-domain.com:my-org/my-repo.git"
-      })
+      }
 
 
-      variables = jsonencode({
+      variables = {
         # Provide a separate bucket per Application and Environment
         bucket = "my-company-my-app-$${context.app.id}-$${context.env.id}"
         region = var.region
-      })
-
-    }
+      }
+    })
   }
 }
