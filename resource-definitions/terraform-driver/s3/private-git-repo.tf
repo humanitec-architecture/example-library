@@ -10,7 +10,6 @@ resource "humanitec_resource_definition" "aws_terraform_resource_s3_bucket" {
       variables = jsonencode({
         access_key = var.access_key
         secret_key = var.secret_key
-
       })
       source = jsonencode({
         # Provide either an SSH key (for SSH connection) or password (for HTTPS).
@@ -18,25 +17,21 @@ resource "humanitec_resource_definition" "aws_terraform_resource_s3_bucket" {
         password = var.password
       })
     }
-    
-    values = {
+
+    values_string = jsonencode({
       # Connection information to the Git repo containing the Terraform code
-      "source" = jsonencode(
-        {
-          path = "s3/terraform/bucket/"
-          rev  = "refs/heads/main"
-          url  = "https://my-domain.com/my-org/my-repo.git"
-          # url  = "git@my-domain.com:my-org/my-repo.git" # For SSH access instead of HTTPS
-        }
-      )
-      "variables" = jsonencode(
-        {
-          # Provide a separate bucket per Application and Environment
-          bucket          = "my-company-my-app-$${context.app.id}-$${context.env.id}"
-          region          = var.region
-          assume_role_arn = var.assume_role_arn
-        }
-      )
-    }
+      source = {
+        path = "s3/terraform/bucket/"
+        rev  = "refs/heads/main"
+        url  = "https://my-domain.com/my-org/my-repo.git"
+        # url  = "git@my-domain.com:my-org/my-repo.git" # For SSH access instead of HTTPS
+      }
+      variables = {
+        # Provide a separate bucket per Application and Environment
+        bucket          = "my-company-my-app-$${context.app.id}-$${context.env.id}"
+        region          = var.region
+        assume_role_arn = var.assume_role_arn
+      }
+    })
   }
 }
