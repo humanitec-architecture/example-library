@@ -42,4 +42,4 @@ entity:
           # Generate some additional keys
           bucket_name: {{ $overrides.prefix | default .init.defaults.prefix }}{{ $overrides.name | default .init.defaults.name }}
 
-      overrides: ${resources["config.developer-overrides"].values}
+      overrides: ${resources['config.developer-overrides'].values}
