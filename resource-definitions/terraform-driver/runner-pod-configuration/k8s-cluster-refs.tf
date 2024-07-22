@@ -5,14 +5,15 @@ resource "humanitec_resource_definition" "aks_aad_resource_cluster" {
   driver_type = "humanitec/k8s-cluster-aks"
 
   driver_inputs = {
-    secrets = {
+    secrets_string = jsonencode({
       credentials = {
         appId       = var.app_id
         displayName = var.display_name
         password    = var.password
         tenant      = var.tenant
       }
-    }
+      }
+    )
 
     values_string = jsonencode({
       name            = "my-cluster"

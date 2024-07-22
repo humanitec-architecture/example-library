@@ -9,17 +9,18 @@ resource "humanitec_resource_definition" "aws_terraform_external_runner_resource
   driver_account = "my-aws-account"
 
   driver_inputs = {
-    secrets = {
+    secrets_string = jsonencode({
       # Secret info of the cluster where the Terraform Runner should run.
       # This references a k8s-cluster resource that will be matched by class `runner`.
-      runner = jsonencode({
+      runner = {
         credentials = "$${resources['k8s-cluster.runner'].outputs.credentials}"
-      })
+      }
 
-      source = jsonencode({
+      source = {
         ssh_key = var.ssh_key
-      })
-    }
+      }
+      }
+    )
 
     values_string = jsonencode({
       # This instructs the driver that the Runner must run in an external cluster.

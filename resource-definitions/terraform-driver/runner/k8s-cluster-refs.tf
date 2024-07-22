@@ -5,12 +5,13 @@ resource "humanitec_resource_definition" "eks_resource_cluster" {
   driver_type = "humanitec/k8s-cluster-eks"
 
   driver_inputs = {
-    secrets = {
+    secrets_string = jsonencode({
       credentials = {
         aws_access_key_id     = var.aws_access_key_id
         aws_secret_access_key = var.aws_secret_access_key
       }
-    }
+      }
+    )
 
     values_string = jsonencode({
       loadbalancer             = "10.10.10.10"

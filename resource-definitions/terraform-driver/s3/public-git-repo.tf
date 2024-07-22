@@ -6,12 +6,13 @@ resource "humanitec_resource_definition" "aws_terraform_resource_s3_bucket" {
 
   driver_inputs = {
 
-    secrets = {
-      variables = jsonencode({
+    secrets_string = jsonencode({
+      variables = {
         access_key = var.access_key
         secret_key = var.secret_key
-      })
-    }
+      }
+      }
+    )
 
     values_string = jsonencode({
       # Connection information to the Git repo containing the Terraform code
