@@ -23,10 +23,10 @@ def json2hcl(prefix; escape_placeholders):
       @text "resource \"humanitec_resource_definition\" \"\( $id )\" {\n" +
       "  driver_type = \( .driver_type | tojson )\n" +
       "  id             = \( $id | tojson )\n" +
-      "  name           = \( $id | tojson )\n" +
+      "  name           = \( .name | tojson )\n" +
       "  type           = \( .type | tojson )\n" + (
         if . | has("driver_account") then
-          "  driver_account = \( .driver_account | sub("$\\{"; "$${}") | tojson )\n"
+          "  driver_account = \( .driver_account | json2hcl("  "; true) )\n"
         else
           ""
         end
@@ -84,7 +84,7 @@ def json2hcl(prefix; escape_placeholders):
         .criteria | to_entries[] | (
           "resource \"humanitec_resource_definition_criteria\" \"\( $id )_criteria_\(.key | tojson)\" " + (
             (
-              .value + {"resource_definition_id" : $id}
+              .value + {"resource_definition_id" : "resource.humanitec_resource_definition.\( $id )"}
             ) | del(.id) | json2hcl(""; false)
           )
         ) 

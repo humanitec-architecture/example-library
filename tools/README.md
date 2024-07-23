@@ -10,6 +10,8 @@ It makes the following assumptions:
 - The Terrafrom resource name of the `humanitec_resource_definition_matching_criteria` resources will have the index value appended as `_0`.
    NOTE: This means that re-running the conversion might result in state changes if the order of the matching criteria changes.
 
+NOTE: Requires `jq` v1.6 or higher.
+
 ### USAGE
 
 Can be used with `humctl` as follows:
