@@ -14,7 +14,7 @@ def json2hcl(prefix; escape_placeholders):
     ) +
     "\n" + prefix + "]"
   else
-    (. | tojson | if escape_placeholders then . | sub("\\${"; "$${") else . end)
+    (. | tojson | if escape_placeholders then . | sub("\\${"; "$${"; "g") else . end)
   end
   ;
 . | (if .kind != "Definition" then "Not a YAML Resource Definition\n" | halt_error else . end) | (
@@ -43,7 +43,7 @@ def json2hcl(prefix; escape_placeholders):
               if .secret_refs then
                 "    secret_refs    = jsonencode(\( .secret_refs | json2hcl("    "; false) ))\n"
               elif .secrets then
-                "    secrets_string = jsonencode(\( .secrets | json2hcl("    "; false) ))\n" 
+                "    secrets_string = jsonencode(\( .secrets | json2hcl("    "; true) ))\n" 
               else
                 ""
               end
@@ -82,7 +82,7 @@ def json2hcl(prefix; escape_placeholders):
     "}\n", (
       if . | has("criteria") then [
         .criteria | to_entries[] | (
-          "resource \"humanitec_resource_definition_criteria\" \( $id )_criteria_\(.key | tojson) " + (
+          "resource \"humanitec_resource_definition_criteria\" \"\( $id )_criteria_\(.key | tojson)\" " + (
             (
               .value + {"resource_definition_id" : $id}
             ) | del(.id) | json2hcl(""; false)
