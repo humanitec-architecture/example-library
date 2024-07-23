@@ -14,10 +14,10 @@ def json2hcl(prefix; escape_placeholders):
     ) +
     "\n" + prefix + "]"
   else
-    (. | tojson | if escape_placeholders then . | sub("\\${"; "$${") end)
+    (. | tojson | if escape_placeholders then . | sub("\\${"; "$${") else . end)
   end
   ;
-. | (if .kind != "Definition" then "Not a YAML Resource Definition\n" | halt_error  end) | (
+. | (if .kind != "Definition" then "Not a YAML Resource Definition\n" | halt_error else . end) | (
   .metadata.id as $id | .entity | (
     (
       @text "resource \"humanitec_resource_definition\" \"\( $id )\" {\n" +
