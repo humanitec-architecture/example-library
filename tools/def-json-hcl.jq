@@ -13,8 +13,14 @@ def json2hcl(prefix; escape_placeholders):
       )] | join(",\n")
     ) +
     "\n" + prefix + "]"
+  elif type == "string" then
+    . | split("\n") | if (. | length) > 2 then
+      "<<END_OF_TEXT\n" + (. | join("\n") ) + "\nEND_OF_TEXT"
+    else
+      (. | join("\n") | if escape_placeholders then . | sub("\\${"; "$${"; "g") else . end)
+    end
   else
-    (. | tojson | if escape_placeholders then . | sub("\\${"; "$${"; "g") else . end)
+    (. | tojson )
   end
   ;
 . | (if .kind != "Definition" then "Not a YAML Resource Definition\n" | halt_error else . end) | (
