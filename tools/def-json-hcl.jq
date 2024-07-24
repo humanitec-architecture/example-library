@@ -17,7 +17,7 @@ def json2hcl(prefix; escape_placeholders):
     (. | split("\n") | if (. | length) > 2 then
       "<<END_OF_TEXT\n" + (. | join("\n") ) + "\nEND_OF_TEXT"
     else
-      . | join("\n")
+      . | join("\n") | tojson
     end) | if escape_placeholders then . | sub("\\${"; "$${"; "g") else . end
   else
     (. | tojson )
@@ -88,10 +88,17 @@ def json2hcl(prefix; escape_placeholders):
     "}\n", (
       if . | has("criteria") then [
         .criteria | to_entries[] | (
-          "resource \"humanitec_resource_definition_criteria\" \"\( $id )_criteria_\(.key | tojson)\" " + (
-            (
-              .value + {"resource_definition_id" : "resource.humanitec_resource_definition.\( $id )"}
-            ) | del(.id) | json2hcl(""; false)
+          "resource \"humanitec_resource_definition_criteria\" \"\( $id )_criteria_\(.key | tojson)\" {\n" +
+          (
+            "  resource_definition_id = resource.humanitec_resource_definition.\( $id ).id \n" +
+            ([
+              .value | to_entries[] | if .key != "id" then
+                "  \(.key) = \( .value | tojson )"
+              else
+                empty
+              end
+            ] | join("\n")) + 
+            "\n}"
           )
         ) 
       ] | join("\n\n")
