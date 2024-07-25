@@ -15,7 +15,7 @@ def json2hcl(prefix; escape_placeholders):
     "\n" + prefix + "]"
   elif type == "string" then
     (. | split("\n") | if (. | length) > 2 then
-      "<<END_OF_TEXT\n" + (. | join("\n") ) + "\nEND_OF_TEXT"
+      "<<END_OF_TEXT\n" + (. | join("\n") | rtrimstr("\n") ) + "\nEND_OF_TEXT"
     else
       . | join("\n") | tojson
     end) | if escape_placeholders then . | sub("\\${"; "$${"; "g") else . end
