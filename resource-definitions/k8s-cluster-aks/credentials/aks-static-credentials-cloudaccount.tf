@@ -1,18 +1,15 @@
-resource "humanitec_resource_definition" "aks-agent" {
+resource "humanitec_resource_definition" "aks-static-credentials-cloudaccount" {
   driver_type    = "humanitec/k8s-cluster-aks"
-  id             = "aks-agent"
-  name           = "aks-agent"
+  id             = "aks-static-credentials-cloudaccount"
+  name           = "aks-static-credentials-cloudaccount"
   type           = "k8s-cluster"
-  driver_account = "azure-dynamic-creds"
+  driver_account = "azure-static-creds"
   driver_inputs = {
     values_string = jsonencode({
       "loadbalancer"    = "20.10.10.10"
       "name"            = "demo-123"
       "resource_group"  = "my-resources"
       "subscription_id" = "12345678-aaaa-bbbb-cccc-0987654321ba"
-    })
-    secrets_string = jsonencode({
-      "agent_url" = "$${resources['agent#agent'].outputs.url}"
     })
   }
 }

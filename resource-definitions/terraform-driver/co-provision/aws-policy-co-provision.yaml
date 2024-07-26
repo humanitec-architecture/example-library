@@ -3,6 +3,7 @@ kind: Definition
 metadata:
   id: aws-policy-co-provision
 entity:
+  name: aws-policy-co-provision
   type: aws-policy
   driver_type: humanitec/terraform
   # Use the credentials injected via the driver_account to set variables as expected by your Terraform code
@@ -47,4 +48,4 @@ entity:
               var.BUCKET_ARN,
             ]
           }
-}
+        }

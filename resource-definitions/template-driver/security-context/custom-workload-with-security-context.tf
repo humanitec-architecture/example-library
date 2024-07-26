@@ -1,15 +1,12 @@
-resource "humanitec_resource_definition" "workload" {
+resource "humanitec_resource_definition" "custom-workload" {
   driver_type = "humanitec/template"
   id          = "custom-workload"
   name        = "custom-workload"
   type        = "workload"
-
   driver_inputs = {
     values_string = jsonencode({
-      templates = {
-        init      = ""
-        manifests = ""
-        outputs   = <<EOL
+      "templates" = {
+        "outputs" = <<END_OF_TEXT
 update:
   - op: add
     path: /spec/securityContext
@@ -31,13 +28,13 @@ update:
       privileged: false
       readOnlyRootFilesystem: true
   {{- end }}
-EOL
+END_OF_TEXT
       }
     })
   }
 }
 
-resource "humanitec_resource_definition_criteria" "workload" {
-  resource_definition_id = humanitec_resource_definition.workload.id
-  # ... add any matching criteria as required.
+resource "humanitec_resource_definition_criteria" "custom-workload_criteria_0" {
+  resource_definition_id = resource.humanitec_resource_definition.custom-workload.id
+
 }
