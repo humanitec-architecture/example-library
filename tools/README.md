@@ -25,3 +25,9 @@ Can be used with Humanitec YAML files, but requires a conversion to JSON, e.g. u
 ```
 cat my-res-def.yaml | yq -o json | jq -r -f ./def-json-hcl.jq > my-res-def.tf
 ```
+
+### Handling of multiline strings
+
+Using a [heredoc](https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings) section is the most user-friendly way of mapping multiline YAML strings into Terraform.
+
+The problem is that Terraform's heredoc always inserts an empty new line at the end of the generated string. This might break the data in cases when there must not be one. Therefore, the script only generates a heredoc if there is a trailing newline in the source string, and uses a traditional single-line string otherwise containing `\n` for any line breaks.
