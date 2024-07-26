@@ -61,7 +61,7 @@ def json2hcl(prefix; escape_placeholders):
         end
       ) + (
         if . | has("provision") then
-          "\n  provision = {\n" + (
+          "\n  provision = {\n" + ([
             .provision | to_entries[] | (
               "    \( .key | tojson ) = {\n" + (
                 if .value | has("is_dependent") then
@@ -78,7 +78,7 @@ def json2hcl(prefix; escape_placeholders):
               ) +
               "    }\n"
             )
-          ) +
+          ] | join("")) +
           "  }\n"
         else
           ""
