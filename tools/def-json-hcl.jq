@@ -47,7 +47,7 @@ def json2hcl(prefix; escape_placeholders):
               end
             ) + (
               if .secret_refs then
-                "    secret_refs    = jsonencode(\( .secret_refs | json2hcl("    "; false) ))\n"
+                "    secret_refs    = jsonencode(\( .secret_refs | json2hcl("    "; true) ))\n"
               elif .secrets then
                 "    secrets_string = jsonencode(\( .secrets | json2hcl("    "; true) ))\n" 
               else
