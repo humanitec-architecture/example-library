@@ -18,7 +18,7 @@ entity:
         variables:
           ACCESS_KEY_ID: AccessKeyId
           ACCESS_KEY_VALUE: SecretAccessKey
-      script: |-
+      script: |
         # This provider block is using the Terraform variables
         # set through the credentials_config.
         # Variable declarations omitted for brevity.

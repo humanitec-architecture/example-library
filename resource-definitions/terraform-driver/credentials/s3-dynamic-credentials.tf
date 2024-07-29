@@ -16,7 +16,23 @@ resource "humanitec_resource_definition" "s3-dynamic-credentials" {
           "SESSION_TOKEN"    = "SessionToken"
         }
       }
-      "script" = "# This provider block is using the Terraform variables\n# set through the credentials_config.\n# Variable declarations omitted for brevity.\nprovider \"aws\" {\n  region     = var.REGION\n  access_key = var.ACCESS_KEY_ID\n  secret_key = var.ACCESS_KEY_VALUE\n  token      = var.SESSION_TOKEN\n}\n\n# ... Terraform code reduced for brevity\n\nresource \"aws_s3_bucket\" \"bucket\" {\n  bucket = my-bucket\n}"
+      "script" = <<END_OF_TEXT
+# This provider block is using the Terraform variables
+# set through the credentials_config.
+# Variable declarations omitted for brevity.
+provider "aws" {
+  region     = var.REGION
+  access_key = var.ACCESS_KEY_ID
+  secret_key = var.ACCESS_KEY_VALUE
+  token      = var.SESSION_TOKEN
+}
+
+# ... Terraform code reduced for brevity
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = my-bucket
+}
+END_OF_TEXT
     })
   }
 }

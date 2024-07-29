@@ -9,7 +9,15 @@ resource "humanitec_resource_definition" "serviceaccount-k8s-service-account" {
       "templates" = {
         "init"      = "name: {{ index (splitList \".\" \"$${context.res.id}\") 1 }}\n"
         "outputs"   = "name: {{ .init.name }}\n"
-        "manifests" = "service-account.yaml:\n  location: namespace\n  data:\n    apiVersion: v1\n    kind: ServiceAccount\n    metadata:\n      name: {{ .init.name }}"
+        "manifests" = <<END_OF_TEXT
+service-account.yaml:
+  location: namespace
+  data:
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: {{ .init.name }}
+END_OF_TEXT
       }
     })
   }

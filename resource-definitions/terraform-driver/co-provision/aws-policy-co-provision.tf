@@ -17,7 +17,38 @@ resource "humanitec_resource_definition" "aws-policy-co-provision" {
           "ACCESS_KEY_VALUE" = "SecretAccessKey"
         }
       }
-      "script" = "# This provider block is using the Terraform variables\n# set through the credentials_config.\n# Variable declarations omitted for brevity.\nprovider \"aws\" {\n  region     = var.REGION\n  access_key = var.ACCESS_KEY_ID\n  secret_key = var.ACCESS_KEY_VALUE\n}\n\n# ... Terraform code reduced for brevity\n\nresource \"aws_iam_policy\" \"bucket\" {\n  name        = \"$${var.BUCKET}-policy\"\n  policy      = data.aws_iam_policy_document.main.json\n}\n\ndata \"aws_iam_policy_document\" \"main\" {\n  statement {\n    effect = \"Allow\"\n\n    actions = [\n      \"s3:GetObject\",\n      \"s3:ListBucket\",\n    ]\n\n    resources = [\n      var.BUCKET_ARN,\n    ]\n  }\n}"
+      "script" = <<END_OF_TEXT
+# This provider block is using the Terraform variables
+# set through the credentials_config.
+# Variable declarations omitted for brevity.
+provider "aws" {
+  region     = var.REGION
+  access_key = var.ACCESS_KEY_ID
+  secret_key = var.ACCESS_KEY_VALUE
+}
+
+# ... Terraform code reduced for brevity
+
+resource "aws_iam_policy" "bucket" {
+  name        = "$${var.BUCKET}-policy"
+  policy      = data.aws_iam_policy_document.main.json
+}
+
+data "aws_iam_policy_document" "main" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      var.BUCKET_ARN,
+    ]
+  }
+}
+END_OF_TEXT
     })
   }
 }

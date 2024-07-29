@@ -15,7 +15,34 @@ resource "humanitec_resource_definition" "s3-co-provision" {
           "ACCESS_KEY_VALUE" = "SecretAccessKey"
         }
       }
-      "script" = "# This provider block is using the Terraform variables\n# set through the credentials_config.\n# Variable declarations omitted for brevity.\nprovider \"aws\" {\n  region     = var.REGION\n  access_key = var.ACCESS_KEY_ID\n  secret_key = var.ACCESS_KEY_VALUE\n}\n\n# ... Terraform code reduced for brevity\n\nresource \"aws_s3_bucket\" \"bucket\" {\n  bucket = my-bucket\n}\n\noutput \"bucket\" {\n  value = aws_s3_bucket.main.id\n}\n\noutput \"arn\" {\n  value = aws_s3_bucket.main.arn\n}\n  \noutput \"region\" {\n  value = aws_s3_bucket.main.region\n}"
+      "script" = <<END_OF_TEXT
+# This provider block is using the Terraform variables
+# set through the credentials_config.
+# Variable declarations omitted for brevity.
+provider "aws" {
+  region     = var.REGION
+  access_key = var.ACCESS_KEY_ID
+  secret_key = var.ACCESS_KEY_VALUE
+}
+
+# ... Terraform code reduced for brevity
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = my-bucket
+}
+
+output "bucket" {
+  value = aws_s3_bucket.main.id
+}
+
+output "arn" {
+  value = aws_s3_bucket.main.arn
+}
+  
+output "region" {
+  value = aws_s3_bucket.main.region
+}
+END_OF_TEXT
     })
   }
 

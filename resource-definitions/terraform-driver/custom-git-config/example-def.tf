@@ -11,7 +11,16 @@ resource "humanitec_resource_definition" "example-git-config" {
     insteadOf = https://example.com/replace-with-git-config/
 END_OF_TEXT
       }
-      "script" = "module \"uuid\" {\n  # We rely on the git-config above to rewrite this URL into one that will work\n  source = \"git::https://example.com/replace-with-git-config/terraform-random-uuid.git?ref=v0.2.0\"\n}\n\noutput \"bucket\" {\n  value = module.uuid.uuid\n}"
+      "script" = <<END_OF_TEXT
+module "uuid" {
+  # We rely on the git-config above to rewrite this URL into one that will work
+  source = "git::https://example.com/replace-with-git-config/terraform-random-uuid.git?ref=v0.2.0"
+}
+
+output "bucket" {
+  value = module.uuid.uuid
+}
+END_OF_TEXT
     })
   }
 }

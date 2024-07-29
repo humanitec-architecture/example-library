@@ -7,7 +7,18 @@ resource "humanitec_resource_definition" "custom-namespace-with-label" {
     values_string = jsonencode({
       "templates" = {
         "init"      = "name: $${context.app.id}-$${context.env.id}\n"
-        "manifests" = "namespace.yaml:\n  location: cluster\n  data:\n    apiVersion: v1\n    kind: Namespace\n    metadata:\n      labels:\n        env_id: $${context.env.id}\n        cost_center_id: $${resources['config.default#app-config'].outputs.cost_center_id}\n      name: {{ .init.name }}"
+        "manifests" = <<END_OF_TEXT
+namespace.yaml:
+  location: cluster
+  data:
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      labels:
+        env_id: $${context.env.id}
+        cost_center_id: $${resources['config.default#app-config'].outputs.cost_center_id}
+      name: {{ .init.name }}
+END_OF_TEXT
         "outputs"   = "namespace: {{ .init.name }}\n"
       }
     })

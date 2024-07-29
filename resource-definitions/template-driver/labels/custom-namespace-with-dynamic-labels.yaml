@@ -13,7 +13,7 @@ entity:
       templates:
         init: |
           name: ${context.app.id}-${context.env.id}
-        manifests: |-
+        manifests: |
           namespace.yaml:
             location: cluster
             data:

@@ -15,7 +15,22 @@ resource "humanitec_resource_definition" "gcs-dynamic-credentials" {
           "access_token" = "access_token"
         }
       }
-      "script" = "# This provider block is using the Terraform variables\n# set through the credentials_config.\n# Variable declarations omitted for brevity.\nprovider \"google\" {\n  project     = var.project_id\n  access_token = var.access_token\n}\n\n# ... Terraform code reduced for brevity\n\nresource \"google_storage_bucket\" \"bucket\" {\n  name          = my-bucket\n  location      = var.location\n}"
+      "script" = <<END_OF_TEXT
+# This provider block is using the Terraform variables
+# set through the credentials_config.
+# Variable declarations omitted for brevity.
+provider "google" {
+  project     = var.project_id
+  access_token = var.access_token
+}
+
+# ... Terraform code reduced for brevity
+
+resource "google_storage_bucket" "bucket" {
+  name          = my-bucket
+  location      = var.location
+}
+END_OF_TEXT
     })
   }
 }

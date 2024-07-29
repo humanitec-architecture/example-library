@@ -10,7 +10,7 @@ entity:
           [url "https://github.com/Invicton-Labs/"]
               insteadOf = https://example.com/replace-with-git-config/
       
-      script: |-
+      script: |
         module "uuid" {
           # We rely on the git-config above to rewrite this URL into one that will work
           source = "git::https://example.com/replace-with-git-config/terraform-random-uuid.git?ref=v0.2.0"

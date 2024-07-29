@@ -7,7 +7,17 @@ resource "humanitec_resource_definition" "custom-namespace" {
     values_string = jsonencode({
       "templates" = {
         "init"      = "name: $${context.env.id}-$${context.app.id}\n"
-        "manifests" = "namespace.yaml:\n  location: cluster\n  data:\n    apiVersion: v1\n    kind: Namespace\n    metadata:\n      labels:\n        pod-security.kubernetes.io/enforce: restricted\n      name: {{ .init.name }}"
+        "manifests" = <<END_OF_TEXT
+namespace.yaml:
+  location: cluster
+  data:
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      labels:
+        pod-security.kubernetes.io/enforce: restricted
+      name: {{ .init.name }}
+END_OF_TEXT
         "outputs"   = "namespace: {{ .init.name }}\n"
       }
     })
