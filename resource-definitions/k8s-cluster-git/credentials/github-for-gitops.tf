@@ -12,7 +12,7 @@ resource "humanitec_resource_definition" "github-for-gitops" {
     })
     secrets_string = jsonencode({
       "credentials" = {
-        "ssh_key" = "$${GIT_SSH_KEY}"
+        "ssh_key" = "my-git-ssh-key"
       }
     })
   }

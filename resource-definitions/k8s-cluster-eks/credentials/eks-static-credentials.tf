@@ -12,8 +12,8 @@ resource "humanitec_resource_definition" "eks-static-credentials" {
     })
     secrets_string = jsonencode({
       "credentials" = {
-        "aws_access_key_id"     = "$${AWS_ACCESS_KEY_ID}"
-        "aws_secret_access_key" = "$${AWS_SECRET_ACCESS_KEY}"
+        "aws_access_key_id"     = "my-access-key-id"
+        "aws_secret_access_key" = "my-secret-access-key"
       }
     })
   }

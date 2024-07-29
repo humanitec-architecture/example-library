@@ -9,13 +9,13 @@ resource "humanitec_resource_definition" "generic-k8s-static-credentials" {
       "loadbalancer" = "35.10.10.10"
       "cluster_data" = {
         "server"                     = "https://35.11.11.11:6443"
-        "certificate-authority-data" = "$${CLUSTER_CERTIFICATE_CA_DATA}"
+        "certificate-authority-data" = "LS0t...ca-data....=="
       }
     })
     secrets_string = jsonencode({
       "credentials" = {
-        "client-certificate-data" = "$${USER_CLIENT_CERTIFICATE_DATA}"
-        "client-key-data"         = "$${USER_CLIENT_KEY_DATA}"
+        "client-certificate-data" = "LS0t...cert-data...=="
+        "client-key-data"         = "LS0t...key-data...=="
       }
     })
   }

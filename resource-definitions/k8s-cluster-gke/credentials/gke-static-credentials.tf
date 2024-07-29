@@ -14,9 +14,9 @@ resource "humanitec_resource_definition" "gke-static-credentials" {
       "credentials" = {
         "type"                        = "service_account"
         "project_id"                  = "my-gcp-project"
-        "private_key_id"              = "$${PRIVATE_KEY_ID}"
-        "private_key"                 = "$${PRIVATE_KEY}"
-        "client_id"                   = "$${CLIENT_ID}"
+        "private_key_id"              = "48b483fbf1d6e80fb4ac1a4626eb5d8036e3520f"
+        "private_key"                 = "-----BEGIN PRIVATE KEY-----\\n...key...data...\\n...key...data...\\n...\\n-----END PRIVATE KEY-----\\n"
+        "client_id"                   = "206964217359046819490"
         "client_email"                = "my-service-account@my-gcp-project.iam.gserviceaccount.com"
         "auth_uri"                    = "https://accounts.google.com/o/oauth2/auth"
         "token_uri"                   = "https://oauth2.googleapis.com/token"
