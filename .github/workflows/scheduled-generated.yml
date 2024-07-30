@@ -1,0 +1,27 @@
+name: Update generated content
+on:
+  schedule:
+    - cron: "0 10 * * 1-5"
+  workflow_dispatch:
+  # push: # uncomment to test this workflow
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate Terraform Resource Definitions
+        run: node ./tools/generate-terraform.js resource-definitions
+      - name: Format Terraform Resource Definitions
+        run: terraform fmt -recursive resource-definitions/
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+          commit-message: "chore: update generated example library content"
+          title: Update generated example library content
+          body: |
+            Update generated example-library content
+          branch: update-generated
+          team-reviewers: "Docs"

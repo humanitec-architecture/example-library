@@ -1,18 +1,16 @@
-# Connect to a GKE cluster using dynamic credentials defined via a Cloud Account
-resource "humanitec_resource_definition" "gke-dynamic" {
-  id          = "gke-dynamic"
-  name        = "gke-dynamic"
-  type        = "k8s-cluster"
-  driver_type = "humanitec/k8s-cluster-gke"
-  # The driver_account references a Cloud Account of type "gcp-identity"
-  driver_account = humanitec_resource_account.gcp-dynamic.id
-
+resource "humanitec_resource_definition" "gke-dynamic-credentials" {
+  driver_type    = "humanitec/k8s-cluster-gke"
+  id             = "gke-dynamic-credentials"
+  name           = "gke-dynamic-credentials"
+  type           = "k8s-cluster"
+  driver_account = "gcp-dynamic-creds"
   driver_inputs = {
     values_string = jsonencode({
-      "name"         = var.gke_cluster_name
-      "loadbalancer" = var.gke_loadbalancer
-      "project_id"   = var.gcp_project_id
-      "zone"         = var.gcp_region
+      "loadbalancer" = "35.10.10.10"
+      "name"         = "demo-123"
+      "zone"         = "europe-west2-a"
+      "project_id"   = "my-gcp-project"
     })
   }
 }
+

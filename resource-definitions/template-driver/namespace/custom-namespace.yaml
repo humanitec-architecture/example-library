@@ -12,7 +12,7 @@ entity:
         # Use any combination of placeholders and characters to configure your naming scheme
         init: |
           name: ${context.env.id}-${context.app.id}
-        manifests: |-
+        manifests: |
           namespace.yaml:
             location: cluster
             data:

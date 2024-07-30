@@ -22,7 +22,7 @@ entity:
           # Using the resource ID "#tf-backend" to fulfill the matching criteria of the "tf-backend-config" config resource.
           value: ${resources.config#tf-backend.outputs.credentials_file}
     values:
-      script: |-
+      script: |
         variable "region" {}
 
         terraform {
