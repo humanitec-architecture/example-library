@@ -3,7 +3,7 @@ resource "humanitec_resource_definition" "gke-agent" {
   id             = "gke-agent"
   name           = "gke-agent"
   type           = "k8s-cluster"
-  driver_account = "gcp-dynamic-creds"
+  driver_account = "gcp-temporary-creds"
   driver_inputs = {
     values_string = jsonencode({
       "loadbalancer" = "35.10.10.10"

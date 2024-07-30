@@ -1,7 +1,7 @@
-resource "humanitec_resource_definition" "s3-dynamic-credentials" {
+resource "humanitec_resource_definition" "s3-temporary-credentials" {
   driver_type    = "humanitec/terraform"
-  id             = "s3-dynamic-credentials"
-  name           = "s3-dynamic-credentials"
+  id             = "s3-temporary-credentials"
+  name           = "s3-temporary-credentials"
   type           = "s3"
   driver_account = "aws-temp-creds"
   driver_inputs = {

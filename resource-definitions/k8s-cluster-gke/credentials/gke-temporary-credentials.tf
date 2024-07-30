@@ -1,9 +1,9 @@
-resource "humanitec_resource_definition" "gke-dynamic-credentials" {
+resource "humanitec_resource_definition" "gke-temporary-credentials" {
   driver_type    = "humanitec/k8s-cluster-gke"
-  id             = "gke-dynamic-credentials"
-  name           = "gke-dynamic-credentials"
+  id             = "gke-temporary-credentials"
+  name           = "gke-temporary-credentials"
   type           = "k8s-cluster"
-  driver_account = "gcp-dynamic-creds"
+  driver_account = "gcp-temporary-creds"
   driver_inputs = {
     values_string = jsonencode({
       "loadbalancer" = "35.10.10.10"

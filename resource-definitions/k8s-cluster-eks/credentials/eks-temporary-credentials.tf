@@ -1,7 +1,7 @@
-resource "humanitec_resource_definition" "eks-dynamic-credentials" {
+resource "humanitec_resource_definition" "eks-temporary-credentials" {
   driver_type    = "humanitec/k8s-cluster-eks"
-  id             = "eks-dynamic-credentials"
-  name           = "eks-dynamic-credentials"
+  id             = "eks-temporary-credentials"
+  name           = "eks-temporary-credentials"
   type           = "k8s-cluster"
   driver_account = "aws-temp-creds"
   driver_inputs = {

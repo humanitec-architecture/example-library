@@ -1,9 +1,9 @@
-resource "humanitec_resource_definition" "aks-dynamic-credentials" {
+resource "humanitec_resource_definition" "aks-temporary-credentials" {
   driver_type    = "humanitec/k8s-cluster-aks"
-  id             = "aks-dynamic-credentials"
-  name           = "aks-dynamic-credentials"
+  id             = "aks-temporary-credentials"
+  name           = "aks-temporary-credentials"
   type           = "k8s-cluster"
-  driver_account = "azure-dynamic-creds"
+  driver_account = "azure-temporary-creds"
   driver_inputs = {
     values_string = jsonencode({
       "loadbalancer"    = "20.10.10.10"

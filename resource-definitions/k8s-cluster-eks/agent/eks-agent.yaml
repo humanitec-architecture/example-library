@@ -1,5 +1,5 @@
 # EKS private cluster. It is to be accessed via the Humanitec Agent
-# It is using a Cloud Account with dynamic credentials
+# It is using a Cloud Account with temporary credentials
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
