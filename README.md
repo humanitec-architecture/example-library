@@ -40,6 +40,8 @@ Keep examples **simple** and feel free to **omit** parts not needed to drive the
 
 Where applicable, favor [`humctl` CLI](https://developer.humanitec.com/platform-orchestrator/cli/) YAML over all other formats. The CLI is the universal language of Humanitec platform orchestration, and also the most concise and easiest to read. Feel free to provide additional formats such as Terraform.
 
+> ℹ️ The Terraform variants of YAML Resource Definitions are [generated automatically](#auto-generated-content). Please provide the YAML variants only.
+
 ## No configuration required
 
 There is no configuration or mandatory metadata required when adding content. Follow the conventions described in the [content organization rules](#organize-content) to structure your files.
@@ -96,3 +98,12 @@ There are two ways of integrating content:
 2. **An individual example file** is integrated **at a particular position inside a particular page** of the docs.
 
 Individual parts of this library can therefore be displayed on different pages throughout the developer docs. It's also possible to display examples more than once, or to display just a specific subset (subfolder) as part of a page to help illustrate a point.
+
+## Auto-generated content
+
+The Terraform variants of YAML Resource Definitions in the `resource-definitions` directory are generated automatically by a [scheduled GitHub Workflow](./.github/workflows/scheduled-generated.yml).
+
+The workflow requires a GitHub [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) to generate Pull Requests. See the workflow code for details on where exactly it is expected. Using a fine-grained access token is recommended having these repository permissions:
+
+- Contents: Read and write
+- Pull requests: Read and write

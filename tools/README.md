@@ -1,5 +1,19 @@
 # Tools
 
+## generate-terraform.js
+
+This is a `node` script that generates the Terraform variants of YAML Resource Definitions using the [helper script](#def-json-hcljq).
+
+The script can be used in an automated workflow. See the [main README](../README.md) for details.
+
+### USAGE
+
+Provide the source directory of the Resource Definitions as a parameter. When using the repo root dir as the working directory, call it like this:
+
+```
+node ./tools/generate-terraform.js resource-definitions
+```
+
 ## def-json-hcl.jq
 
 This is a JQ script that converts a JSON representation of a resource definition into a terraform representation of the same resource definition.
