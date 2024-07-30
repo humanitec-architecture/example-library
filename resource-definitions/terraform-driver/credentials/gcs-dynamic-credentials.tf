@@ -1,13 +1,13 @@
 resource "humanitec_resource_definition" "gcs-dynamic-credentials" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "gcs-dynamic-credentials"
   name           = "gcs-dynamic-credentials"
   type           = "gcs"
   driver_account = "gcp-dynamic-creds"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "variables" = {
-        "location"   = "europe-west3"
+        "location" = "europe-west3"
         "project_id" = "my-gcp-project"
       }
       "credentials_config" = {

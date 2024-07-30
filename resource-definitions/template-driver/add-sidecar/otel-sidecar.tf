@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "otel-sidecar" {
   driver_type = "humanitec/template"
-  id          = "otel-sidecar"
-  name        = "otel-sidecar"
-  type        = "workload"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "otel-sidecar"
+  name           = "otel-sidecar"
+  type           = "workload"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
         "outputs" = <<END_OF_TEXT
 {{- /*
@@ -23,7 +23,7 @@ END_OF_TEXT
         "manifests" = {
           "sidecar.yaml" = {
             "location" = "containers"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 {{- /*
   The Open Telemetry container as a sidecar in the workload
 */ -}}
@@ -53,7 +53,7 @@ END_OF_TEXT
           }
           "sidecar-volume.yaml" = {
             "location" = "volumes"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 {{- /*
   A volume that is used to surface the config file
 */ -}}
@@ -67,7 +67,7 @@ END_OF_TEXT
           }
           "otel-config-map.yaml" = {
             "location" = "namespace"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 {{- /*
   The config file for the Open Telemetry agent. Notice that it's name includes the GUResID
 */ -}}

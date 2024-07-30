@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "example-git-config" {
   driver_type = "humanitec/terraform"
-  id          = "example-git-config"
-  name        = "example-git-config"
-  type        = "s3"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "example-git-config"
+  name           = "example-git-config"
+  type           = "s3"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "files" = {
         ".gitconfig" = <<END_OF_TEXT
 [url "https://github.com/Invicton-Labs/"]

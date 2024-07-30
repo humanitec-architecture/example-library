@@ -1,17 +1,17 @@
 resource "humanitec_resource_definition" "s3-co-provision" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "s3-co-provision"
   name           = "s3-co-provision"
   type           = "s3"
   driver_account = "aws"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "variables" = {
         "REGION" = "eu-central-1"
       }
       "credentials_config" = {
         "variables" = {
-          "ACCESS_KEY_ID"    = "AccessKeyId"
+          "ACCESS_KEY_ID" = "AccessKeyId"
           "ACCESS_KEY_VALUE" = "SecretAccessKey"
         }
       }

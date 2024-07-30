@@ -1,11 +1,11 @@
 resource "humanitec_resource_definition" "tf-backend-config" {
-  driver_type    = "humanitec/template"
+  driver_type = "humanitec/template"
   id             = "tf-backend-config"
   name           = "tf-backend-config"
   type           = "config"
   driver_account = "aws-credentials"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
         "outputs" = <<END_OF_TEXT
 bucket: my-terraform-state-bucket
@@ -24,6 +24,6 @@ END_OF_TEXT
 }
 
 resource "humanitec_resource_definition_criteria" "tf-backend-config_criteria_0" {
-  resource_definition_id = resource.humanitec_resource_definition.tf-backend-config.id
-  res_id                 = "tf-backend"
+  resource_definition_id = resource.humanitec_resource_definition.tf-backend-config.id 
+  res_id = "tf-backend"
 }

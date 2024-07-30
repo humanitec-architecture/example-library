@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "aci-workload" {
   driver_type = "humanitec/template"
-  id          = "aci-workload"
-  name        = "aci-workload"
-  type        = "workload"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "aci-workload"
+  name           = "aci-workload"
+  type           = "workload"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
         "outputs" = <<END_OF_TEXT
 update: 

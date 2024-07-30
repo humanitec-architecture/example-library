@@ -1,17 +1,17 @@
 resource "humanitec_resource_definition" "blob-storage-dynamic-credentials" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "blob-storage-dynamic-credentials"
   name           = "blob-storage-dynamic-credentials"
   type           = "azure-blob"
   driver_account = "azure-dynamic-creds"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "variables" = {
-        "location"            = "eastus"
+        "location" = "eastus"
         "resource_group_name" = "my-test-resources"
-        "tenant_id"           = "3987ae5f-008f-4265-a6ee-e9dcedce4742"
-        "subscription_id"     = "742f6d8b-1b7b-4c6a-9f37-90bdd5aeb996"
-        "client_id"           = "c977c44d-3003-464c-b163-03920d4a390b"
+        "tenant_id" = "3987ae5f-008f-4265-a6ee-e9dcedce4742"
+        "subscription_id" = "742f6d8b-1b7b-4c6a-9f37-90bdd5aeb996"
+        "client_id" = "c977c44d-3003-464c-b163-03920d4a390b"
       }
       "credentials_config" = {
         "variables" = {

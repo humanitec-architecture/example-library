@@ -1,11 +1,11 @@
 resource "humanitec_resource_definition" "gcp-file-credentials" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "gcp-file-credentials"
   name           = "gcp-file-credentials"
   type           = "gcs"
   driver_account = "$${resources['config.default#gcp-account'].account}"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "credentials_config" = {
         "file" = "credentials.json"
       }
@@ -39,7 +39,7 @@ resource "google_storage_bucket" "bucket" {
 }
 END_OF_TEXT
       "variables" = {
-        "location"   = "$${resources.config#gcp-account.outputs.location}"
+        "location" = "$${resources.config#gcp-account.outputs.location}"
         "project_id" = "$${resources.config#gcp-account.outputs.project_id}"
       }
     })

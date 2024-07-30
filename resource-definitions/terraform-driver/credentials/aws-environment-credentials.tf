@@ -1,16 +1,16 @@
 resource "humanitec_resource_definition" "aws-environment-credentials" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "aws-environment-credentials"
   name           = "aws-environment-credentials"
   type           = "s3"
   driver_account = "$${resources['config.default#aws-account'].account}"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "credentials_config" = {
         "environment" = {
-          "AWS_ACCESS_KEY_ID"     = "AccessKeyId"
+          "AWS_ACCESS_KEY_ID" = "AccessKeyId"
           "AWS_SECRET_ACCESS_KEY" = "SecretAccessKey"
-          "AWS_SESSION_TOKEN"     = "SessionToken"
+          "AWS_SESSION_TOKEN" = "SessionToken"
         }
       }
       "script" = <<END_OF_TEXT

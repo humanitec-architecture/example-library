@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "s3-backend-example" {
   driver_type = "humanitec/terraform"
-  id          = "s3-backend-example"
-  name        = "s3-backend-example"
-  type        = "s3"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "s3-backend-example"
+  name           = "s3-backend-example"
+  type           = "s3"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "script" = <<END_OF_TEXT
 variable "region" {}
 
@@ -49,7 +49,7 @@ END_OF_TEXT
         "region" = "us-east-1"
       }
     })
-    secret_refs = jsonencode({
+    secret_refs    = jsonencode({
       "files" = {
         "aws_creds" = {
           "value" = "$${resources.config#aws-account.outputs.credentials_file}"

@@ -1,19 +1,19 @@
 resource "humanitec_resource_definition" "aws-policy-co-provision" {
-  driver_type    = "humanitec/terraform"
+  driver_type = "humanitec/terraform"
   id             = "aws-policy-co-provision"
   name           = "aws-policy-co-provision"
   type           = "aws-policy"
   driver_account = "aws"
-  driver_inputs = {
-    values_string = jsonencode({
+  driver_inputs  = {
+    values_string  = jsonencode({
       "variables" = {
-        "REGION"     = "$${resources.s3.outputs.region}"
-        "BUCKET"     = "$${resources.s3.outputs.bucket}"
+        "REGION" = "$${resources.s3.outputs.region}"
+        "BUCKET" = "$${resources.s3.outputs.bucket}"
         "BUCKET_ARN" = "$${resources.s3.outputs.arn}"
       }
       "credentials_config" = {
         "variables" = {
-          "ACCESS_KEY_ID"    = "AccessKeyId"
+          "ACCESS_KEY_ID" = "AccessKeyId"
           "ACCESS_KEY_VALUE" = "SecretAccessKey"
         }
       }

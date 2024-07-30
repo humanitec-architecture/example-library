@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "custom-workload" {
   driver_type = "humanitec/template"
-  id          = "custom-workload"
-  name        = "custom-workload"
-  type        = "workload"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "custom-workload"
+  name           = "custom-workload"
+  type           = "workload"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
         "outputs" = <<END_OF_TEXT
 update:
@@ -35,6 +35,6 @@ END_OF_TEXT
 }
 
 resource "humanitec_resource_definition_criteria" "custom-workload_criteria_0" {
-  resource_definition_id = resource.humanitec_resource_definition.custom-workload.id
+  resource_definition_id = resource.humanitec_resource_definition.custom-workload.id 
 
 }

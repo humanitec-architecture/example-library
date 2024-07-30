@@ -1,12 +1,12 @@
 resource "humanitec_resource_definition" "traefik-ingress" {
   driver_type = "template"
-  id          = "traefik-ingress"
-  name        = "traefik-ingress"
-  type        = "ingress"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "traefik-ingress"
+  name           = "traefik-ingress"
+  type           = "ingress"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
-        "init"      = <<END_OF_TEXT
+        "init" = <<END_OF_TEXT
 name: {{ .id }}-ir
 secretname: $${resources.tls-cert.outputs.tls_secret_name}
 host: $${resources.dns.outputs.host}

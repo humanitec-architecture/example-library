@@ -1,10 +1,10 @@
 resource "humanitec_resource_definition" "volume-nfs" {
   driver_type = "humanitec/template"
-  id          = "volume-nfs"
-  name        = "volume-nfs"
-  type        = "volume"
-  driver_inputs = {
-    values_string = jsonencode({
+  id             = "volume-nfs"
+  name           = "volume-nfs"
+  type           = "volume"
+  driver_inputs  = {
+    values_string  = jsonencode({
       "templates" = {
         "init" = <<END_OF_TEXT
 # Generate a unique id for each pv/pvc combination.
@@ -18,7 +18,7 @@ END_OF_TEXT
         "manifests" = {
           "app-pv-tmpl.yaml" = {
             "location" = "namespace"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -37,7 +37,7 @@ END_OF_TEXT
           }
           "app-pvc-tmpl.yaml" = {
             "location" = "namespace"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -54,7 +54,7 @@ END_OF_TEXT
           }
           "app-vol-tmpl.yaml" = {
             "location" = "volumes"
-            "data"     = <<END_OF_TEXT
+            "data" = <<END_OF_TEXT
 name: {{ .init.volBaseName }}{{ .init.volumeUid }}
 persistentVolumeClaim:
   claimName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
