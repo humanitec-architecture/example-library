@@ -54,7 +54,7 @@ def json2hcl(prefix; escape_placeholders):
                 ""
               end
             ) + 
-            "  }\n"
+            "  \n"
           ) 
         else
           ""
