@@ -3,7 +3,7 @@ resource "humanitec_resource_definition" "aks-agent" {
   id             = "aks-agent"
   name           = "aks-agent"
   type           = "k8s-cluster"
-  driver_account = "azure-dynamic-creds"
+  driver_account = "azure-temporary"
   driver_inputs = {
     values_string = jsonencode({
       "loadbalancer"    = "20.10.10.10"

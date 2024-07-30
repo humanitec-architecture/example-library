@@ -24,18 +24,18 @@ In this set of examples, we provide two `config` Resource Definitions for AWS an
 - [Account config (`account-config-gcp.yaml`)](./account-config-gcp.yaml)
 - [File Credentials (`gcp-file-credentials.yaml`)](./gcp-file-credentials.yaml)
 
-## Dynamic credentials
+## Temporary credentials
 
-Using a Cloud Account type that supports dynamic credentials, those credentials can be easily injected into a Resource Definition using the Terraform Driver. Use a `driver_account` referencing the Cloud Account in the Resource Definition, and access its the credentials through the supplied values as shown in the examples.
+Using a Cloud Account type that supports temporary credentials, those credentials can be easily injected into a Resource Definition using the Terraform Driver. Use a `driver_account` referencing the Cloud Account in the Resource Definition, and access its the credentials through the supplied values as shown in the examples.
 
 ### AWS
 
-- [S3 bucket (`s3-dynamic-credentials.yaml`)](./s3-dynamic-credentials.yaml)
+- [S3 bucket (`s3-temporary-credentials.yaml`)](./s3-temporary-credentials.yaml)
 
 ### GCP
 
-- [Cloud Storage bucket (`gcs-dynamic-credentials.yaml`)](./gcs-dynamic-credentials.yaml)
+- [Cloud Storage bucket (`gcs-temporary-credentials.yaml`)](./gcs-temporary-credentials.yaml)
 
 ### Azure
 
-- [Blob Storage container (`azure-blob-storage-dynamic-credentials.yaml`)](./azure-blob-storage-dynamic-credentials.yaml)
+- [Blob Storage container (`azure-blob-storage-temporary-credentials.yaml`)](./azure-blob-storage-temporary-credentials.yaml)

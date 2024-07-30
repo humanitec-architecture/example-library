@@ -1,9 +1,9 @@
-resource "humanitec_resource_definition" "blob-storage-dynamic-credentials" {
+resource "humanitec_resource_definition" "blob-storage-temporary-credentials" {
   driver_type    = "humanitec/terraform"
-  id             = "blob-storage-dynamic-credentials"
-  name           = "blob-storage-dynamic-credentials"
+  id             = "blob-storage-temporary-credentials"
+  name           = "blob-storage-temporary-credentials"
   type           = "azure-blob"
-  driver_account = "azure-dynamic-creds"
+  driver_account = "azure-temporary-creds"
   driver_inputs = {
     values_string = jsonencode({
       "variables" = {
