@@ -9,6 +9,8 @@ Two `config` Resource Definitions are provided:
 - [config-quota.yaml](config-quota.yaml) will be matched for all references of `res_id: quota`
 - [config-quota-override.yaml](config-quota-override.yaml) will additionally be matched for a particular `app_id: my-app` only, effectively providing an override for the configuration values for this particular Application id
 
+The Resource Graphs for two Applications, one of which matches the "override" criteria, will look like this:
+
 ```mermaid
 flowchart LR
     subgraph app2[Resource Graph &quot;my-app&quot;]
