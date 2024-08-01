@@ -1,0 +1,16 @@
+# This Resource Definition uses the Echo Driver to provide configuration values
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: quota-config
+entity:
+  name: quota-config
+  type: config
+  driver_type: humanitec/echo
+  driver_inputs:
+    # Any Driver inputs will be returned as outputs by the Echo Driver
+    values:
+      limits-cpu: "500m"
+      limits-memory: "500Mi"
+  criteria:
+  - res_id: quota

@@ -1,0 +1,28 @@
+# This Resource Definition uses the base-env Resource type to create
+# a ResourceQuota manifest in the target namespace.
+# The actual values are read from a referenced config resource.
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: base-env
+entity:
+  name: base-env
+  type: base-env
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests: |-
+          quota.yaml:
+            location: namespace
+            data:
+              apiVersion: v1
+              kind: ResourceQuota
+              metadata:
+                name: compute-resources
+              spec:
+                hard:
+                  limits.cpu: ${resources['config#quota'].outputs.limits-cpu}
+                  limits.memory: ${resources['config#quota'].outputs.limits-memory}
+  criteria:
+  - {}

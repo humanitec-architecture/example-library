@@ -1,0 +1,18 @@
+# This Resource Definition uses the Echo Driver to provide configuration values
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: quota-config-override
+entity:
+  name: quota-config-override
+  type: config
+  driver_type: humanitec/echo
+  driver_inputs:
+    # Any Driver inputs will be returned as outputs by the Echo Driver
+    values:
+      limits-cpu: "750m"
+      limits-memory: "750Mi"
+  # The matching criteria make this Resource Definition match for a particular app_id only
+  criteria:
+  - res_id: quota
+    app_id: my-app
