@@ -12,7 +12,30 @@ secretname: $${resources.tls-cert.outputs.tls_secret_name}
 host: $${resources.dns.outputs.host}
 namespace: $${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
 END_OF_TEXT
-        "manifests" = "ambassador-mapping.yaml:\n  data:\n    apiVersion: getambassador.io/v3alpha1\n    kind: Mapping\n    metadata:\n      name: {{ .init.name }}-mapping\n    spec:\n      host: {{ .init.host }}\n      prefix: /\n      service: my-service-name:8080\n  location: namespace\nambassador-tlscontext.yaml:\n  data:\n    apiVersion: getambassador.io/v3alpha1\n    kind: TLSContext\n    metadata:\n      name: {{ .init.name }}-tlscontext\n    spec:\n      hosts:\n        - {{ .init.host }}\n      secret: {{ .init.secretname }}\n  location: namespace"
+        "manifests" = <<END_OF_TEXT
+ambassador-mapping.yaml:
+  data:
+    apiVersion: getambassador.io/v3alpha1
+    kind: Mapping
+    metadata:
+      name: {{ .init.name }}-mapping
+    spec:
+      host: {{ .init.host }}
+      prefix: /
+      service: my-service-name:8080
+  location: namespace
+ambassador-tlscontext.yaml:
+  data:
+    apiVersion: getambassador.io/v3alpha1
+    kind: TLSContext
+    metadata:
+      name: {{ .init.name }}-tlscontext
+    spec:
+      hosts:
+        - {{ .init.host }}
+      secret: {{ .init.secretname }}
+  location: namespace
+END_OF_TEXT
       }
     })
   }
