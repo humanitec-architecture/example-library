@@ -10,7 +10,19 @@ resource "humanitec_resource_definition" "workload-volume-nfs" {
 pvcName: $${resources.volume.outputs.pvcName}
 volumeName: $${resources.volume.outputs.volumeName}
 END_OF_TEXT
-        "outputs" = "update:\n  - op: add\n    path: /spec/annotations/backup.org-name.io\n    value: {{ .init.pvcName }}\n  {{- range $containerId, $value := .resource.spec.containers }}\n  - op: add\n    path: /spec/containers/{{ $containerId }}/volumeMounts\n    value:\n    - name: {{ $.init.volumeName }}\n      mountPath: /tmp/data\n  {{- end }}"
+        "outputs" = <<END_OF_TEXT
+update:
+  - op: add
+    path: /spec/annotations/backup.org-name.io
+    value: {{ .init.pvcName }}
+  {{- range $containerId, $value := .resource.spec.containers }}
+  - op: add
+    path: /spec/containers/{{ $containerId }}/volumeMounts
+    value:
+    - name: {{ $.init.volumeName }}
+      mountPath: /tmp/data
+  {{- end }}
+END_OF_TEXT
       }
     })
   }

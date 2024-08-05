@@ -29,7 +29,7 @@ END_OF_TEXT
             "location" = "namespace"
           }
         }
-        "outputs" = "secret_name: {{ .driver.values.secret_name }}"
+        "outputs" = "secret_name: {{ .driver.values.secret_name }}\n"
       }
     })
     secret_refs = jsonencode({

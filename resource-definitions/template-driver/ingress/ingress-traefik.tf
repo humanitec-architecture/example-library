@@ -12,7 +12,26 @@ secretname: $${resources.tls-cert.outputs.tls_secret_name}
 host: $${resources.dns.outputs.host}
 namespace: $${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
 END_OF_TEXT
-        "manifests" = "traefik-ingressroute.yaml:\n  data:\n    apiVersion: traefik.io/v1alpha1\n    kind: IngressRoute\n    metadata:\n      name: {{ .init.name }}\n    spec:\n      routes:\n      - match: Host(`{{ .init.host }}`) && PathPrefix(`/`)\n        kind: Rule\n        services:\n        - name: my-service-name\n          kind: Service\n          port: 8080\n          namespace: {{ .init.namespace }} \n      tls:\n        secretName: {{ .init.secretname }}\n  location: namespace"
+        "manifests" = <<END_OF_TEXT
+traefik-ingressroute.yaml:
+  data:
+    apiVersion: traefik.io/v1alpha1
+    kind: IngressRoute
+    metadata:
+      name: {{ .init.name }}
+    spec:
+      routes:
+      - match: Host(`{{ .init.host }}`) && PathPrefix(`/`)
+        kind: Rule
+        services:
+        - name: my-service-name
+          kind: Service
+          port: 8080
+          namespace: {{ .init.namespace }} 
+      tls:
+        secretName: {{ .init.secretname }}
+  location: namespace
+END_OF_TEXT
       }
     })
   }
