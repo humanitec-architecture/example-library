@@ -1,0 +1,11 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: dns-template
+entity:
+  name: dns-template
+  type: k8s-namespace
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      host: "preview-${context.app.id}-${context.env.id}.my-test-domain.com"
