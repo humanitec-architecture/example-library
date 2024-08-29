@@ -30,7 +30,7 @@ provider "aws" {
 # ... Terraform code reduced for brevity
 
 resource "aws_iam_policy" "bucket" {
-  name        = "$${var.BUCKET}-policy"
+  name        = "$\{var.BUCKET}-policy"
   policy      = data.aws_iam_policy_document.main.json
 }
 
