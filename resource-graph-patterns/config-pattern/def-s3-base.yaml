@@ -15,7 +15,7 @@ entity:
       # automatically be provisioned with res_id and class equal to this
       # instance that will be provisioned.
       #
-      # See ../../propagate-id and ../../propagate-class for more details.
+      # See ../propagate-id and ../propagate-class for more details.
 
       region: ${resources.config.outputs.region}
       bucket: ${resources.config.outputs.bucket_name}
