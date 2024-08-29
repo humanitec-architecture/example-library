@@ -12,7 +12,7 @@ entity:
         # Here the namespace name is shortened to be a maximum of 17 characters,
         # no matter how long the app and env name might be.
         init: |
-          name: name: {{ substr 0 8 "${context.env.id}" }}-{{ substr 0 8 "${context.app.id}" }}
+          name: {{ trunc 8 "${context.env.id}" }}-{{ trunc 8 "${context.app.id}" }}
         manifests: |
           namespace.yaml:
             location: cluster
