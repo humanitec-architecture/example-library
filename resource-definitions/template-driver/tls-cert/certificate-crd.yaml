@@ -17,7 +17,7 @@ entity:
           tlsSecretName: {{ .id }}-tls
           hostName: ${resources.dns.outputs.host}
           certificateName: {{ .id }}-cert
-        manifests:
+        manifests: |
           certificate-crd.yml:
             data:
               apiVersion: cert-manager.io/v1
@@ -37,7 +37,7 @@ entity:
                   - server auth
                   - client auth
                 dnsNames:
-                  - "{{ .init.hostName }}"
+                  - {{ .init.hostName | toString | toRawJson }}
                 # The name of the issuerRef must point to the issuer / clusterIssuer in your cluster
                 issuerRef:
                   name: letsencrypt-prod
