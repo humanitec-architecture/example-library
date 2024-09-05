@@ -5,4 +5,5 @@ metadata:
 
 containers:
   main-container:
-    image: registry/my-image:1.0.0
+    #image: registry/my-image:1.0.0
+    image: nginx

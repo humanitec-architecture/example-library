@@ -1,7 +1,9 @@
 apiVersion: humanitec.org/v1b1
+# Select the "default-cronjob" Workload Profile
 profile: humanitec/default-cronjob
 
 spec:
+  # Define the CronJob schedules
   schedules:
     6-hour-run:
       containers:
@@ -9,4 +11,32 @@ spec:
           args:
             - "--hours"
             - "6"
-      schedule: "15 1,7,13,19 * * *"
+      #schedule: "15 1,7,13,19 * * *"
+      schedule: "* * * * *"
+  cronjob:
+    # 🚧❌ There is a suspected bug in the Chart preventing from rendering these items properly.
+    # See https://github.com/humanitec/deployment-helm-charts/blob/a3b60f9267cf1da05d5a541033ab6b5304020a19/default-cronjob/templates/cronjob.yaml#L26 ff.
+    # - There is no "annotations:" section
+    # - Values should be drawn from $cronjob instead of $job
+    # Set annotations and labels in the CronJob object metadata
+    annotations:
+      cronjobannotationkey: cronjobannotationvalue
+    labels:
+      cronjoblabelkey: cronjoblabelvalue
+  job:
+    # Set annotations and labels in the Job object metadata for the Jobs created out of the CronJob
+    annotations:
+      jobannotationkey: jobannotationvalue
+    labels:
+      joblabelkey: joblabelvalue
+  pod:
+    # Set Pod annotations and labels in Pod metadata
+    annotations:
+      podannotationkey: podannotationvalue
+    labels:
+      podlabelkey: podlabelvalue
+    # Set any property of the PodSpec except "containers", e.g.:
+    nodeSelector:
+      topology.kubernetes.io/region: europe-west3
+    os:
+      name: linux
