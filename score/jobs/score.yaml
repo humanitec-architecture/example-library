@@ -1,0 +1,9 @@
+apiVersion: score.dev/v1b1
+
+metadata:
+  name: my-job
+
+containers:
+  main-container:
+    #image: registry/my-image:1.0.0
+    image: nginx
