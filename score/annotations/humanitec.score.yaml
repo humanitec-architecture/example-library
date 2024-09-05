@@ -1,8 +1,15 @@
 apiVersion: humanitec.org/v1b1
 
 spec:
-  annotations:
-    annotationkey: annotationvalue
+  # Set annotations on the Kubernetes Deployment
+  deployment:
+    annotations:
+      deploymentannotationkey: deploymentannotationvalue
+  # Set annotations on the Kubernetes Pod
+  pod:
+    annotations:
+      podannotationkey: podannotationvalue
+  # Set annotations on the Kubernetes Service
   service:
     annotations:
       serviceannotationkey: serviceannotationvalue
