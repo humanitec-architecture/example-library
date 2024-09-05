@@ -1,0 +1,15 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  deployment:
+    # Set annotations and labels in Deployment metadata
+    annotations:
+      deploymentannotationkey: deploymentannotationvalue
+    labels:
+      deploymentlabelkey: deploymentlabelvalue
+    # Set any property of the DeploymentSpec
+    minReadySeconds: 10
+    replicas: 2
+    strategy:
+      rollingUpdate:
+        maxSurge: 30%
