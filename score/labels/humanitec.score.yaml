@@ -1,8 +1,15 @@
 apiVersion: humanitec.org/v1b1
 
 spec:
-  labels:
-    labelkey: labelvalue
+  # Set labels on the Kubernetes Deployment
+  deployment:
+    labels:
+      deploymentlabelkey: deploymentlabelvalue
+  # Set labels on the Kubernetes Pod
+  pod:
+    labels:
+      podlabelkey: podlabelvalue
+  # Set labels on the Kubernetes Service
   service:
     labels:
       servicelabelkey: servicelabelvalue
