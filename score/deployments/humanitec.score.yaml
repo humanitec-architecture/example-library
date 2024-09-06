@@ -13,3 +13,9 @@ spec:
     strategy:
       rollingUpdate:
         maxSurge: 30%
+  # Set properties of the PodSpec, e.g.:
+  pod:
+    nodeSelector:
+      topology.kubernetes.io/region: europe-west3
+    os:
+      name: linux
