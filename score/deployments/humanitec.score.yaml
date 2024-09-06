@@ -7,7 +7,7 @@ spec:
       deploymentannotationkey: deploymentannotationvalue
     labels:
       deploymentlabelkey: deploymentlabelvalue
-    # Set any property of the DeploymentSpec, e.g.:
+    # Set properties of the DeploymentSpec, e.g.:
     minReadySeconds: 10
     replicas: 2
     strategy:

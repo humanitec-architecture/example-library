@@ -7,7 +7,7 @@ spec:
       podannotationkey: podannotationvalue
     labels:
       podlabelkey: podlabelvalue
-    # Set any property of the PodSpec except "containers", e.g.:
+    # Set properties of the PodSpec, e.g.:
     nodeSelector:
       topology.kubernetes.io/region: europe-west3
     os:

@@ -1,5 +1,5 @@
 apiVersion: humanitec.org/v1b1
-# Select the "default-cronjob" Workload Profile
+# Select the "default-cronjob" built-in Workload Profile
 profile: humanitec/default-cronjob
 
 spec:
@@ -14,28 +14,33 @@ spec:
       #schedule: "15 1,7,13,19 * * *"
       schedule: "* * * * *"
   cronjob:
-    # 🚧❌ There is a suspected bug in the Chart preventing from rendering these items properly.
-    # See https://github.com/humanitec/deployment-helm-charts/blob/a3b60f9267cf1da05d5a541033ab6b5304020a19/default-cronjob/templates/cronjob.yaml#L26 ff.
-    # - There is no "annotations:" section
-    # - Values should be drawn from $cronjob instead of $job
+    # 🚧 There is a bug in the Chart preventing from rendering these items properly.
+    # 🚧 See https://github.com/humanitec/deployment-helm-charts/pull/86 -> merged, still needs to be published
+    # 🚧 Retest after publishing
     # Set annotations and labels in the CronJob object metadata
     annotations:
       cronjobannotationkey: cronjobannotationvalue
     labels:
       cronjoblabelkey: cronjoblabelvalue
+    # Set properties of the CronJobSpec, e.g.:
+    timeZone: Africa/Lagos
+    concurrencyPolicy: Forbid
   job:
     # Set annotations and labels in the Job object metadata for the Jobs created out of the CronJob
     annotations:
       jobannotationkey: jobannotationvalue
     labels:
       joblabelkey: joblabelvalue
+    # Set properties of the JobSpec, e.g.:
+    activeDeadlineSeconds: 30
+    ttlSecondsAfterFinished: 3600
   pod:
     # Set Pod annotations and labels in Pod metadata
     annotations:
       podannotationkey: podannotationvalue
     labels:
       podlabelkey: podlabelvalue
-    # Set any property of the PodSpec except "containers", e.g.:
+    # Set properties of the PodSpec, e.g.:
     nodeSelector:
       topology.kubernetes.io/region: europe-west3
     os:

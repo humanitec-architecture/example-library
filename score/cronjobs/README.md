@@ -1,11 +1,7 @@
-Define `schedules` under which the CronJob should run as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/Workloads/controllers/cron-jobs/).
+Define your workload to be deployed as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/Workloads/controllers/cron-jobs/) through a Score extension file.
 
-Refer to the [schedules feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecschedules) for configuration details.
+The extension file needs to request a Workload Profile which creates a CronJob, such as the built-in [default-cronjob](https://developer.humanitec.com/integration-and-extensions/workload-profiles/built-in-workload-profiles/#default-cronjob) Workload Profile.
 
-The Score extension file specifies the `humanitec/default-cronjob` Workload Profile to use which supports the feature.
+The CronJob schedules are defined in the `spec.schedules` section of the extension file. Refer to the [schedules feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecschedules) for configuration details.
 
-You can set any property of the [Kubernetes JobSpec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/cron-job-v1/#CronJobSpec), except `selector` and `template`, on the Kubernetes `Job` objects created from the CronJob through a Score extension file for your workload.
-
-Refer to the [CronJob feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humaniteccronjob) for configuration details.
-
-You can apply properties to the Pods created for the CronJob accurding to the [Kubernetes PodSpec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodSpec), except `containers`. Refer to the [Pod feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecpod) for configuration details.
+You may optionally also set additional properties for the Kubernetes `CronJob`, `Job`, and `Pod` objects which will be created. Refer to the [CronJob feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humaniteccronjob), [Job feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecjob), and [Pod feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecpod) descriptions for details on supported properties.

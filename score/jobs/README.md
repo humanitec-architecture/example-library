@@ -1,7 +1,5 @@
-You can set any property of the [Kubernetes JobSpec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobSpec), except `selector` and `template`, on the Kubernetes `Job` object through a Score extension file for your workload.
+Define your workload to be deployed as a [Kubernetes Job](https://kubernetes.io/docs/concepts/Workloads/controllers/job/) through a Score extension file.
 
-Refer to the [Job feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecjob) for configuration details.
+The extension file needs to request a Workload Profile which creates a Job, such as the built-in [default-job](https://developer.humanitec.com/integration-and-extensions/workload-profiles/built-in-workload-profiles/#default-job) Workload Profile.
 
-The Score extension file specifies the `humanitec/default-job` Workload Profile to use which supports the feature.
-
-You can apply properties to the Pods created for the CronJob accurding to the [Kubernetes PodSpec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodSpec), except `containers`. Refer to the [Pod feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecpod) for configuration details.
+You may optionally also set additional properties for the Kubernetes `Job` and `Pod` objects which will be created. Refer to the [Job feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecjob) and [Pod feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecpod) descriptions for details on supported properties.
