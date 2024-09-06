@@ -11,7 +11,7 @@ spec:
           args:
             - "--hours"
             - "6"
-      #schedule: "15 1,7,13,19 * * *"
+      # 🚧 schedule: "15 1,7,13,19 * * *"
       schedule: "* * * * *"
   cronjob:
     # 🚧 There is a bug in the Chart preventing from rendering these items properly.
