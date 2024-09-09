@@ -1,0 +1,29 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-namespace
+entity:
+  name: custom-namespace
+  type: k8s-namespace
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        # Here the namespace name is shortened to be a maximum of 17 characters,
+        # no matter how long the app and env name might be.
+        init: |
+          name: {{ trunc 8 "${context.env.id}" }}-{{ trunc 8 "${context.app.id}" }}
+        manifests: |
+          namespace.yaml:
+            location: cluster
+            data:
+              apiVersion: v1
+              kind: Namespace
+              metadata:
+                labels:
+                  pod-security.kubernetes.io/enforce: restricted
+                name: {{ .init.name }}
+        outputs: |
+          namespace: {{ .init.name }}
+  criteria:
+    - {}
