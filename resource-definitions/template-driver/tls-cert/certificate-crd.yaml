@@ -1,0 +1,47 @@
+# This Resource Definition creates a certificate custom resource definition,
+# which will instruct cert-manager to create a TLS certificate
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: certificate-crd
+entity:
+  driver_type: humanitec/template
+  name: certificate-crd
+  type: tls-cert
+  criteria:
+  - class: default
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          tlsSecretName: {{ .id }}-tls
+          hostName: ${resources.dns.outputs.host}
+          certificateName: {{ .id }}-cert
+        manifests: |
+          certificate-crd.yml:
+            data:
+              apiVersion: cert-manager.io/v1
+              kind: Certificate
+              metadata:
+                name: {{ .init.certificateName }}
+              spec:
+                secretName: {{ .init.tlsSecretName }}
+                duration: 2160h # 90d
+                renewBefore: 720h # 30d
+                isCA: false
+                privateKey:
+                  algorithm: RSA
+                  encoding: PKCS1
+                  size: 2048
+                usages:
+                  - server auth
+                  - client auth
+                dnsNames:
+                  - {{ .init.hostName | toString | toRawJson }}
+                # The name of the issuerRef must point to the issuer / clusterIssuer in your cluster
+                issuerRef:
+                  name: letsencrypt-prod
+                  kind: ClusterIssuer
+            location: namespace
+        outputs: |
+          tls_secret_name: {{ .init.tlsSecretName }}

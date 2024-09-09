@@ -1,0 +1,3 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for managing [TLS Certificates](https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets) in your cluster.
+
+* [`certificate-crd.yaml`](./certificate-crd.yaml): Add a [certificate custom resource definition](https://cert-manager.io/docs/usage/certificate/) in the namespace of your deployment. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).

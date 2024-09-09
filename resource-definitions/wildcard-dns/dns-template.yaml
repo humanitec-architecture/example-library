@@ -1,0 +1,12 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: dns-template
+entity:
+  name: dns-template
+  type: dns
+  driver_type: humanitec/dns-wildcard
+  driver_inputs:
+    values:
+      domain: "my-test-domain.com"
+      template: "preview-${context.app.id}-${context.env.id}"
