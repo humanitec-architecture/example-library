@@ -25,9 +25,9 @@ resource "humanitec_resource_definition" "example-resource" {
     values_string = jsonencode({
       # Connection information to the target Git repo
       source = {
-        path = "some-resource-type/terraform"
-        rev  = "refs/heads/main"
-        url  = "git@my-domain.com:my-org/my-repo.git"
+        path    = "some-resource-type/terraform"
+        branch  = "refs/heads/main"
+        url     = "git@my-domain.com:my-org/my-repo.git"
       }
       # ...
     })
