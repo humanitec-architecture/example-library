@@ -1,0 +1,10 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  service:
+    # Set annotations on the Kubernetes Service
+    annotations:
+      serviceannotationkey: serviceannotationvalue
+    # Set labels on the Kubernetes Service
+    labels:
+      servicelabelkey: servicelabelvalue
