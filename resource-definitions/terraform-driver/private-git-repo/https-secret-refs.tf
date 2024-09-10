@@ -26,7 +26,7 @@ resource "humanitec_resource_definition" "example-resource" {
       # Connection information to the target Git repo
       source = {
         path = "some-resource-type/terraform"
-        rev  = "refs/heads/main"
+        branch  = "refs/heads/main"
         url  = "https://my-domain.com/my-org/my-repo.git"
       }
       # ...
