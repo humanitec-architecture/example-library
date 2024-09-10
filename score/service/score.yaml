@@ -4,8 +4,7 @@ metadata:
 
 containers:
   demo:
-    #image: registry/my-image:1.0.0
-    image: nginx
+    image: registry/my-image:1.0.0
 service:
   ports:
     www:
