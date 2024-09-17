@@ -1,18 +1,62 @@
 # Backends
 
-Humanitec manages the state file for the `local` backend. This is the backend that is used if no backend is specified.
+When a `terraform apply` is executed, data and metadata is generated that must be stored to be able to keep track of the resources that have been created. For example, the ID of an S3 bucket might be generated. This ID is needed in order to update or destroy the bucket on future invocations. This data is stored in a [Terraform State file](https://developer.hashicorp.com/terraform/language/v1.5.x/state). The state file should be considered _sensitive data_ as it can contain secrets such as credentials or keys.
 
-In order to manage your own state, you will need to define your own backend. We recommend that the backend configuration is defined in the `script` part of the Resource Definition - i.e. as an `override.tf` file (see the [Inputs of the Terraform Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/#inputs)). This allows the backend to be tuned per resource instance.
+Terraform provides various ways storing the state file in different places. These are called [Backends](https://developer.hashicorp.com/terraform/language/v1.5.x/settings/backends/configuration).
 
-In order to centralize configuration, it is also recommended to create a `config` resource that can be used to centrally manage the backend configuration.
+_Humanitec recommends that you configure a backend for all Resource Definitions using the Terraform Driver. That way you maintain control over the state file and any sensitive data it may contain._
 
-In this example, there are two `config` resources defined. Both are using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) to generate outputs for use in the example Resource Definition:
+## Configuring a backend
 
-- [`backend-config.yaml`](./backend-config.yaml) which provides shared backend configuration that can be used across Resource Definitions.
-- [`account-config-aws.yaml`](./account-config-aws.yaml) which provides credentials used by the provider.
+### Terraform block
 
-The example Resource Definition [`s3-backend.yaml`](./s3-backend.yaml) does the following:
+Backend configuration can be defined in the [`terraform` block](https://developer.hashicorp.com/terraform/language/v1.5.x/settings). Terraform imposes limitations on the `terraform` block. For example, Terraform variables cannot be used to parameterize the `terraform` block.  This means that the terraform block must be generated ahead of time.
 
-- Configures a backend using the [`backend-config.yaml`](./backend-config.yaml).
-- Configures the provider using a different set of credentials from [`account-config-aws.yaml`](./account-config-aws.yaml).
-- Provisions an s3 bucket.
+Backends can be configured via a `backend` block inside the `terraform` block. An example block would be:
+
+```
+terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "path/to/my/key"
+    region = "us-east-1"
+  }
+}
+```
+
+
+### Unique state key
+
+The key used to identify the terraform state needs to be unique to all *instances* of a resource being created. A resource is uniquely described by its context. That is the application ID, environment ID, Type and Class of the resource and the Resource ID.
+
+Here is an example string of placeholders that will uniquely define a resource.
+
+```
+${context.app.id}_${context.env.id}_${context.res.type}_${context.res.class}_${context.res.id}
+```
+
+A less descriptive, but equally unique key would be the Globally Unique RESource ID (GUResID). This is available for the current resource via this placeholder:
+
+```
+${context.res.guresid}
+```
+
+### Credentials
+
+State files often contain sensitive data. Therefore they should be stored on backend that support authorization. This means that the backend should be configured with credentials in Terraform.
+
+There are 2 broad types of credentials that could be used:
+
+- Temporary credentials
+- Long lived credentials
+
+The Platform Orchestrator supports Temporary Credentials via [Cloud Accounts](https://developer.humanitec.com/platform-orchestrator/security/cloud-accounts/overview/). All backends can be configured via environment variables, so it is recommended to use the [`credentials_config` object](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform/#inputs) to specify credentials via the appropriate environment variable for the backend.
+
+For Long lived credentials, it is recommended to store the credentials in a config resource definition and inject them using a placeholder.
+
+# Examples
+
+The following examples of configuring backends are provided:
+
+- [S3 backend using temporary credentials](./s3/README.md)
+- [GitLab HTTP backed using long lived credentials](./gitlab/README.md)
