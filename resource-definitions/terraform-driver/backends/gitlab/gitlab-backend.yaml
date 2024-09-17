@@ -1,0 +1,28 @@
+# This Resource Definition uses GitLab as the Terraform backend to store Terraform state
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-terraform-gitlab-backend-s3
+entity:
+  driver_inputs:
+    values:
+      files:
+        main.tf: |
+          resource "random_id" "thing" {
+            byte_length = 8
+          }
+
+          output "bucket" {
+            value = random_id.thing.hex
+          }
+    secrets:
+      files:
+        # We don't supply the res_id so that it can be passed through to build the state key
+        backend.tf: ${resources['config.tf-runner'].outputs.backend_tf}
+  driver_type: humanitec/terraform
+  name: example-terraform-gitlab-backend-s3
+  type: s3
+
+  # Supply matching criteria
+  criteria: []
+  

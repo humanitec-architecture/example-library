@@ -1,0 +1,20 @@
+# This Resource Definition provides configuration for using an S3 bucket to store the Terraform state.
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: tf-backend-config
+entity:
+  criteria:
+    # This res_id is used in the resource reference in the s3-backend Resource Definition.
+    - res_id: tf-backend
+
+  driver_account: aws-ref-arch
+  driver_inputs:
+    values:
+      bucket: my-terraform-state-bucket
+      prefix: tf-state/
+      region: us-east-1
+
+  driver_type: humanitec/echo
+  name: tf-backend-config
+  type: config

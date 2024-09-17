@@ -1,0 +1,38 @@
+# This Resource Definition uses an S3 bucket as the Terraform backend to store Terraform state
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: example-terraform-s3-backend-s3
+entity:
+  driver_account: ${resources.config#tf-backend.account}
+  driver_inputs:
+    values:
+      credentials_config:
+        environment:
+          AWS_ACCESS_KEY_ID: "AccessKeyId"
+          AWS_SECRET_ACCESS_KEY: "SecretAccessKey"
+          AWS_SESSION_TOKEN: "SessionToken"
+      script: |
+        terraform {
+          backend "s3" {
+            bucket = "${resources.config#tf-backend.outputs.bucket}"
+            key    = "${resources.config#tf-backend.outputs.prefix}${context.app.id}/${context.env.id}/${context.res.type}.${context.res.class}/${context.res.id}"
+            region = "${resources.config#tf-backend.outputs.region}"
+          }
+        }
+
+        resource "random_id" "thing" {
+          byte_length = 8
+        }
+
+        output "bucket" {
+          value = "$\{random_id.thing.hex}"
+        }
+
+  driver_type: humanitec/terraform
+  name: s3-backend-example
+  type: s3
+
+  # Supply matching criteria
+  criteria: []
+  
