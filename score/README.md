@@ -21,4 +21,12 @@ Usage notes:
 - If no Score file or no Score extension file is shown, no particular configuration is required through that file.
 - A Score extension file alone is never sufficient to perform a Workload Deployment. If no Score file is shown, you may choose one of your own, e.g. the [Hello World](https://developer.humanitec.com/score/getting-started/hello-world/) example.
 - A Score file is picked up automatically if present in the same directory and named `score.yaml`.
-- A Score extension file is picked up automatically if present in the same directory and named `humanitec.score.yaml`.
+- A Score extension file is not picked up automatically, it must be spefified using the `--extensions` flag.
+- Make sure to use the proper types in your Score and Score extensions files to prevent deployment errors. They will be passed through as-is. E.g. when setting the `boolean` value for the `setHostnameAsFQDN` property in the [PodSpec](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#PodSpec), configure it in the extension file like this:
+
+```yaml
+apiVersion: humanitec.org/v1b1
+spec:
+  pod:
+    setHostnameAsFQDN: true # Not "true"
+```

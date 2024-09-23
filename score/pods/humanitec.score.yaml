@@ -1,0 +1,14 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  pod:
+    # Set Pod annotations and labels in the Pod metadata
+    annotations:
+      podannotationkey: podannotationvalue
+    labels:
+      podlabelkey: podlabelvalue
+    # Set properties of the PodSpec, e.g.:
+    nodeSelector:
+      topology.kubernetes.io/region: europe-west3
+    os:
+      name: linux

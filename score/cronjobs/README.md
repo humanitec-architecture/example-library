@@ -1,5 +1,7 @@
-Define `schedules` under which the Workload should run as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/Workloads/controllers/cron-jobs/).
+Define your workload to be deployed as a [Kubernetes CronJob](https://kubernetes.io/docs/concepts/Workloads/controllers/cron-jobs/) through a Score extension file.
 
-Refer to the [schedules feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecschedules) for configuration details.
+The extension file needs to request a Workload Profile which creates a CronJob, such as the built-in [default-cronjob](https://developer.humanitec.com/integration-and-extensions/workload-profiles/built-in-workload-profiles/#default-cronjob) Workload Profile.
 
-The Score extension file specifies the `humanitec/default-cronjob` Workload Profile to use which supports the feature.
+The CronJob schedules are defined in the `spec.schedules` section of the extension file. Refer to the [schedules feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecschedules) for configuration details.
+
+You may optionally also set additional properties for the Kubernetes `CronJob`, `Job`, and `Pod` objects which will be created. You can set almost any property of the Kubernetes API specifications for those objects. Refer to the [CronJob feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humaniteccronjob), [Job feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecjob), and [Pod feature](https://developer.humanitec.com/integration-and-extensions/workload-profiles/features/#humanitecpod) descriptions for details on supported properties.

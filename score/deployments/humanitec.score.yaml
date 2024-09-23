@@ -1,0 +1,21 @@
+apiVersion: humanitec.org/v1b1
+
+spec:
+  deployment:
+    # Set annotations and labels in the Deployment object metadata
+    annotations:
+      deploymentannotationkey: deploymentannotationvalue
+    labels:
+      deploymentlabelkey: deploymentlabelvalue
+    # Set properties of the DeploymentSpec, e.g.:
+    minReadySeconds: 10
+    replicas: 2
+    strategy:
+      rollingUpdate:
+        maxSurge: 30%
+  # Set properties of the PodSpec, e.g.:
+  pod:
+    nodeSelector:
+      topology.kubernetes.io/region: europe-west3
+    os:
+      name: linux

@@ -1,0 +1,25 @@
+apiVersion: humanitec.org/v1b1
+# Select the "default-job" bulit-in Workload Profile
+profile: humanitec/default-job
+
+spec:
+  job:
+    # Set annotations and labels in the Job object metadata
+    annotations:
+      jobannotationkey: jobannotationvalue
+    labels:
+      joblabelkey: joblabelvalue
+    # Set properties of the JobSpec, e.g.:
+    activeDeadlineSeconds: 30
+    ttlSecondsAfterFinished: 3600
+  pod:
+    # Set Pod annotations and labels in Pod metadata
+    annotations:
+      podannotationkey: podannotationvalue
+    labels:
+      podlabelkey: podlabelvalue
+    # Set properties of the PodSpec, e.g.:
+    nodeSelector:
+      topology.kubernetes.io/region: europe-west3
+    os:
+      name: linux
