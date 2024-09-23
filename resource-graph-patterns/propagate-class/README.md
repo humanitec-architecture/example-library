@@ -44,7 +44,27 @@ This example will result in a single pod being deployed to a Kubernetes Cluster.
    humctl apply -f ./resource-definitions
    ```
 
-3. Deploy the score workload:
+3. Create the Resource Classes
+
+   While not technically required, it is recommended to explicitly [create Resource Classes](https://developer.humanitec.com/platform-orchestrator/resources/resource-classes/#creating-a-resource-class) for types used by developers in Score.
+
+   ```bash
+   humctl api post "/orgs/${HUMANITEC_ORG}/resources/types/s3/classes" \
+   -d '{
+   "id": "one",
+   "description": "Sample Resource Class one"
+   }'
+   ```
+
+   ```bash
+   humctl api post "/orgs/${HUMANITEC_ORG}/resources/types/s3/classes" \
+   -d '{
+   "id": "two",
+   "description": "Sample Resource Class two"
+   }'
+   ```
+
+4. Deploy the Score workload:
 
    ```bash
    humctl score deploy --org "${HUMANITEC_ORG}" --app "${HUMANITEC_APP}" --env "${HUMANITEC_ENV}" --token "${HUMANITEC_TOKEN}
