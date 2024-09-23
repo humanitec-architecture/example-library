@@ -11,12 +11,8 @@ spec:
           args:
             - "--hours"
             - "6"
-      # 🚧 schedule: "15 1,7,13,19 * * *"
-      schedule: "* * * * *"
+      schedule: "15 1,7,13,19 * * *"
   cronjob:
-    # 🚧 There is a bug in the Chart preventing from rendering these items properly.
-    # 🚧 See https://github.com/humanitec/deployment-helm-charts/pull/86 -> merged, still needs to be published
-    # 🚧 Retest after publishing
     # Set annotations and labels in the CronJob object metadata
     annotations:
       cronjobannotationkey: cronjobannotationvalue
