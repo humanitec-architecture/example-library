@@ -22,5 +22,3 @@ containers:
 resources:
   my-s3:
     type: s3
-    # Change the class to "two" 
-    class: one
