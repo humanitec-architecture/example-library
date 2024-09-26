@@ -1,0 +1,21 @@
+# Example Score file for a Workload using a Shared Resource to provide its DNS name to another Workload
+apiVersion: score.dev/v1b1
+metadata:
+  name: shared-resource-example-backend
+
+containers:
+  backend:
+    image: my-be-service:latest
+
+resources:
+  # This resource becomes a Shared Resource by assiging it an "id"
+  # Other Workloads using the same id will reference the same resource
+  my-dns:
+    type: dns
+    id: external-dns
+  my-route:
+    type: route
+    params:
+      host: ${resources.my-dns.host}
+      path: /
+      port: 8765

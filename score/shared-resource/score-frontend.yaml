@@ -1,0 +1,25 @@
+# Example Score file for a Workload using a Shared Resource to obtain the DNS name of another Workload
+apiVersion: score.dev/v1b1
+metadata:
+  name: shared-resource-example-frontend
+
+containers:
+  frontend:
+    image: my-fe-service:latest
+    variables:
+      # Inject the DNS name of the backend service as an environment variable
+      API_URL: https://${resources.api-dns.host}
+
+resources:
+  # This resource becomes a Shared Resource by assiging it an "id"
+  # Other Workloads using the same id will reference the same resource
+  api-dns:
+    type: dns
+    id: external-dns
+  fe-dns:
+    type: dns
+  fe-route:
+    type: route
+    host: ${resources.fe-dns.host}
+      path: /
+      port: 80
