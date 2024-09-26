@@ -4,9 +4,9 @@ Workloads using the Shared Resource will then reference the same node in the Res
 
 ### Example: Shared DNS
 
-This example shows a frontend and a backend workload. Both are exposed via DNS. The frontend is exposed via an external DNS, and it needs to access the backend via it associated DNS name as well. It therefore requires the backend DNS name to be injected as an environment variable.
+This example shows a frontend and a backend Workload. Both are exposed via DNS. The frontend is exposed via an external DNS, and it needs to access the backend via it associated DNS name as well. It therefore requires the backend DNS name to be injected as an environment variable.
 
-To achieve this, the backend `dns` is made a Shared Resource by assigning it an `id` in the Score files. Both Score files need to use the same `id` to reference the same Resource.
+To achieve this, the backend `dns` is made a Shared Resource by assigning it an `id` in Score. Both Score files need to use the same `id` to reference the same Resource.
 
 Note that the Workloads refer to the Shared Resource using a different resource name (`api-dns` vs. `my-dns`). That name is local to the Score file and may be different.
 

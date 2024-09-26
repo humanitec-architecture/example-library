@@ -12,7 +12,7 @@ resources:
   # Other Workloads using the same id will reference the same resource
   my-dns:
     type: dns
-    id: external-dns
+    id: backend-dns
   my-route:
     type: route
     params:

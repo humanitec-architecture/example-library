@@ -15,7 +15,7 @@ resources:
   # Other Workloads using the same id will reference the same resource
   api-dns:
     type: dns
-    id: external-dns
+    id: backend-dns
   fe-dns:
     type: dns
   fe-route:
