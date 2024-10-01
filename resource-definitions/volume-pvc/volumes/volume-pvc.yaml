@@ -1,0 +1,14 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-pvc
+entity:
+  type: volume
+  driver_type: humanitec/volume-pvc
+  name: volume-pvc
+  driver_inputs:
+    values:
+      access_modes: ReadWriteOnce
+      capacity: 10Gi
+  criteria:
+  - {}
