@@ -1,4 +1,6 @@
+# This Resource Definition shows how to add annotations to the Kubernetes service object using the Template Driver
 apiVersion: entity.humanitec.io/v1b1
+
 kind: Definition
 metadata:
   id: annotations
