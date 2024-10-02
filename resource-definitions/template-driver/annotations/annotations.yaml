@@ -1,0 +1,23 @@
+# This Resource Definition shows how to add annotations to the Kubernetes service object using the Template Driver
+apiVersion: entity.humanitec.io/v1b1
+
+kind: Definition
+metadata:
+  id: annotations
+entity:
+  name: annotations
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update:
+            {{- if .resource.spec.service }}
+            {{- $port := values .resource.spec.service.ports | first }}
+            - op: add
+              path: /spec/service/annotations/cloud.google.com~1neg
+              value: '{"ingress":true,"exposed_ports":{ {{- $port.container_port | quote -}} :{}}}'
+            {{- end}}
+  criteria:
+    - {}
