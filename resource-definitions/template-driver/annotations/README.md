@@ -2,4 +2,4 @@ This section shows how to use the [Template Driver](https://developer.humanitec.
 
 While it is also possible to [set annotations via Score](https://developer.humanitec.com/examples/score/annotations/), the approach shown here shifts the management of annotations down to the Platform, ensuring consistency and relieving developers of the task to repeat common annotations for each Workload in the Score extension file.
 
-The example illustrates an annotation on the Kubernetes Service object (specific to Google Kubernetes Engine in this case). But if you want to see a more generic approach with annotations on Workloads too, you can follow the same approach as described in the [example with labels](../labels/).
+The example illustrates an annotation on the Kubernetes Service object (specific to Google Kubernetes Engine in this case). But if you want to see a more generic approach with annotations on Workloads too, you can follow the same approach as described in the [example with labels](https://developer.humanitec.com/examples/resource-definitions/template-driver/labels/).
