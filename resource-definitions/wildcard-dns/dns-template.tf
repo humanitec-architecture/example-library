@@ -6,7 +6,7 @@ resource "humanitec_resource_definition" "dns-template" {
   driver_inputs = {
     values_string = jsonencode({
       "domain"   = "my-test-domain.com"
-      "template" = "preview-$${context.app.id}-$${context.env.id}"
+      "template" = "{{ index (splitList "." "$${context.res.id}") 1 }}-$${context.env.id}-$${context.app.id}"
     })
   }
 }

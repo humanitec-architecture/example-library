@@ -1,3 +1,3 @@
-This section contains example Resource Definitions using the [Wildcard DNS Driver](https://developer.humanitec.com/integration-and-extensions/drivers/dns-drivers/wildcard/) for managing DNS records for routing and ingress inside the cluster.
+This section contains example Resource Definitions using the [Wildcard DNS Driver](https://developer.humanitec.com/integration-and-extensions/drivers/dns-drivers/wildcard/) returning an externally managed DNS record for routing and ingress inside the cluster.
 
-* [`dns-template.yaml`](./dns-template.yaml): Shows how to use the Wildcard DNS Driver to return the name of an externally managed DNS record. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+The `provision` section is to [co-provision](https://developer.humanitec.com/platform-orchestrator/resources/resource-graph/#co-provision-resources) an `ingress` resource, see [Routes](https://developer.humanitec.com/integration-and-extensions/networking/routes/) to learn how the networking Resource Types work together.
