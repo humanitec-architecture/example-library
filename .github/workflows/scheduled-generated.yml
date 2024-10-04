@@ -13,8 +13,12 @@ jobs:
           fetch-depth: 0
       - name: Generate Terraform Resource Definitions
         run: node ./tools/generate-terraform.js resource-definitions
+      - name: Generate Terraform Resource Graph Patterns
+        run: node ./tools/generate-terraform.js resource-graph-patterns
       - name: Format Terraform Resource Definitions
         run: terraform fmt -recursive resource-definitions/
+      - name: Format Terraform Resource Graph Patterns
+        run: terraform fmt -recursive resource-graph-patterns/
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
