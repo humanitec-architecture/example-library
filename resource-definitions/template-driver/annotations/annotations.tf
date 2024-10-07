@@ -12,7 +12,7 @@ update:
   {{- $port := values .resource.spec.service.ports | first }}
   - op: add
     path: /spec/service/annotations/cloud.google.com~1neg
-    value: '{"ingress":true,"exposed_ports":{ {{- $port.container_port | quote -}} :{}}}'
+    value: '{"ingress":true,"exposed_ports":{ {{- $port.service_port | quote -}} :{}}}'
   {{- end}}
 END_OF_TEXT
       }
