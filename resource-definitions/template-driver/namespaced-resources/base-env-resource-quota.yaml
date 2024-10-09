@@ -1,0 +1,25 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: base-env-resource-quota
+entity:
+  name: base-env-resource-quota
+  type: base-env
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests: |-
+          quota.yaml:
+            location: namespace
+            data:
+              apiVersion: v1
+              kind: ResourceQuota
+              metadata:
+                name: compute-resources
+              spec:
+                hard:
+                  limits.cpu: 1
+                  limits.memory: 256Mi
+  criteria:
+  - res_id: resource-quota
