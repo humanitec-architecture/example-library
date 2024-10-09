@@ -1,0 +1,13 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: base-env-default
+entity:
+  name: base-env-default
+  type: base-env
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      namespaced-resources:
+        resource-quota: ${resources["base-env.default#resource-quota"].guresid}
+        network-policies: ${resources["base-env.default#network-policies"].guresid}

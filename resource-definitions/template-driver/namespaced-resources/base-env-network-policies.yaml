@@ -1,0 +1,25 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: base-env-network-policies
+entity:
+  name: base-env-network-policies
+  type: base-env
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests: |-
+          network-policies.yaml:
+            location: namespace
+            data:
+              apiVersion: networking.k8s.io/v1
+              kind: NetworkPolicy
+              metadata:
+                name: default-deny-egress
+              spec:
+                podSelector: {}
+                policyTypes:
+                - Egress
+  criteria:
+  - res_id: network-policies
