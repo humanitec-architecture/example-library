@@ -3,12 +3,12 @@ on:
   schedule:
     - cron: "0 9 * * 1-5"
   workflow_dispatch:
-  # push: # uncomment to test this workflow
+  push: # uncomment to test this workflow
 jobs:
   update:
-    # Pinning the runner to a version supporting Terraform
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
+      - uses: hashicorp/setup-terraform@v3
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
