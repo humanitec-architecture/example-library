@@ -3,7 +3,7 @@ on:
   schedule:
     - cron: "0 9 * * 1-5"
   workflow_dispatch:
-  push: # uncomment to test this workflow
+  # push: # uncomment to test this workflow
 jobs:
   update:
     runs-on: ubuntu-latest
