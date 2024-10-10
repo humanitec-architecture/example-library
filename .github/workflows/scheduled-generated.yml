@@ -6,7 +6,8 @@ on:
   # push: # uncomment to test this workflow
 jobs:
   update:
-    runs-on: ubuntu-latest
+    # Pinning the runner to a version supporting Terraform
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
