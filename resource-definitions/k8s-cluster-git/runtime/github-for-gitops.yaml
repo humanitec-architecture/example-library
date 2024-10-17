@@ -14,11 +14,17 @@ entity:
       branch: development
       # Path in the git repository, optional. If not specified, the root is used.
       path: "${context.app.id}/${context.env.id}"
-      # Load Balancer, optional. Though it's not related to the git, it's used to create ingress in the target K8s cluster.
+      # Load Balancer, optional. Though it's not related to the GitOps setup, it's used to create ingress in the target K8s cluster if such resources are part of the Resource Graph, just like with a non-GitOps cluster.
       loadbalancer: 35.10.10.10
     secrets:
       credentials:
         ssh_key: my-git-ssh-key
         # Alternative to ssh_key: password or Personal Account Token
         # password: my-git-ssh-pat
-
+  
+  # To co-provision a non-GitOps cluster resource from which the Orchestrator will fetch runtime info.
+  # The provision key specifies `k8s-cluster-runtime` as Resource Id and it must be used in the non-GitOps cluster resource definition Matching Criteria.
+  provision:
+    k8s-cluster#k8s-cluster-runtime:
+      is_dependent: false
+      match_dependents: false
