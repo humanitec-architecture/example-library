@@ -21,4 +21,9 @@ entity:
         ssh_key: my-git-ssh-key
         # Alternative to ssh_key: password or Personal Account Token
         # password: my-git-ssh-pat
-
+  
+  # To co-provision another k8s-cluster resource from which the Orchestrator will fetch runtime info
+  provision:
+    k8s-cluster#k8s-cluster-runtime:
+      is_dependent: false
+      match_dependents: false
