@@ -1,0 +1,19 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: external-dns-cert-manager-dns
+entity:
+  driver_type: humanitec/dns-wildcard
+  driver_inputs:
+    values:
+      # Update to your DNS superdomain
+      domain: staging.hosted-domain.com
+      # Update to your preferred template for the subdomain
+      template: "${context.env.id}-${context.app.id}"
+  name: external-dns-cert-manager-dns
+  type: dns
+  provision:
+    ingress: {}
+  criteria:
+    # Change to match the name of the app you want this to apply to
+    - app_id: external-dns-cert-manager-example-app

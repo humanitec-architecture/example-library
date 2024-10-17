@@ -1,0 +1,22 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: external-dns-cert-manager-ingress
+entity:
+  driver_type: humanitec/ingress
+  driver_inputs:
+    values:
+      annotations:
+        # Replace with your Cert Manager Cluster Issuer
+        cert-manager.io/cluster-issuer: my-cluster-certificate-issue
+        external-dns.alpha.kubernetes.io/hostname: ${resources.dns.outputs.host}
+      class: nginx
+      # Use the Globally Unique RESource ID of the DNS resource in order to 
+      # have a secret name that is unique to the DNS. Cert Manager will create
+      # a secret with this name.
+      tls_secret_name: tls-cert-${resources.dns.guresid}
+  name: external-dns-cert-manager-ingress
+  type: ingress
+  criteria:
+    # Change to match the name of the app you want this to apply to
+  - app_id: external-dns-cert-manager-example-app
