@@ -10,6 +10,8 @@ entity:
     values:
       # Git repository for pushing manifests
       url: git@github.com:example-org/gitops-repo.git
+      # When using a GitHub personal access token, use the HTTPS URL:
+      # url: https://github.com/example-org/gitops-repo.git
       # Branch in the git repository, optional. If not specified, the default branch is used.
       branch: development
       # Path in the git repository, optional. If not specified, the root is used.
