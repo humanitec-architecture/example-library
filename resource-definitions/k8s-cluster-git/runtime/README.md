@@ -1,6 +1,6 @@
 ## Connecting to a Git repository (GitOps mode)
 
-This section contains example Resource Definitions for connecting to a Git repository to push application CRs ([GitOps mode](https://developer.humanitec.com/integration-and-extensions/humanitec-operator/architecture/#modes-of-operation-humanitec-operator-with-gitops-mode)).
+This section contains example Resource Definitions for connecting to a Git repository to push application CRs in [GitOps mode](https://developer.humanitec.com/integration-and-extensions/humanitec-operator/architecture/#modes-of-operation-gitops-mode).
 
 It also provides a solution to specify the non GitOps-cluster where the GitOps deploys workloads.  
 To retrieve the status of deployed workloads, the Orchestrator searches for a `k8s-cluster` Resource with the Id `k8s-cluster-runtime`. If it doesn't find this resource, it defaults to the `k8s-cluster` resource with the Id `k8s-cluster`. When the default cluster is a GitOps-managed cluster, an additional non-GitOps cluster is required to gather runtime information for workloads deployed by the GitOps operator. This example demonstrates that process.
