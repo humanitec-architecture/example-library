@@ -3,6 +3,8 @@ apiVersion: humanitec.org/v1b1
 spec:
   containers:
     demo:
-      env:
+      variables:
       - name: "SOME"
         value: "VARIABLE"
+      - name: "SHARED_VALUE"
+        value": "$${values.SOMETHING}"
