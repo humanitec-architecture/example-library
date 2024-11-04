@@ -4,7 +4,5 @@ spec:
   containers:
     demo:
       variables:
-      - name: "SOME"
-        value: "VARIABLE"
-      - name: "SHARED_VALUE"
-        value": "$${values.SOMETHING}"
+        SOME: VARIABLE
+        SHARED_VALUE: $${values.SOMETHING}
