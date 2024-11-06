@@ -1,0 +1,57 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: endpoint-example-endpoint
+entity:
+  driver_inputs:
+    values:
+      # Commented out properties are optional
+
+      # scheme: http
+      host: example.com
+      port: 8080
+      # path: ""
+      # query: ""
+      # fragment: ""
+
+      templates:
+        init: |
+          {{- $username := .driver.secrets.username | default "" }}
+          {{- $password := .driver.secrets.password | default "" }}
+          username: {{ $username | toRawJson }}
+          password: {{ $password | toRawJson }}
+          userinfo: {{ if $username }}
+            {{- $username }}:
+            {{- end }}
+            {{- $password }}
+          hostport: {{ .driver.values.host }}
+            {{- if .driver.values.port -}}
+              :{{ .driver.values.port }}
+            {{- end }}
+        outputs: |
+          scheme: {{ .driver.values.scheme | default "http" }}
+          host: {{ .driver.values.host }}
+          port: {{ .driver.values.port }}
+          path: {{ .driver.values.path | default "" | toRawJson }}
+          query: {{ .driver.values.query | default "" | toRawJson }}
+          fragment: {{ .driver.values.fragment | default "" | toRawJson }}
+        secrets: |
+          username: {{ .init.username | toRawJson }}
+          password: {{ .init.password | toRawJson }}
+          url: {{ .outputs.values | merge (dict "userinfo" (.init.userinfo | default "") "host" .init.hostport) | urlJoin | toRawJson }}
+
+    # Both username and password are optional
+    # If supplied, they should be secret references to keys in the
+    # secret manager configured for the Humanitec Operator
+
+    # secret_refs:
+    #   username:
+    #     store:
+    #     ref:
+    #   password:
+    #     store:
+    #     ref:
+
+  driver_type: humanitec/template
+  type: endpoint
+  name: endpoint-example-endpoint
