@@ -11,6 +11,9 @@ resource "humanitec_resource_definition" "gke-temporary-credentials" {
       "zone"         = "europe-west2-a"
       "project_id"   = "my-gcp-project"
     })
+    secrets_string = jsonencode({
+      "agent_url" = "$${resources['agent#agent'].outputs.url}"
+    })
   }
 }
 
