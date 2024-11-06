@@ -1,0 +1,18 @@
+# This Resource Definition describes the Humanitec Agent to match for the runtime cluster
+# if the Agent is being used
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: gke-agent
+entity:
+  type: agent
+  name: gke-agent
+  driver_type: humanitec/agent
+  driver_inputs:
+    values:
+      # This property must match the Agent id as it is configured in the Platform Orchestrator
+      id: gke-agent
+  # Set matching criteria so that it is matched along with the runtime cluster Resource Definition
+  criteria:
+  - env_type: development
+    res_id: agent
