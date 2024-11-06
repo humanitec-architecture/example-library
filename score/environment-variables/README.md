@@ -35,4 +35,3 @@ Define environment variables for a container. There are two ways to configure th
             KEY_FOUR: goodbye
     ```
 
-{{% example-file filename="score.yaml" dir="score/environment-variables" githubUrl="https://github.com/humanitec-architecture/example-library/blob/main" %}}
