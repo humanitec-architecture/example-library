@@ -55,3 +55,5 @@ flowchart LR
   end
   resource-graph ~~~ key
 ```
+
+The nfs can be used in score following the example in [Score volumes example](../../../score/volumes/README.md)
