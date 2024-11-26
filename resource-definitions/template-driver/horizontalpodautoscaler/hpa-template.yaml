@@ -12,9 +12,9 @@ entity:
       templates:
         init: |
           workload: {{ index (splitList "." "${context.res.id}") 1 }}
-          maxReplicas: {{ .resource.maxReplicas | 5 }}
-          minReplicas: {{ .resource.minReplicas | 1 }}
-          targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | 80 }}
+          maxReplicas: {{ if .resource.maxReplicas }}{{ min .resource.maxReplicas 10 }}{{ else }}10{{ end }}
+          minReplicas: {{ if .resource.minReplicas }}{{ max .resource.minReplicas 2 }}{{ else }}2{{ end }}
+          targetCPUUtilizationPercentage: {{ if .resource.targetCPUUtilizationPercentage }}{{ max .resource.targetCPUUtilizationPercentage 80 }}{{ else }}80{{ end }}
         manifests: |
           hpa.yaml:
             location: namespace
