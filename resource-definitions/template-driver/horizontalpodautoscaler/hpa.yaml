@@ -1,0 +1,39 @@
+# This Resource Defintion provisions a Kubernetes ServiceAccount
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: hpa
+entity:
+  driver_type: humanitec/template
+  name: hpa
+  type: horizontal-pod-autoscaler
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          workload: {{ index (splitList "." "${context.res.id}") 1 }}
+          maxReplicas: {{ .resource.maxReplicas | 10 }}
+          minReplicas: {{ .resource.minReplicas | 2 }}
+          targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | 50 }}
+        manifests: |
+          hpa.yaml:
+            location: namespace
+            data:
+              apiVersion: autoscaling/v2
+              kind: HorizontalPodAutoscaler
+              metadata:
+                name: {{ .init.workload }}-hpa
+              spec:
+                maxReplicas: {{ .init.maxReplicas }}
+                metrics:
+                - resource:
+                    name: cpu
+                    target:
+                      averageUtilization: {{ .init.targetCPUUtilizationPercentage }}
+                      type: Utilization
+                  type: Resource
+                minReplicas: {{ .init.minReplicas }}
+                scaleTargetRef:
+                  apiVersion: apps/v1
+                  kind: Deployment
+                  name: {{ .init.workload }}
