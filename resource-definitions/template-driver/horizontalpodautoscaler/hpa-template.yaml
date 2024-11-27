@@ -1,4 +1,3 @@
-# This Resource Defintion provisions a Kubernetes ServiceAccount
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
