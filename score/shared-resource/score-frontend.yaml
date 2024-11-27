@@ -20,6 +20,7 @@ resources:
     type: dns
   fe-route:
     type: route
-    host: ${resources.fe-dns.host}
+    params:
+      host: ${resources.fe-dns.host}
       path: /
       port: 80
