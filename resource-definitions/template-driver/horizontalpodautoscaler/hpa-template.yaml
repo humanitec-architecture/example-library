@@ -2,19 +2,19 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: hpa
+  id: hpa-template
 entity:
   driver_type: humanitec/template
-  name: hpa
+  name: hpa-template
   type: horizontal-pod-autoscaler
   driver_inputs:
     values:
       templates:
         init: |
           workload: {{ index (splitList "." "${context.res.id}") 1 }}
-          maxReplicas: {{ if .resource.maxReplicas }}{{ min .resource.maxReplicas 10 }}{{ else }}10{{ end }}
-          minReplicas: {{ if .resource.minReplicas }}{{ max .resource.minReplicas 2 }}{{ else }}2{{ end }}
-          targetCPUUtilizationPercentage: {{ if .resource.targetCPUUtilizationPercentage }}{{ max .resource.targetCPUUtilizationPercentage 80 }}{{ else }}80{{ end }}
+          maxReplicas: {{ .resource.maxReplicas | default 3 }}
+          minReplicas: {{ .resource.minReplicas | default 2 }}
+          targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | default 80 }}
         manifests: |
           hpa.yaml:
             location: namespace
@@ -37,3 +37,5 @@ entity:
                   apiVersion: apps/v1
                   kind: Deployment
                   name: {{ .init.workload }}
+  criteria:
+  - {}
