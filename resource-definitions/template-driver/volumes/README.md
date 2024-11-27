@@ -1,0 +1,3 @@
+This section contains Resource Definitions example for handling Kubernetes [Volumes](https://kubernetes.io/docs/concepts/storage/volumes) by using the [`template`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) Driver to configure your own `PersistentVolume` implementation. You can [see this other example](https://developer.humanitec.com/examples/resource-definitions/volume-pvc/volumes/) if you want to use the `volume-pvc` Driver.
+
+You can find a Score file example using the `horizontal-pod-autoscaler` resource type [here](https://developer.humanitec.com/examples/score/horizontalpodautoscaler/).

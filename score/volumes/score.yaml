@@ -1,15 +1,27 @@
 apiVersion: score.dev/v1b1
 metadata:
   name: my-workload
-
 containers:
-  demo:
-    image: registry/my-image:1.0.0
+  my-container:
+    image: .
     volumes:
-      - source: ${resources.my-volume}
-        target: /mnt/my-volume
-        readOnly: true
-
+    - source: ${resources.my-pvc}
+      target: /target/dir
+    - source: ${resources.my-ebs}
+      target: /ebs-target/dir
+    - source: ${resources.my-ephemeral-volume}
+      target: /tmp/dir
+    - source: ${resources.my-nfs}
+      target: /nfs-target/dir
 resources:
-  my-volume:
+  my-pvc:
     type: volume
+  my-ebs:
+    type: volume
+    class: ebs
+  my-ephemeral-volume:
+    type: volume
+    class: ephemeral
+  my-nfs:
+    type: volume
+    class: nfs
