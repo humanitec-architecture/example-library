@@ -10,10 +10,14 @@ entity:
     values:
       templates:
         init: |
+          {{ $defaultMaxReplicas := 3 }}
+          {{ $defaultMinReplicas := 2 }}
+          {{ $absoluteMaxReplicas := 10 }}
+          {{ $defaultTargetUtilizationPercent := 80 }}
           workload: {{ index (splitList "." "${context.res.id}") 1 }}
-          maxReplicas: {{ .resource.maxReplicas | default 3 }}
-          minReplicas: {{ .resource.minReplicas | default 2 }}
-          targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | default 80 }}
+          maxReplicas: {{ .resource.maxReplicas | default $defaultMaxReplicas | min $absoluteMaxReplicas }}
+          minReplicas: {{ .resource.minReplicas | default $defaultMinReplicas }}
+          targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | default $defaultTargetUtilizationPercent }}
         manifests: |
           hpa.yaml:
             location: namespace
