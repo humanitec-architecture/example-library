@@ -1,0 +1,15 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: hpa-driver
+entity:
+  driver_type: humanitec/hpa
+  name: hpa-driver
+  type: horizontal-pod-autoscaler
+  driver_inputs:
+    values:
+      minReplicas: 2
+      maxReplicas: 5
+      targetCPUUtilizationPercentage: 80
+  criteria:
+  - {}

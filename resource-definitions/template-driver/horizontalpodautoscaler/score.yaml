@@ -1,0 +1,13 @@
+apiVersion: score.dev/v1b1
+metadata:
+  name: my-workload
+containers:
+  my-container:
+    image: .
+resources:
+  hpa:
+    type: horizontal-pod-autoscaler
+    params:
+      maxReplicas: 2
+      minReplicas: 1
+      targetCPUUtilizationPercentage: 80
