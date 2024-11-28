@@ -7,7 +7,7 @@ containers:
 resources:
   hpa:
     type: horizontal-pod-autoscaler
-    params:
-      maxReplicas: 2
-      minReplicas: 1
-      targetCPUUtilizationPercentage: 80
+    params: # optional.
+      maxReplicas: 2 # optional.
+      minReplicas: 1 # optional.
+      targetCPUUtilizationPercentage: 80 # optional.

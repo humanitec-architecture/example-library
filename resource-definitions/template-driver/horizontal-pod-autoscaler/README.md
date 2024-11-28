@@ -1,0 +1,3 @@
+This section contains a Resource Definition example for handling Kubernetes [`HorizontalPodAutoscaler`](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) by using the [`template`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) Driver to configure your own `HorizontalPodAutoscaler` implementation. You can [see this other example](https://developer.humanitec.com/examples/resource-definitions/hpa/horizontal-pod-autoscaler/) if you want to use the `hpa` Driver.
+
+You can find a Score file example using the `horizontal-pod-autoscaler` resource type [here](https://developer.humanitec.com/examples/score/horizontal-pod-autoscaler/).

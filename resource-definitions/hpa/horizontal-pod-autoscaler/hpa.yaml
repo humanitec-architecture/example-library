@@ -1,10 +1,10 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: hpa-driver
+  id: hpa
 entity:
   driver_type: humanitec/hpa
-  name: hpa-driver
+  name: hpa
   type: horizontal-pod-autoscaler
   driver_inputs:
     values:

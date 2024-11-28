@@ -1,3 +1,0 @@
-This section contains example Resource Definitions for handling Kubernetes [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
-
-You can use either the Driver type [`hpa`](https://developer.humanitec.com/integration-and-extensions/drivers/k8-drivers/horizontal-pod-autoscaler/) or you can use the [`template`](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) Driver type, which allows to render your custom Kubernetes YAML object.
