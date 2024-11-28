@@ -1,9 +1,9 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: example-volume-emptydir
+  id: volume-emptydir
 entity:
-  name: example-volume-emptydir
+  name: volume-emptydir
   type: volume
   driver_type: humanitec/template
   driver_inputs:
