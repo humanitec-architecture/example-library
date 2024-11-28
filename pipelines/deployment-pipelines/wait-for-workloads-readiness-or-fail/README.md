@@ -6,6 +6,6 @@ This Pipeline definition shows how to accomplish this.
 
 Note: the `Deployment status` on the Deployment in Humanitec will still be `Successful`.
 
-When the Pipeline is in `Failed` status, `humctl score deploy` or `humctl deploy` will fail. Then to get the associated errors, you can catch the details of errors by combining the result of:
+When the Pipeline is in `Failed` status, `humctl score deploy --wait` or `humctl deploy --wait` will fail. Then to get the associated errors, you can catch the details of errors by combining the result of:
 - `humctl get deployment-error`
 - `humctl api get /orgs/${HUMANITEC_ORG}/apps/${APP}/envs/${ENV}/runtime`
