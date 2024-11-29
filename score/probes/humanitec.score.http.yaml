@@ -3,6 +3,7 @@ apiVersion: humanitec.org/v1b1
 spec:
   containers: 
     demo:
+      # These settings complement the livenessProbe specification in the Score file
       liveness_probe:
         failureThreshold: 5
         initialDelaySeconds: 30
