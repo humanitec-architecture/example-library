@@ -5,7 +5,8 @@ Humanitec Pipelines can be used to wait for the readiness of the Worklaods deplo
 
 This Pipeline definition shows how to accomplish this.
 
-Note: the `Deployment status` on the Deployment in Humanitec will still be `Successful`.
+Note: the `Deployment status` on the Deployment in the Platform Orchestrator will still be `Successful`.
+
 
 When the Pipeline is in `Failed` status, `humctl score deploy --wait` or `humctl deploy --wait` will fail. Then to get the associated errors, you can catch the details of errors by combining the result of:
 - `humctl get deployment-error`
