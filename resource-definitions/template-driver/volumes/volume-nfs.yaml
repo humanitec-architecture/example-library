@@ -77,3 +77,5 @@ entity:
         outputs: |
           volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}
           pvcName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
+  criteria:
+  - class: nfs

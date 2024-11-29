@@ -1,0 +1,15 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-ebs
+entity:
+  type: volume
+  driver_type: humanitec/volume-pvc
+  name: volume-ebs
+  driver_inputs:
+    values:
+      access_modes: ReadWriteOnce
+      capacity: 5Gi
+      storage_class_name: ebs-sc
+  criteria:
+  - class: ebs
