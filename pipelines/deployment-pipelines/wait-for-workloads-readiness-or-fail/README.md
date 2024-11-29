@@ -1,4 +1,5 @@
-When the Platform Orchestrator deploys changes into an Environment, the Deployment status indicates whether it successfully provisioned associated resources and configured the Workloads. It does not necessarily imply that the Workloads are healthy or that the desired functionality is available to end users. The Pipeline will also be successfull in scenario where the Workload will never be `Ready`, for example when the container image doesn't exist (`ImagePullBackOff`), or when an admission controller is blocking the deployment in the Kubernetes cluster, etc.
+When the Platform Orchestrator deploys changes into an Environment, the Deployment status indicates whether it successfully provisioned associated resources and configured the Workloads. It does not necessarily imply that the Workloads are healthy or that the desired functionality is available to end users. The Pipeline will also be successful in scenario where the Workload will never be `Ready`, for example when the container image doesn't exist (`ImagePullBackOff`), or when an admission controller is blocking the deployment in the Kubernetes cluster, etc.
+
 
 Humanitec Pipelines can be used to wait for the readiness of the Worklaods deployed in Kubernetes, and fail the Pipeline if the previous step timed out.
 
