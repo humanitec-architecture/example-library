@@ -17,6 +17,8 @@ concurrency:
 jobs:
   deploy:
     steps:
+    # Taken from default Pipeline definition.
+    # If there is no existing deployment set in the request, create one by applying the delta to the target environment.
     - if: ${{ ! inputs.set_id }}
       name: Create Deployment Set
       id: create-deployment-set
@@ -25,6 +27,8 @@ jobs:
         delta_id: ${{ inputs.delta_id }}
         env_id: ${{ inputs.env_id }}
 
+    # Taken from default Pipeline definition.
+    # Finally deploy the set to the target environment with a custom message and optional value set. 
     - name: Deploy Set To Environment
       uses: actions/humanitec/deploy@v1
       with:
@@ -33,15 +37,18 @@ jobs:
         env_id: ${{ inputs.env_id }}
         message: ${{ inputs.comment }}
 
+    # Waits until all Workloads in an Environment are in a “ready” state, otherwise fails the Pipeline Step after a timeout.
     - name: Wait for Workloads readiness
       continue-on-error: true
       id: wait-for-workloads-readiness
       uses: actions/humanitec/wait-for-readiness@v1
       with:
         env_id: ${{ inputs.env_id }}
+        timeout_minutes: 2
 
+    # Fails the Pipeline Step and writes a log message. 
     - if: ${{ steps.wait-for-workloads-readiness.status == 'failed' }}
       name: Fail if Workloads readiness failed
       uses: actions/humanitec/fail@v1
       with:
-        message: Workloads readiness failed.
+        message: Workloads readiness failed, check the Runtime errors.
