@@ -1,6 +1,8 @@
 apiVersion: score.dev/v1b1
 metadata:
   name: my-workload
+  annotations:
+    podscoreannotationkey: podscoreannotationvalue
 
 containers:
   demo:
