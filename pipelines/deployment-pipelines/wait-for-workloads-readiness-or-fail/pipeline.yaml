@@ -1,0 +1,54 @@
+name: Wait for Workloads readiness or fail
+
+# This pipeline is a deployment request pipeline and runs for any deploy or re-deploy.
+on:
+  deployment_request: {}
+
+# This pipeline needs permissions to deploy to our development environments. We could add staging and production here too.
+permissions:
+  application: developer
+  env-types:
+    development: deployer
+
+# Because this pipeline runs tests, we're going to use concurrency controls to ensure only one deploy and test cycle is running at a time against the target environment.
+concurrency:
+  group: "${{ pipeline.id }}-${{ pipeline.app.id }}-${{ inputs.env_id }}"
+
+jobs:
+  deploy:
+    steps:
+    # Taken from default Pipeline definition.
+    # If there is no existing deployment set in the request, create one by applying the delta to the target environment.
+    - if: ${{ ! inputs.set_id }}
+      name: Create Deployment Set
+      id: create-deployment-set
+      uses: actions/humanitec/apply@v1
+      with:
+        delta_id: ${{ inputs.delta_id }}
+        env_id: ${{ inputs.env_id }}
+
+    # Taken from default Pipeline definition.
+    # Finally deploy the set to the target environment with a custom message and optional value set. 
+    - name: Deploy Set To Environment
+      uses: actions/humanitec/deploy@v1
+      with:
+        set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
+        value_set_version_id: ${{ inputs.value_set_version_id }}
+        env_id: ${{ inputs.env_id }}
+        message: ${{ inputs.comment }}
+
+    # Waits until all Workloads in an Environment are in a “ready” state, otherwise fails the Pipeline Step after a timeout.
+    - name: Wait for Workloads readiness
+      continue-on-error: true # Optional, if you want to have another step after this one in case of failure to write a custom message, send a message in Slack, etc.
+      id: wait-for-workloads-readiness
+      uses: actions/humanitec/wait-for-readiness@v1
+      with:
+        env_id: ${{ inputs.env_id }}
+        timeout_minutes: 2
+
+    # (Optional) Fails the Pipeline Step and writes a custom error message. It's an example that you can adapt and replace by other actions like send a message in Slack, etc.
+    - if: ${{ steps.wait-for-workloads-readiness.status == 'failed' }}
+      name: Fail if Workloads readiness failed
+      uses: actions/humanitec/fail@v1
+      with:
+        message: Workloads readiness failed, check the Runtime errors.
