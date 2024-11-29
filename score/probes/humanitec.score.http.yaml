@@ -10,6 +10,7 @@ spec:
         periodSeconds: 30
         successThreshold: 1
         timeoutSeconds: 5
+      # These settings complement the readinessProbe specification in the Score file
       readiness_probe:
         failureThreshold: 5
         initialDelaySeconds: 30
