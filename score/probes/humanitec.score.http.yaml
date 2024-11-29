@@ -3,35 +3,26 @@ apiVersion: humanitec.org/v1b1
 spec:
   containers: 
     demo:
+      # These settings complement the livenessProbe specification in the Score file
       liveness_probe:
-        type: command
-        command:
-          - "bash"
-          - "-c"
-          - "/app/is_alive.sh"
         failureThreshold: 5
         initialDelaySeconds: 30
         periodSeconds: 30
         successThreshold: 1
         timeoutSeconds: 5
+      # These settings complement the readinessProbe specification in the Score file
       readiness_probe:
-        type: command
-        command:
-          - "bash"
-          - "-c"
-          - "/app/is_ready.sh"
         failureThreshold: 5
         initialDelaySeconds: 30
         periodSeconds: 30
         successThreshold: 1
         timeoutSeconds: 300
       startup_probe:
-        type: command
-        command:
-          - "bash"
-          - "-c"
-          - "/app/is_started.sh"
+        type: "http"
+        path: /healthcheck
+        port: 8000
         failureThreshold: 200
         periodSeconds: 10
         successThreshold: 1
         timeoutSeconds: 1
+        

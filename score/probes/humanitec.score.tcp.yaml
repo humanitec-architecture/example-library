@@ -6,3 +6,23 @@ spec:
       liveness_probe:
         type: tcp
         port: 7001
+        failureThreshold: 5
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      readiness_probe:
+        type: tcp
+        port: 7001
+        failureThreshold: 5
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 300
+      startup_probe:
+        type: tcp
+        port: 8000
+        failureThreshold: 200
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
