@@ -39,14 +39,14 @@ jobs:
 
     # Waits until all Workloads in an Environment are in a “ready” state, otherwise fails the Pipeline Step after a timeout.
     - name: Wait for Workloads readiness
-      continue-on-error: true
+      continue-on-error: true # Optional, if you want to have another step after this one in case of failure to write a custom message, send a message in Slack, etc.
       id: wait-for-workloads-readiness
       uses: actions/humanitec/wait-for-readiness@v1
       with:
         env_id: ${{ inputs.env_id }}
         timeout_minutes: 2
 
-    # Fails the Pipeline Step and writes a log message. 
+    # (Optional) Fails the Pipeline Step and writes a custom error message. It's an example that you can adapt and replace by other actions like send a message in Slack, etc.
     - if: ${{ steps.wait-for-workloads-readiness.status == 'failed' }}
       name: Fail if Workloads readiness failed
       uses: actions/humanitec/fail@v1
