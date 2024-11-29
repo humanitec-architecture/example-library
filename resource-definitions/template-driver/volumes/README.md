@@ -4,4 +4,4 @@ You will find two examples:
 - `volume-emptydir` - in order to inject an `emptyDir` `volume` in a Workload for any request of a `volume` resource with the `class` `ephemeral`.
 - `volume-nfs` - in order to create the associated `PersistentVolumeClaim`, `PersistentVolume` and `volume` in a Workload for any request of a `volume` resource with the `class` `nfs`.
 
-You can find a Score file example using the `volume` resource type [here](https://developer.humanitec.com/examples/score/horizontalpodautoscaler/).
+You can find a Score file example using the `volume` resource type [here](https://developer.humanitec.com/examples/score/volumes/).
