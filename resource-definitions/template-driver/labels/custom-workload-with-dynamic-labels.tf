@@ -9,13 +9,19 @@ resource "humanitec_resource_definition" "custom-workload-with-label" {
         "outputs" = <<END_OF_TEXT
 update:
   - op: add
-    path: /spec/labels
+    path: /spec/deployment/labels
     value:
-      {{- range $key, $val := .resource.spec.labels }}
+      {{- range $key, $val := .resource.spec.deployment.labels }}
       {{ $key }}: {{ $val | quote }}
       {{- end }}
       env_id: $${context.env.id}
       cost_center_id: $${resources['config.default#app-config'].outputs.cost_center_id}
+  - op: add
+    path: /spec/pod/labels
+    value:
+      {{- range $key, $val := .resource.spec.pod.labels }}
+      {{ $key }}: {{ $val | quote }}
+      {{- end }}
   # If the Score file also defines a service, add labels to the service object
   {{- if .resource.spec.service }}
   - op: add
