@@ -61,9 +61,16 @@ persistentVolumeClaim:
 END_OF_TEXT
           }
         }
-        "outputs" = "volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}\npvcName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}"
+        "outputs" = <<END_OF_TEXT
+volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}
+pvcName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
+END_OF_TEXT
       }
     })
   }
 }
 
+resource "humanitec_resource_definition_criteria" "volume-nfs_criteria_0" {
+  resource_definition_id = resource.humanitec_resource_definition.volume-nfs.id
+  class                  = "nfs"
+}
