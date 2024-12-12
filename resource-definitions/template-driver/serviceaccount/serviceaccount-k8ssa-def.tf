@@ -7,7 +7,7 @@ resource "humanitec_resource_definition" "serviceaccount-k8s-service-account" {
     values_string = jsonencode({
       "res_id" = "$${context.res.id}"
       "templates" = {
-        "init"      = "name: {{ index (splitList \".\" \"$${context.res.id}\") 1 }}\n"
+        "init"      = "name: {{ index ( .driver.values.res_id | splitList \".\" ) 1 }}\n"
         "outputs"   = "name: {{ .init.name }}\n"
         "manifests" = <<END_OF_TEXT
 service-account.yaml:
