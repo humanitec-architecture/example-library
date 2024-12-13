@@ -1,0 +1,96 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-ingress
+entity:
+  name: custom-ingress
+  type: ingress
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          host: {{ .resource.host | default .driver.values.host | quote }}
+          ingressPaths: {{ dig  "rules" "http" (list) .resource | toRawJson }}
+          {{/*
+            These 3 selectors are guaranteed to return JSON arrays, so don't
+            need quoting.
+            They will all be empty if there are no routes referencing this
+          */}}
+          routePaths: ${resources.dns<route.outputs.path}
+          routePorts: ${resources.dns<route.outputs.port}
+          routeServices: ${resources.dns<route.outputs.service}
+
+          tlsSecretName: {{ .driver.values.tls_secret_name | default .resource.tls_secret_name | default .driver.values.automatic_tls_secret_name | quote }}
+
+        manifests: |
+          {{- /*
+            Only generate an ingress manifest if there are any routes defined.
+          */ -}}
+          {{- if or (gt (len .init.ingressPaths) 0) (gt (len .init.routePaths ) 0) -}}
+          ingress.yaml:
+            location: namespace
+            data:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              metadata:
+                {{- if hasKey .driver.values "annotations" }}
+                annotations:
+                  {{- range $k, $v := .driver.values.annotations }}
+                  {{ $k | quote }}: {{ $v | quote }}
+                  {{- end}}
+                {{- end}}
+                {{- if hasKey .driver.values "labels" }}
+                labels:
+                  {{- range $k, $v := .driver.values.labels }}
+                  {{ $k | quote }}: {{ $v | quote }}
+                  {{- end}}
+                {{- end}}
+                name: {{ .id }}-ingress
+              spec:
+                {{- if .driver.values.class }}
+                ingressClassName: {{ .driver.values.class | quote }}
+                {{- end }}
+                rules:
+                - host: {{ .init.host | quote }}
+                  http:
+                    paths:
+                    {{- /*
+                      We are guaranteed that one of .init.ingressPaths or .init.routePaths is
+                      non-zero in length, so we don't need to deal with the empty condition.
+                    */ -}}
+                    {{- range $path, $rule := .init.ingressPaths }}
+                    - path: {{ ternary "/" $path (eq $path "*") | quote }}
+                      pathType: {{ $lcType := lower $rule.type -}}
+                        {{- if eq $lcType "implementationspecific" -}}
+                          {{- "ImplementationSpecific" -}}
+                        {{- else if eq $lcType "exact" -}}
+                          {{- "Exact" -}}
+                        {{- else -}}
+                          {{- "Prefix" -}}
+                        {{- end }}
+                      backend:
+                        service:
+                          name: {{ $rule.name | quote }}
+                          port:
+                            number: {{ $rule.port }}
+                    {{- end }}
+                    {{- range $index, $path := .init.routePaths }}
+                    - path: {{ $path | quote }}
+                      pathType: {{ $.driver.values.path_type | default "Prefix" | quote }}
+                      backend:
+                        service:
+                          name: {{ index $.init.routeServices $index  | quote }}
+                          port:
+                            number: {{ index $.init.routePorts $index }}
+                    {{- end }}
+                {{- if not (or .driver.values.no_tls (eq .init.tlsSecretName "")) }}
+                tls:
+                - hosts:
+                  - {{ .init.host | quote }}
+                  secretName: {{ .init.tlsSecretName | quote }}
+                {{- end }}
+          {{- end -}}
+        outputs: |
+          no_tls: {{ .driver.values.no_tls | default false }}
+          id: {{ .id }}-ingress
