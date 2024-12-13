@@ -15,8 +15,3 @@ flowchart LR
 ```
 
 Note that the resource `id` is used in the `k8s-service-account` Resource Definition to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
-
-Example files:
-
-* [`cli-serviceaccount-workload-def.yaml`](./cli-serviceaccount-workload-def.yaml) and [`cli-serviceaccount-k8ssa-def.yaml`](./cli-serviceaccount-k8ssa-def.yaml): Resource Definition combination for Workload/ServiceAccount. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
-* [`tf-serviceaccount-workload-def.tf`](./tf-serviceaccount-workload-def.tf) and [`tf-serviceaccount-k8ssa-def.tf`](./tf-serviceaccount-k8ssa-def.tf): Resource Definition combination for Workload/ServiceAccount. This format is for use with the [Humanitec Terraform provider](https://registry.terraform.io/providers/humanitec/humanitec).
