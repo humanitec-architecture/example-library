@@ -1,0 +1,44 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: qa-testing-ground-generic-async
+entity:
+  name: qa-testing-ground-generic-async
+  type: config
+  driver_type: humanitec/echo
+  driver_inputs:
+    values:
+      job:
+        # Change to match the image you built to run the IaC of your choice
+        image: ghcr.io/my-registry/generic-async-driver-runner:1.0.1
+        # Change to match the command to run your image or remove it if you want to use the image entrypoint
+        command: ["/opt/container"]
+        # Change to match the mount point of your shared directory
+        shared_directory: /home/runneruser/workspace
+        # Change to the namespace name you created to host the Kubernetes Job created by the Driver.
+        namespace: humanitec-runner
+        # Change to the service account name with permissions to create secrets/configmaps in the Kubernetes Job namespace you created.
+        service_account: humanitec-runner-job
+        # This assumes a secret with the given name exists in the desired namespace and it contains the credentials to pull the job image from the private registry.
+        pod_template: |
+          spec:
+            imagePullSecrets:
+              - name: ghcr-private-registry
+      # Change to match the configuration of your target cluster
+      cluster:
+        cluster_type: gke
+        account: my-org/my-gcp-cloud-account
+        cluster:
+          loadbalancer: 10.10.10.10
+          name: my-cluster
+          project_id: my-project
+          zone: europe-west2
+          internal_ip: true
+    # Change to match the desired agent (if any)
+    secret_refs:
+      agent_url: 
+        value: ${resources['agent.default#agent'].outputs.url}
+  criteria:
+    # Change to match the name of the development type you want this to apply to
+    - env_type: development
+      class: runner

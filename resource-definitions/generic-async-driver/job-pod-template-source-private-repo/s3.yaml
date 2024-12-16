@@ -20,6 +20,11 @@ entity:
         environment:
           AWS_ACCESS_KEY_ID: AccessKeyId
           AWS_SECRET_ACCESS_KEY: SecretAccessKey
+      # Change to match your repository
+      source:
+        path: path/to/my/iac/scripts
+        ref: refs/heads/main
+        url: git@github.com:my-org/my-repo.git          
       files:
         terraform.tfvars.json:  | 
           {"REGION": "eu-west-3", "BUCKET": "${context.app.id}-${context.env.id}"}
@@ -32,59 +37,15 @@ entity:
               region = "eu-west-3"
             }
           }
-        providers.tf: |
-          terraform {
-            required_providers {
-              aws = {
-                source = "hashicorp/aws"
-                version = "~> 5.72.0"
-              }
-            }
-          }
-        vars.tf: |
-          variable "REGION" {
-              type = string
-          }
-
-          variable "BUCKET" {
-              type = string
-          }
-        main.tf: |
-          provider "aws" {
-            region     = var.REGION
-            default_tags {
-              tags = {
-                CreatedBy = "Humanitec"
-              }
-            }
-          }
-
-          resource "random_string" "bucket_suffix" {
-            length           = 5
-            special          = false
-            upper            = false
-          }
-
-          module "aws_s3" {
-            source = "terraform-aws-modules/s3-bucket/aws"
-            bucket = format("%s-%s", var.BUCKET, random_string.bucket_suffix.result)
-            acl    = "private"
-            force_destroy = true
-            control_object_ownership = true
-            object_ownership         = "BucketOwnerPreferred"
-          }
-
-          output "region" {
-            value = module.aws_s3.s3_bucket_region
-          }
-
-          output "bucket" {
-            value = module.aws_s3.s3_bucket_id
-          }
-    secrets_ref:
+    secret_refs:
       cluster:
         agent_url: 
           value: ${resources['config.runner'].outputs.agent_url}
+      # Change to match where your ssh key is stored
+      source:
+        ssh_key:
+          store: my-secret-store
+          ref: my-path-to-git-ssh-key
   criteria:
     # Change to match the name of the development type you want this to apply to
     - env_type: development
