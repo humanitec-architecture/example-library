@@ -1,0 +1,13 @@
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+entity:
+  driver_type: humanitec/agent
+  name: agent-runner
+  type: agent
+  driver_inputs:
+    values:
+      id: my-agent
+  criteria:
+    # Change to match the name of the development type you want this to apply to
+    - env_type: development
+      class: runner      
