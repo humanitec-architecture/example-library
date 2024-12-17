@@ -82,7 +82,7 @@ entity:
           output "bucket" {
             value = module.aws_s3.s3_bucket_id
           }
-    secrets_ref:
+    secret_refs:
       cluster:
         agent_url: 
           value: ${resources['config.runner'].outputs.agent_url}
