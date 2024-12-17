@@ -1,3 +1,4 @@
+# This Resource Definition specifies an `s3` Resource to be provisioned through inline Terraform code.
 apiVersion: entity.humanitec.io/v1b1
 
 kind: Definition
