@@ -1,5 +1,7 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
+metadata:
+  id: agent-runner
 entity:
   driver_type: humanitec/agent
   name: agent-runner
