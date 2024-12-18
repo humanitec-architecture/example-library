@@ -11,7 +11,6 @@ resource "humanitec_resource_definition" "hpa" {
 {{ $defaultMinReplicas := 2 }}
 {{ $absoluteMaxReplicas := 10 }}
 {{ $defaultTargetUtilizationPercent := 80 }}
-workload: {{ index (splitList "." "$${context.res.id}") 1 }}
 maxReplicas: {{ .resource.maxReplicas | default $defaultMaxReplicas | min $absoluteMaxReplicas }}
 minReplicas: {{ .resource.minReplicas | default $defaultMinReplicas }}
 targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | default $defaultTargetUtilizationPercent }}
