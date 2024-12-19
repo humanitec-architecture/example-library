@@ -3,7 +3,7 @@ permissions:
   contents: read
   id-token: write
 on:
-  push:
+  pull_request:
 jobs:
   score-validate:
     runs-on: ubuntu-24.04
