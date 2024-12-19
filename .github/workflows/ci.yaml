@@ -25,4 +25,12 @@ jobs:
               --strict \
               --local
           done
+      - name: test-definition
+        run: |
+          resourceDefinitions=$(ls -d resource-definitions/*/*/*.yaml)
+          for resourceDefinition in ${resourceDefinitions}
+          do
+            humctl resources test-definition ${resourceDefinition} --generate > inputs-${resourceDefinition}
+            humctl resources test-definition ${resourceDefinition} --inputs inputs-${resourceDefinition}
+          done
           
