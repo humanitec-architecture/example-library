@@ -27,10 +27,16 @@ jobs:
           done
       - name: test-definition
         run: |
-          resourceDefinitions=$(ls -d resource-definitions/*/*/*.yaml)
+          resourceDefinitions=$(ls -d resource-definitions/echo-driver/*/*.yaml)
           for resourceDefinition in ${resourceDefinitions}
           do
-            humctl resources test-definition ${resourceDefinition} --generate > inputs-${resourceDefinition}
-            humctl resources test-definition ${resourceDefinition} --inputs inputs-${resourceDefinition}
+            humctl resources test-definition ${resourceDefinition} --generate > $(echo $test |  sed "s,/,-,g")
+            humctl resources test-definition ${resourceDefinition} --inputs $(echo $test |  sed "s,/,-,g")
+          done
+          resourceDefinitions=$(ls -d resource-definitions/template-driver/*/*.yaml)
+          for resourceDefinition in ${resourceDefinitions}
+          do
+            humctl resources test-definition ${resourceDefinition} --generate > $(echo $test |  sed "s,/,-,g")
+            humctl resources test-definition ${resourceDefinition} --inputs $(echo $test |  sed "s,/,-,g")
           done
           
