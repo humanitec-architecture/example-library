@@ -21,14 +21,13 @@ jobs:
           version: ${{ env.HUMCTL_VERSION }}
       - name: humctl score validate
         run: |
-          scoreFiles=$(ls -d score/*/score.yaml)
+          scoreFiles=$(ls -d score/*/score*)
           for scoreFile in ${scoreFiles}
           do
             echo ${scoreFile}
-            humctl score validate ${scoreFile} \
-              --strict \
-              --local
+            humctl score validate ${scoreFile} --strict --local
           done
+
   test-definition-echo:
     runs-on: ubuntu-24.04
     env:
