@@ -28,7 +28,18 @@ jobs:
               --strict \
               --local
           done
-      - name: test-definition
+  test-definition-echo:
+    runs-on: ubuntu-24.04
+    env:
+      HUMCTL_VERSION: '*'
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install humctl
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: ${{ env.HUMCTL_VERSION }}
+      - name: test-definition echo-driver
         run: |
           resourceDefinitions=$(ls -d resource-definitions/echo-driver/*/*.yaml)
           for resourceDefinition in ${resourceDefinitions}
@@ -36,6 +47,19 @@ jobs:
             humctl resources test-definition ${resourceDefinition} --generate > $(echo ${resourceDefinition} |  sed "s,/,-,g")
             humctl resources test-definition ${resourceDefinition} --inputs $(echo ${resourceDefinition} |  sed "s,/,-,g")
           done
+  test-definition-template:
+    runs-on: ubuntu-24.04
+    env:
+      HUMCTL_VERSION: '*'
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install humctl
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: ${{ env.HUMCTL_VERSION }}
+      - name: test-definition template-driver
+        run: |
           resourceDefinitions=$(ls -d resource-definitions/template-driver/*/*.yaml)
           for resourceDefinition in ${resourceDefinitions}
           do
