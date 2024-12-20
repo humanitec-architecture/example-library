@@ -46,8 +46,10 @@ jobs:
           for resourceDefinition in ${resourceDefinitions}
           do
             echo ${resourceDefinition}
-            humctl resources test-definition ${resourceDefinition} --generate > $(echo ${resourceDefinition} |  sed "s,/,-,g")
-            humctl resources test-definition ${resourceDefinition} --inputs $(echo ${resourceDefinition} |  sed "s,/,-,g")
+            inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
+            humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
+            sed -i 's/""/"test"/g' ${inputs}
+            humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
           done
   test-definition-template:
     runs-on: ubuntu-24.04
@@ -66,7 +68,9 @@ jobs:
           for resourceDefinition in ${resourceDefinitions}
           do
             echo ${resourceDefinition}
-            humctl resources test-definition ${resourceDefinition} --generate > $(echo ${resourceDefinition} |  sed "s,/,-,g")
-            humctl resources test-definition ${resourceDefinition} --inputs $(echo ${resourceDefinition} |  sed "s,/,-,g")
+            inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
+            humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
+            sed -i 's/""/"test"/g' ${inputs}
+            humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
           done
           
