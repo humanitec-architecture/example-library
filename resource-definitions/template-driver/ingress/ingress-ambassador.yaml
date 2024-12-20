@@ -6,7 +6,7 @@ metadata:
 entity:
   name: ambassador-ingress
   type: ingress
-  driver_type: template
+  driver_type: humanitec/template
   driver_inputs:
     values:
       templates:
