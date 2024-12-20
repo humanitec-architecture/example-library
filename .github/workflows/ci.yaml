@@ -48,8 +48,8 @@ jobs:
             echo ${resourceDefinition}
             inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
             humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
-            sed -i 's/""/"test"/g' ${inputs}
             sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
+            sed -i 's/""/"test"/g' ${inputs}
             humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
           done
   test-definition-template:
@@ -71,8 +71,8 @@ jobs:
             echo ${resourceDefinition}
             inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
             humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
-            sed -i 's/""/"test"/g' ${inputs}
             sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
+            sed -i 's/""/"test"/g' ${inputs}
             humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
           done
           
