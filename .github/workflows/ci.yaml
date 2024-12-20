@@ -24,6 +24,7 @@ jobs:
           scoreFiles=$(ls -d score/*/score.yaml)
           for scoreFile in ${scoreFiles}
           do
+            echo ${scoreFile}
             humctl score validate ${scoreFile} \
               --strict \
               --local
@@ -44,6 +45,7 @@ jobs:
           resourceDefinitions=$(ls -d resource-definitions/echo-driver/*/*.yaml)
           for resourceDefinition in ${resourceDefinitions}
           do
+            echo ${resourceDefinition}
             humctl resources test-definition ${resourceDefinition} --generate > $(echo ${resourceDefinition} |  sed "s,/,-,g")
             humctl resources test-definition ${resourceDefinition} --inputs $(echo ${resourceDefinition} |  sed "s,/,-,g")
           done
@@ -63,6 +65,7 @@ jobs:
           resourceDefinitions=$(ls -d resource-definitions/template-driver/*/*.yaml)
           for resourceDefinition in ${resourceDefinitions}
           do
+            echo ${resourceDefinition}
             humctl resources test-definition ${resourceDefinition} --generate > $(echo ${resourceDefinition} |  sed "s,/,-,g")
             humctl resources test-definition ${resourceDefinition} --inputs $(echo ${resourceDefinition} |  sed "s,/,-,g")
           done
