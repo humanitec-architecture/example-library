@@ -3,7 +3,7 @@ kind: ScoreDeployConfig
 workloads:
   - name: example-service
     specFile: ./score.example-service.yaml
-    extensionsFile: ./score.humanitec.yaml
+    extensionsFile: ./humanitec.score.yaml
   - name: another-service
     specFile: ./score.another-service.yaml
-    extensionsFile: ./score.humanitec.yaml
+    extensionsFile: ./humanitec.score.yaml

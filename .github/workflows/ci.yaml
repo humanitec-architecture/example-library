@@ -1,0 +1,79 @@
+name: ci
+permissions:
+  contents: read
+  id-token: write
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  score-validate:
+    runs-on: ubuntu-24.04
+    env:
+      HUMCTL_VERSION: '*'
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install humctl
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: ${{ env.HUMCTL_VERSION }}
+      - name: humctl score validate
+        run: |
+          scoreFiles=$(ls -d score/*/score*)
+          for scoreFile in ${scoreFiles}
+          do
+            echo ${scoreFile}
+            humctl score validate ${scoreFile} --strict --local
+          done
+
+  test-definition-echo:
+    runs-on: ubuntu-24.04
+    env:
+      HUMCTL_VERSION: '*'
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install humctl
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: ${{ env.HUMCTL_VERSION }}
+      - name: test-definition echo-driver
+        run: |
+          resourceDefinitions=$(ls -d resource-definitions/echo-driver/*/*.yaml)
+          for resourceDefinition in ${resourceDefinitions}
+          do
+            echo ${resourceDefinition}
+            inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
+            humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
+            sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
+            sed -i 's/""/"test"/g' ${inputs}
+            humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
+          done
+  test-definition-template:
+    runs-on: ubuntu-24.04
+    env:
+      HUMCTL_VERSION: '*'
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install humctl
+        uses: humanitec/setup-cli-action@v1
+        with:
+          version: ${{ env.HUMCTL_VERSION }}
+      - name: test-definition template-driver
+        run: |
+          resourceDefinitions=$(ls -d resource-definitions/template-driver/*/*.yaml)
+          for resourceDefinition in ${resourceDefinitions}
+          do
+            echo ${resourceDefinition}
+            if [ "${resourceDefinition}" != "resource-definitions/template-driver/ingress/ingress-traefik-multiple-routes.yaml" ]; then
+              inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
+              humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
+              sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
+              sed -i 's/""/"test"/g' ${inputs}
+              humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
+            fi
+          done
+          
