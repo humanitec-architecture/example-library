@@ -1,5 +1,5 @@
 resource "humanitec_resource_definition" "traefik-ingress" {
-  driver_type = "template"
+  driver_type = "humanitec/template"
   id          = "traefik-ingress"
   name        = "traefik-ingress"
   type        = "ingress"

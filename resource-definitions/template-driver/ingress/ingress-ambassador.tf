@@ -1,5 +1,5 @@
 resource "humanitec_resource_definition" "ambassador-ingress" {
-  driver_type = "template"
+  driver_type = "humanitec/template"
   id          = "ambassador-ingress"
   name        = "ambassador-ingress"
   type        = "ingress"
