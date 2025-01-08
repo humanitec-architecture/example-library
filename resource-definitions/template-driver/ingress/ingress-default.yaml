@@ -1,0 +1,89 @@
+# This Resource Definition provisions the equivalent of the humanitec/ingress driver
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: default-ingress
+entity:
+  name: default-ingress
+  type: ingress
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests: |
+          {{- /*
+            Only generate an ingress manifest if there are any routes defined.
+          */ -}}
+          {{- if gt (len .driver.values.routePaths ) 0 -}}
+          ingress.yaml:
+            location: namespace
+            data:
+              apiVersion: networking.k8s.io/v1
+              kind: Ingress
+              metadata:
+                {{- if hasKey .driver.values "annotations" }}
+                annotations: {{ .driver.values.annotations | toRawJson }}
+                {{- end}}
+                {{- if hasKey .driver.values "labels" }}
+                labels: {{ .driver.values.labels | toRawJson }}
+                {{- end}}
+                name: {{ .id }}-ingress
+              spec:
+                {{- if .driver.values.class }}
+                ingressClassName: {{ .driver.values.class | toRawJson }}
+                {{- end }}
+                rules:
+                - host: {{ .driver.values.host | toRawJson }}
+                  http:
+                    paths:
+                    {{- /*
+                      We are guaranteed that .driver.values.routePaths is non-zero in
+                      length from the top level if statement, so we don't need
+                      to deal with the empty condition.
+                    */ -}}
+                    {{- range $index, $path := .driver.values.routePaths }}
+                    - path: {{ $path | toRawJson }}
+                      pathType: {{ $.driver.values.path_type | default "Prefix" | toRawJson }}
+                      backend:
+                        service:
+                          name: {{ index $.driver.values.routeServices $index  | toRawJson }}
+                          port:
+                            number: {{ index $.driver.values.routePorts $index }}
+                    {{- end }}
+                {{- if not (or .driver.values.no_tls (eq .driver.values.tls_secret_name "")) }}
+                tls:
+                - hosts:
+                  - {{ .driver.values.host | toRawJson }}
+                  secretName: {{ .driver.values.tls_secret_name | toRawJson }}
+                {{- end }}
+          {{- end -}}
+        outputs: |
+          no_tls: {{ .driver.values.no_tls | default false }}
+          id: {{ .id }}-ingress
+
+      {{/*
+        The host will be used from the dns resource with the same
+        ResID and Class as this ingress.
+      */}}
+      host: ${resources.dns.outputs.host}
+
+      {{/*
+        These 3 selectors are guaranteed to return JSON arrays.
+        They will all be empty if there are no routes referencing this.
+      */}}
+      routePaths: ${resources.dns<route.outputs.path}
+      routePorts: ${resources.dns<route.outputs.port}
+      routeServices: ${resources.dns<route.outputs.service}
+
+      {{- /*
+        The following fields can be set based on the documented driver inputs
+        for humanitec/ingress.
+        Uncomment and add values.
+      */ -}}
+      # annotations: {}
+      # class: nginx
+      # labels: {}
+      # no_tls: true
+      # path_type: Prefix
+      # tls_secret_name: ""
+
