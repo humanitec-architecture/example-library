@@ -50,7 +50,7 @@ entity:
                           port:
                             number: {{ index $.driver.values.routePorts $index }}
                     {{- end }}
-                {{- if not (or .driver.values.no_tls (eq .driver.values.tls_secret_name "")) }}
+                {{- if not (or .driver.values.no_tls (eq (.driver.values.tls_secret_name | default "") "")) }}
                 tls:
                 - hosts:
                   - {{ .driver.values.host | toRawJson }}
@@ -61,25 +61,22 @@ entity:
           no_tls: {{ .driver.values.no_tls | default false }}
           id: {{ .id }}-ingress
 
-      {{/*
-        The host will be used from the dns resource with the same
-        ResID and Class as this ingress.
-      */}}
+
+      # The host will be used from the dns resource with the same
+      # ResID and Class as this ingress.
       host: ${resources.dns.outputs.host}
 
-      {{/*
-        These 3 selectors are guaranteed to return JSON arrays.
-        They will all be empty if there are no routes referencing this.
-      */}}
+      # These 3 selectors are guaranteed to return JSON arrays.
+      # They will all be empty if there are no routes referencing this.
       routePaths: ${resources.dns<route.outputs.path}
       routePorts: ${resources.dns<route.outputs.port}
       routeServices: ${resources.dns<route.outputs.service}
 
-      {{- /*
-        The following fields can be set based on the documented driver inputs
-        for humanitec/ingress.
-        Uncomment and add values.
-      */ -}}
+
+      # The following fields can be set based on the documented driver inputs
+      # for humanitec/ingress.
+      # Uncomment and add values.
+
       # annotations: {}
       # class: nginx
       # labels: {}
