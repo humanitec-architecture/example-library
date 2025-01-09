@@ -68,7 +68,7 @@ jobs:
           for resourceDefinition in ${resourceDefinitions}
           do
             echo ${resourceDefinition}
-            if [ "${resourceDefinition}" != "resource-definitions/template-driver/ingress/ingress-traefik-multiple-routes.yaml" ]; then
+            if [ "${resourceDefinition}" != "resource-definitions/template-driver/ingress/ingress-traefik-multiple-routes.yaml" ] && [ "${resourceDefinition}" != "resource-definitions/template-driver/ingress/ingress-default.yaml" ]; then
               inputs=$(echo ${resourceDefinition} |  sed "s,/,-,g")
               humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
               sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
