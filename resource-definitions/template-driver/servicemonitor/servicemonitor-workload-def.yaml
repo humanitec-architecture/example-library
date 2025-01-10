@@ -9,11 +9,11 @@ entity:
   type: workload
   driver_inputs:
     values:
-      namespace: ${resources['k8s-namespace.default#k8s-namespace'].outputs.namespace}
+      namespace: ${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
       templates:
         init: |
           workload: {{ index (splitList "." "${context.res.id}") 1 }}
-          {{- if .resource.spec.service }}
+          {{- if and .resource.spec.service (gt (.resource.spec.service.ports | len) 0) }}
           servicePort: {{ get (.resource.spec.service.ports | values | first ) "service_port" }}
           {{- else }}
           servicePort: 8080
