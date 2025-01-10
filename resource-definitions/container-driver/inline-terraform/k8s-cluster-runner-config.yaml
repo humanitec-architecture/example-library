@@ -1,17 +1,17 @@
-# This Resource Definition provides configuration values for the Generic Async Driver.
+# This Resource Definition provides configuration values for the Container Driver.
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: qa-testing-ground-generic-async
+  id: config-container-driver
 entity:
-  name: qa-testing-ground-generic-async
+  name: config-container-driver
   type: config
   driver_type: humanitec/echo
   driver_inputs:
     values:
       job:
         # Change to match the image you built to run the IaC of your choice
-        image: ghcr.io/my-registry/generic-async-driver-runner:1.0.1
+        image: ghcr.io/my-registry/container-driver-runner:1.0.1
         # Change to match the command to run your image or remove it if you want to use the image entrypoint
         command: ["/opt/container"]
         # Change to match the mount point of your shared directory

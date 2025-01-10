@@ -7,7 +7,7 @@ metadata:
 entity:
   name: aws-s3
   type: s3
-  driver_type: humanitec/generic-async
+  driver_type: humanitec/container
   driver_account: my-aws-cloud-account
   driver_inputs:
     values:
