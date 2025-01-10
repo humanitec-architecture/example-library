@@ -1,9 +1,9 @@
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: custom-namespace
+  id: short-namespace
 entity:
-  name: custom-namespace
+  name: short-namespace
   type: k8s-namespace
   driver_type: humanitec/template
   driver_inputs:

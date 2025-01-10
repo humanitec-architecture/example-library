@@ -11,10 +11,10 @@ update:
   - op: add
     path: /spec/securityContext
     value:
-      fsGroup: 1000
-      runAsGroup: 1000
+      fsGroup: 65532
+      runAsGroup: 65532
       runAsNonRoot: true
-      runAsUser: 1000
+      runAsUser: 65532
       seccompProfile:
         type: RuntimeDefault
   {{- range $containerId, $value := .resource.spec.containers }}
