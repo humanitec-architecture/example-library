@@ -3,7 +3,7 @@ kind: Definition
 metadata:
   id: custom-namespace
 entity:
-  name: custom-namespace2
+  name: custom-namespace
   type: k8s-namespace
   driver_type: humanitec/template
   driver_inputs:
