@@ -25,7 +25,9 @@ entity:
       source:
         path: path/to/my/iac/scripts
         ref: refs/heads/main
-        url: git@github.com:my-org/my-repo.git          
+        url: git@github.com:my-org/my-repo.git
+        # When using a GitHub personal access token, use the HTTPS URL:
+        # url: https://github.com/my-org/my-repo.git
       files:
         terraform.tfvars.json:  | 
           {"REGION": "eu-west-3", "BUCKET": "${context.app.id}-${context.env.id}"}
@@ -47,6 +49,10 @@ entity:
         ssh_key:
           store: my-secret-store
           ref: my-path-to-git-ssh-key
+        # Alternative to ssh_key: password or Personal Access Token
+        # password:
+        #   store: my-secret-store
+        #   ref: my-path-to-git-password-or-token
   criteria:
     # Change to match the name of the development type you want this to apply to
     - env_type: development
