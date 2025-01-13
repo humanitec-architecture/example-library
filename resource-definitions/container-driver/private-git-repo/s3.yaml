@@ -50,7 +50,7 @@ entity:
           store: my-secret-store
           ref: my-path-to-git-ssh-key
         # Alternative to ssh_key: password or Personal Access Token
-        # password: my-git-ssh-pat
+        # password:
         #   store: my-secret-store
         #   ref: my-path-to-git-password-or-token
   criteria:
