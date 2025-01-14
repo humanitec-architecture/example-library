@@ -1,0 +1,190 @@
+# This Resource Definition specifies an `s3` Resource to be provisioned through inline Terraform code.
+apiVersion: entity.humanitec.io/v1b1
+
+kind: Definition
+metadata:
+  id: aws-s3
+entity:
+  name: aws-s3
+  type: s3
+  driver_type: humanitec/container
+  driver_account: aws-ref-arch
+  driver_inputs:
+    values:
+      job: 
+        # Due to the Hashicorp BSL License, Humanitec cannot provide
+        # examples using any of the BSL covered versions of terraform
+        # i.e versions higher than 1.5.7
+        image: hashicorp/terraform:1.5.7
+
+        command: ["/bin/sh", "/home/runneruser/workspace/run.sh"]
+        shared_directory: /home/runneruser/workspace
+
+        # Change to the namespace name you created to host the Kubernetes Job created by the Driver.
+        namespace: humanitec-runner
+        # Change to the service account name with permissions to create secrets/configmaps in the Kubernetes Job namespace you created.
+        service_account: humanitec-container-runner
+
+        pod_template: |
+          spec:
+            containers:
+              - name: runner
+                securityContext:
+                  runAsGroup: 1000
+                  runAsUser: 1000
+      cluster:
+        # Update to your cloud account
+        account: my-org/my-aws-cloud-account
+        cluster_type: ${resources["k8s-cluster.default#k8s-cluster"].outputs.cluster_type}
+        cluster: ${resources["k8s-cluster.default#k8s-cluster"].values}
+
+      # Needed to authenticate to aws TF provider in the TF code passed via files inputs
+      credentials_config:
+        environment:
+          AWS_ACCESS_KEY_ID: AccessKeyId
+          AWS_SECRET_ACCESS_KEY: SecretAccessKey
+          AWS_SESSION_TOKEN: SessionToken
+      files:
+        run.sh: |
+          #!/bin/sh
+
+          # NOTE: This script is written to be POXIX shell compatible.
+
+          # run_cmd runs the command provided in its input args.
+          # If the command files, STDERR from the command is written to ERROR_FILE and
+          # also to STDERR and he script exists with exit code 1.
+          run_cmd ()
+          {
+              if ! "$@" 2> "$\{ERROR_FILE}"
+              then
+                  echo
+                  echo "FAILED: $@"
+                  cat "$\{ERROR_FILE}" 1>&2
+                  exit 1
+              fi
+          }
+
+          if ! [ -d "$\{SCRIPTS_DIRECTORY}" ]
+          then
+              echo "SCRIPTS_DIRECTORY does not exist: \"$\{SCRIPTS_DIRECTORY}"\" > "$\{ERROR_FILE}"
+              cat "$\{ERROR_FILE}" 1>&2function 
+          fi
+
+          run_cmd cd "$\{SCRIPTS_DIRECTORY}"
+
+          if [ "$\{ACTION}" = "create" ]
+          then
+              run_cmd terraform init -no-color
+
+              run_cmd terraform apply -auto-approve -input=false -no-color
+              
+              # Process terraform into format expected by Container driver
+
+              mkdir output_parse_container
+
+              # Generate a tfvars file in JSON format without any JSON tooling
+              echo '{"in":' > output_parse_container/terraform.tfvars.json
+              run_cmd terraform output -json >> output_parse_container/terraform.tfvars.json
+              echo '}' >> output_parse_container/terraform.tfvars.json
+
+              # Move to a different directory and therefore a different terraform context
+              run_cmd cd output_parse_container
+
+              echo 'variable "in" { type = map }
+          output "values" { value = {for k, v in var.in: k => v.value if !v.sensitive} }
+          output "secrets" { value = {for k, v in var.in: k => v.value if v.sensitive} }' > parse.tf
+
+              echo
+              echo "Converting outputs from terraform apply"
+
+              # Note: no need to run terraform init as no providers are required
+              run_cmd terraform apply -auto-approve -input=false -no-color > /dev/null
+
+              run_cmd terraform output -json values > "$\{OUTPUTS_FILE}"
+
+              run_cmd terraform output -json values > "$\{SECRET_OUTPUTS_FILE}"
+
+              echo "Done."
+
+          elif [ "$\{ACTION}" = "destroy" ]
+          then
+              run_cmd terraform init -no-color
+
+              run_cmd terraform destroy -auto-approve -input=false -no-color
+
+          else
+            echo "unrecognized ACTION: \"$\{ACTION}"\" > "$\{ERROR_FILE}"
+            cat "$\{ERROR_FILE}" 1>&2
+            exit 1
+          fi
+
+        terraform.tfvars.json:  | 
+          {"REGION": "eu-west-3", "BUCKET": "${context.app.id}-${context.env.id}"}
+        # Change to match the backend of your choice.
+        backend.tf: |
+          terraform {
+            backend "s3" {
+              #bucket = "my-s3-to-store-tf-state"
+              bucket = "example-bucket-for-marketing-q-a"
+              key = "${context.res.guresid}/state/terraform.tfstate"
+              region = "eu-central-1"
+            }
+          }
+        providers.tf: |
+          terraform {
+            required_providers {
+              aws = {
+                source = "hashicorp/aws"
+                version = "~> 5.72.0"
+              }
+            }
+          }
+        vars.tf: |
+          variable "REGION" {
+              type = string
+          }
+
+          variable "BUCKET" {
+              type = string
+          }
+        main.tf: |
+          provider "aws" {
+            region     = var.REGION
+            default_tags {
+              tags = {
+                CreatedBy = "Humanitec"
+              }
+            }
+          }
+
+          resource "random_string" "bucket_suffix" {
+            length           = 5
+            special          = false
+            upper            = false
+          }
+
+          module "aws_s3" {
+            source = "terraform-aws-modules/s3-bucket/aws"
+            bucket = format("%s-%s", var.BUCKET, random_string.bucket_suffix.result)
+            acl    = "private"
+            force_destroy = true
+            control_object_ownership = true
+            object_ownership         = "BucketOwnerPreferred"
+          }
+
+          output "region" {
+            value = module.aws_s3.s3_bucket_region
+          }
+
+          output "bucket" {
+            value = module.aws_s3.s3_bucket_id
+          }
+    secret_refs:
+      cluster:
+        agent_url: 
+          value: ${resources['agent.default#runner'].outputs.url}
+  criteria:
+    # Change to match the name of the development type you want this to apply to
+    - env_type: development
+      app_id: container-test
+
