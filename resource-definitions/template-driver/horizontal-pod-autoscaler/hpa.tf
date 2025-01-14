@@ -5,13 +5,20 @@ resource "humanitec_resource_definition" "hpa" {
   type        = "horizontal-pod-autoscaler"
   driver_inputs = {
     values_string = jsonencode({
+      "resId" = "$${context.res.id}"
       "templates" = {
         "init"      = <<END_OF_TEXT
 {{ $defaultMaxReplicas := 3 }}
 {{ $defaultMinReplicas := 2 }}
 {{ $absoluteMaxReplicas := 10 }}
 {{ $defaultTargetUtilizationPercent := 80 }}
-workload: {{ index (splitList "." "$${context.res.id}") 1 }}
+
+workload: {{ if regexMatch "modules\\.[a-z0-9-]+\\.externals" .driver.values.resId }}
+  {{- index (splitList "." .driver.values.resId) 1 | toRawJson }}
+{{- else }}
+  {{- cat "A horizontal-pod-autoscaler must be added as a private resource dependency. ID:" .driver.values.resId | fail }}
+{{- end }}
+
 maxReplicas: {{ .resource.maxReplicas | default $defaultMaxReplicas | min $absoluteMaxReplicas }}
 minReplicas: {{ .resource.minReplicas | default $defaultMinReplicas }}
 targetCPUUtilizationPercentage: {{ .resource.targetCPUUtilizationPercentage | default $defaultTargetUtilizationPercent }}

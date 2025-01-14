@@ -1,7 +1,7 @@
-resource "humanitec_resource_definition" "custom-namespace" {
+resource "humanitec_resource_definition" "short-namespace" {
   driver_type = "humanitec/template"
-  id          = "custom-namespace"
-  name        = "custom-namespace"
+  id          = "short-namespace"
+  name        = "short-namespace"
   type        = "k8s-namespace"
   driver_inputs = {
     values_string = jsonencode({
@@ -24,7 +24,7 @@ END_OF_TEXT
   }
 }
 
-resource "humanitec_resource_definition_criteria" "custom-namespace_criteria_0" {
-  resource_definition_id = resource.humanitec_resource_definition.custom-namespace.id
+resource "humanitec_resource_definition_criteria" "short-namespace_criteria_0" {
+  resource_definition_id = resource.humanitec_resource_definition.short-namespace.id
 
 }
