@@ -1,7 +1,7 @@
 resource "humanitec_resource_definition" "custom-namespace" {
   driver_type = "humanitec/template"
   id          = "custom-namespace"
-  name        = "custom-namespace2"
+  name        = "custom-namespace"
   type        = "k8s-namespace"
   driver_inputs = {
     values_string = jsonencode({
