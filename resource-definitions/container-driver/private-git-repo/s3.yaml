@@ -12,10 +12,7 @@ entity:
   driver_inputs:
     values:
       job: ${resources['config.runner'].outputs.job}
-      cluster:
-        cluster_type: ${resources['config.runner'].outputs.cluster.cluster_type}
-        account: ${resources['config.runner'].outputs.cluster.account}
-        cluster: ${resources['config.runner'].outputs.cluster.cluster}
+      cluster: ${resources['config.runner'].outputs.cluster}
       # Needed to authenticate to aws TF provider in the TF code passed via files inputs
       credentials_config:
         environment:

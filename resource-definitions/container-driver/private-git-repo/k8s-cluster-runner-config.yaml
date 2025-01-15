@@ -27,14 +27,12 @@ entity:
               - name: ghcr-private-registry
       # Change to match the configuration of your target cluster
       cluster:
-        cluster_type: gke
-        account: my-org/my-gcp-cloud-account
+        account: my-org/my-aws-cloud-account
         cluster:
+          cluster_type: eks
           loadbalancer: 10.10.10.10
-          name: my-cluster
-          project_id: my-project
-          zone: europe-west2
-          internal_ip: true
+          name: my-demo-cluster
+          region: eu-west-3
     # Change to match the desired agent (if any)
     secret_refs:
       agent_url: 
