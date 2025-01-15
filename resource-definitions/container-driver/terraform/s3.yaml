@@ -24,18 +24,9 @@ entity:
         namespace: humanitec-runner
         # Change to the service account name with permissions to create secrets/configmaps in the Kubernetes Job namespace you created.
         service_account: humanitec-container-runner
-
-        pod_template: |
-          spec:
-            containers:
-              - name: runner
-                securityContext:
-                  runAsGroup: 1000
-                  runAsUser: 1000
       cluster:
         # Update to your cloud account
         account: my-org/my-aws-cloud-account
-        cluster_type: ${resources["k8s-cluster.default#k8s-cluster"].outputs.cluster_type}
         cluster: ${resources["k8s-cluster.default#k8s-cluster"].values}
 
       # Needed to authenticate to aws TF provider in the TF code passed via files inputs
@@ -48,11 +39,11 @@ entity:
         run.sh: |
           #!/bin/sh
 
-          # NOTE: This script is written to be POXIX shell compatible.
+          # NOTE: This script is written to be POSIX shell compatible.
 
           # run_cmd runs the command provided in its input args.
-          # If the command files, STDERR from the command is written to ERROR_FILE and
-          # also to STDERR and he script exists with exit code 1.
+          # If the command fails, STDERR from the command is written to ERROR_FILE and
+          # also to STDERR and the script exists with exit code 1.
           run_cmd ()
           {
               if ! "$@" 2> "$\{ERROR_FILE}"
@@ -67,7 +58,8 @@ entity:
           if ! [ -d "$\{SCRIPTS_DIRECTORY}" ]
           then
               echo "SCRIPTS_DIRECTORY does not exist: \"$\{SCRIPTS_DIRECTORY}"\" > "$\{ERROR_FILE}"
-              cat "$\{ERROR_FILE}" 1>&2function 
+              cat "$\{ERROR_FILE}" 1>&2
+              exit 1
           fi
 
           run_cmd cd "$\{SCRIPTS_DIRECTORY}"
@@ -78,31 +70,54 @@ entity:
 
               run_cmd terraform apply -auto-approve -input=false -no-color
               
-              # Process terraform into format expected by Container driver
+              # Terraform can export its outputs with the following schema:
+              #   {
+              #     "output-name": {
+              #       "sensitive": bool: true of output is marked sensitive
+              #       "type": string: the Terraform type of the output
+              #       "value": any: the JSON representation of the output value
+              #     },
+              #     ...
+              #   }
+              # 
+              # The container driver, expects a simple map of output-name: value
+              #
+              # The hashicorp/terraform does not provide any special tooling to
+              # manipulate JSON. However, terraform accepts inputs and JSON so can use
+              # an additional run of the terraform CLI to manipulate the JSON.
 
+              # Create a new directory do convert the JSON outputs.
               mkdir output_parse_container
 
-              # Generate a tfvars file in JSON format without any JSON tooling
+              # Generate a tfvars file in JSON format without any JSON tooling with a
+              # single variable of "in".
               echo '{"in":' > output_parse_container/terraform.tfvars.json
               run_cmd terraform output -json >> output_parse_container/terraform.tfvars.json
               echo '}' >> output_parse_container/terraform.tfvars.json
 
               # Move to a different directory and therefore a different terraform context
+              # This means if we run terraform apply, it will be independent from the main
+              # request above.
               run_cmd cd output_parse_container
 
+              # Inject the Terraform code that converts the input into 2 separate maps
+              # depending on whether the value is marked as sensitive or not.
               echo 'variable "in" { type = map }
           output "values" { value = {for k, v in var.in: k => v.value if !v.sensitive} }
           output "secrets" { value = {for k, v in var.in: k => v.value if v.sensitive} }' > parse.tf
 
               echo
-              echo "Converting outputs from terraform apply"
+              echo "Converting outputs using terraform apply"
 
+              # This terraform apply is just operating on the terraform.tfvars.json
+              # created above. It is running in a new terraform context and so will
+              # not influence the infrastructure deployed above
               # Note: no need to run terraform init as no providers are required
               run_cmd terraform apply -auto-approve -input=false -no-color > /dev/null
 
               run_cmd terraform output -json values > "$\{OUTPUTS_FILE}"
 
-              run_cmd terraform output -json values > "$\{SECRET_OUTPUTS_FILE}"
+              run_cmd terraform output -json secrets > "$\{SECRET_OUTPUTS_FILE}"
 
               echo "Done."
 
@@ -124,8 +139,7 @@ entity:
         backend.tf: |
           terraform {
             backend "s3" {
-              #bucket = "my-s3-to-store-tf-state"
-              bucket = "example-bucket-for-marketing-q-a"
+              bucket = "my-s3-to-store-tf-state"
               key = "${context.res.guresid}/state/terraform.tfstate"
               region = "eu-central-1"
             }
