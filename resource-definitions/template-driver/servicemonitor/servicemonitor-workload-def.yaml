@@ -12,7 +12,7 @@ entity:
       namespace: ${resources['k8s-namespace#k8s-namespace'].outputs.namespace}
       templates:
         init: |
-          workload: {{ index (splitList "." "${context.res.id}") 1 }}
+          workload: {{ .resource.id }}
           {{- if and .resource.spec.service (gt (.resource.spec.service.ports | len) 0) }}
           servicePort: {{ get (.resource.spec.service.ports | values | first ) "service_port" }}
           {{- else }}
