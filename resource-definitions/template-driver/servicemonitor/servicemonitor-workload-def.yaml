@@ -13,7 +13,7 @@ entity:
       templates:
         init: |
           workload: {{ .resource.id }}
-          {{- if and .resource.spec.service (gt (.resource.spec.service.ports | len) 0) }}
+          {{- if gt (.resource.spec | dig "service" "ports" (list) | len) 0 }}
           servicePort: {{ get (.resource.spec.service.ports | values | first ) "service_port" }}
           {{- else }}
           servicePort: 8080
