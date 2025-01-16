@@ -73,6 +73,7 @@ jobs:
               humctl resources test-definition ${resourceDefinition} --generate > ${inputs}
               sed -i 's/context.res.id: ""/context.res.id: "modules.test.externals.test"/g' ${inputs}
               sed -i 's/""/"test"/g' ${inputs}
+              sed -i 's/resource: {}/resource:\n  spec: {}/g' ${inputs}
               humctl resources test-definition ${resourceDefinition} --inputs ${inputs}
             fi
           done
