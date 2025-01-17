@@ -12,10 +12,7 @@ entity:
   driver_inputs:
     values:
       job: ${resources['config.runner'].outputs.job}
-      cluster:
-        cluster_type: ${resources['config.runner'].outputs.cluster.cluster_type}
-        account: ${resources['config.runner'].outputs.cluster.account}
-        cluster: ${resources['config.runner'].outputs.cluster.cluster}
+      cluster: ${resources['config.runner'].outputs.cluster}
       # Needed to authenticate to aws TF provider in the TF code passed via files inputs
       credentials_config:
         environment:
@@ -23,7 +20,6 @@ entity:
           AWS_SECRET_ACCESS_KEY: SecretAccessKey
       # Change to match your repository
       source:
-        path: path/to/my/iac/scripts
         ref: refs/heads/main
         url: git@github.com:my-org/my-repo.git
         # When using a GitHub personal access token, use the HTTPS URL:
