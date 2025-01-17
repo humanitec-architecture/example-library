@@ -18,7 +18,11 @@ We appreciate your contributions!
 - Perform one logical change per pull request
 - Maintain a clean list of commits and squash them if necessary
 
-## Example usage in downstream sites
+## Creating issues
+
+If you found an issue with one of the examples, please [raise a GitHub issue](https://github.com/humanitec-architecture/example-library/issues/new) in this repo to submit your feedback and request a fix.
+
+## Examples usage in downstream sites
 
 All examples except the `resource-graph-patterns` are regularly transferred for display in the [Example Library](https://developer.humanitec.com/examples/) site for greater community reach.
 
