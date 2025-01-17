@@ -20,7 +20,6 @@ entity:
           AWS_SECRET_ACCESS_KEY: SecretAccessKey
       # Change to match your repository
       source:
-        path: path/to/my/iac/scripts
         ref: refs/heads/main
         url: git@github.com:my-org/my-repo.git
         # When using a GitHub personal access token, use the HTTPS URL:

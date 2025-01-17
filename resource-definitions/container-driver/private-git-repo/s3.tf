@@ -19,7 +19,6 @@ resource "humanitec_resource_definition" "aws-s3" {
         }
       }
       "source" = {
-        "path" = "path/to/my/iac/scripts"
         "ref"  = "refs/heads/main"
         "url"  = "git@github.com:my-org/my-repo.git"
       }
