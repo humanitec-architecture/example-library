@@ -6,12 +6,8 @@ resource "humanitec_resource_definition" "aws-s3" {
   driver_account = "my-aws-cloud-account"
   driver_inputs = {
     values_string = jsonencode({
-      "job" = "$${resources['config.runner'].outputs.job}"
-      "cluster" = {
-        "cluster_type" = "$${resources['config.runner'].outputs.cluster.cluster_type}"
-        "account"      = "$${resources['config.runner'].outputs.cluster.account}"
-        "cluster"      = "$${resources['config.runner'].outputs.cluster.cluster}"
-      }
+      "job"     = "$${resources['config.runner'].outputs.job}"
+      "cluster" = "$${resources['config.runner'].outputs.cluster}"
       "credentials_config" = {
         "environment" = {
           "AWS_ACCESS_KEY_ID"     = "AccessKeyId"
@@ -19,8 +15,8 @@ resource "humanitec_resource_definition" "aws-s3" {
         }
       }
       "source" = {
-        "ref"  = "refs/heads/main"
-        "url"  = "git@github.com:my-org/my-repo.git"
+        "ref" = "refs/heads/main"
+        "url" = "git@github.com:my-org/my-repo.git"
       }
       "files" = {
         "terraform.tfvars.json" = "{\"REGION\": \"eu-west-3\", \"BUCKET\": \"$${context.app.id}-$${context.env.id}\"}\n"

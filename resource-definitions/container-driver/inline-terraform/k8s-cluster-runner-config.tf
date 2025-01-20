@@ -20,14 +20,12 @@ spec:
 END_OF_TEXT
       }
       "cluster" = {
-        "cluster_type" = "gke"
-        "account"      = "my-org/my-gcp-cloud-account"
+        "account" = "my-org/my-aws-cloud-account"
         "cluster" = {
+          "cluster_type" = "eks"
           "loadbalancer" = "10.10.10.10"
-          "name"         = "my-cluster"
-          "project_id"   = "my-project"
-          "zone"         = "europe-west2"
-          "internal_ip"  = true
+          "name"         = "my-demo-cluster"
+          "region"       = "eu-west-3"
         }
       }
     })
