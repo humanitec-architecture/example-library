@@ -2,7 +2,7 @@ This section shows how to use the [Template Driver](https://developer.humanitec.
 
 The example implements the Kubernetes standard mechanism to [Pull an Image from a Private Registry](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/). It creates a Kubernetes Secret of `kubernetes.io/dockerconfigjson` type, reading the credentials from a secret store. It then configures the secret as the `imagePullSecret` for a Workload's Pod.
 
-The example is applicable only when using the [Humanitec Operator](https://developer.humanitec.com/integration-and-extensions/humanitec-operator/overview/) on the cluster. With the Operator, using the [Registries](https://developer.humanitec.com/integration-and-extensions/ci-cd/integrate/#container-registries) feature of the Platform Orchestrator is not supported.
+The example requires the [Humanitec Operator](https://developer.humanitec.com/integration-and-extensions/humanitec-operator/overview/) to be configured on the cluster and connected to a secret store. The Resource Definition of type `config` will then read the credentials for the `imagePullSecret` from that secret store to populate the actual Kubernetes secret.
 
 To use this mechanism, install the Resource Definitions of this example into your Organization, replacing some placeholder values with the actual values of your setup. Add the appropriate [matching criteria](https://developer.humanitec.com/platform-orchestrator/resources/resource-definitions/#matching-criteria) to the `workload` Definition to match the Workloads you want to have access to the private registry.
 

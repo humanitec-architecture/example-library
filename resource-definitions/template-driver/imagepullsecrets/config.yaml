@@ -14,18 +14,22 @@ entity:
     res_id: regcred
   driver_inputs:
     # These secret references read the credentials from a secret store
+    # Note: Resolving secret references requires the use of the Humanitec Operator
+    # and a secret store configured for it on the target cluster
     secret_refs:
       password:
+        # Replace this value with the name of the secret that's supplying the password
         ref: regcred-password
         # Replace this value with the secret store id that's supplying the password
         store: FIXME
       username:
+        # Replace this value with the name of the secret that's supplying the username
         ref: regcred-username
         # Replace this value with the secret store id that's supplying the username
         store: FIXME
     values:
       secret_name: regcred
-      # Replace this value with the servername of your registry
+      # Replace this value with the servername of your image registry
       server: FIXME
       templates:
         # The init template is used to prepare the "dockerConfigJson" content
