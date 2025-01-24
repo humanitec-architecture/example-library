@@ -7,9 +7,6 @@ containers:
   busybox:
     image: busybox:latest
 
-    variables:
-      BUCKET_NAME: ${resources.my-s3.bucket}
-
     command:
       - /bin/sh
     args:
@@ -18,7 +15,3 @@ containers:
       # STDOUT every 15 seconds. This can be seen in the container logs in the
       # Humanitec UI.
       - "while true; do set; sleep 15; done"
-
-resources:
-  my-s3:
-    type: s3
