@@ -5,7 +5,7 @@ resource "humanitec_resource_definition" "example-k8s-service-account" {
   type        = "k8s-service-account"
   driver_inputs = {
     values_string = jsonencode({
-      "role_arn" = "$${resources['config.sa-name-role-id'].outputs.role_arn}"
+      "role_arn" = "$${resources.aws-role.outputs.arn}"
       "sa_name"  = "$${resources['config.sa-name-role-id'].outputs.sa_name}"
       "templates" = {
         "outputs"   = "name: {{ .driver.values.sa_name }}\n"
