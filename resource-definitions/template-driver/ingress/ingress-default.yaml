@@ -10,6 +10,19 @@ entity:
   driver_inputs:
     values:
       templates:
+        init: |
+          tls_secret_name: {{ if
+            (or
+              .driver.values.no_tls
+              (and
+                (hasKey .driver.values "tls_secret_name" )
+                (ne .driver.values.tls_secret_name "" )
+              )
+            ) -}}
+            ""
+          {{- else -}}
+            ${resources.tls-cert.outputs.tls_secret_name}
+          {{- end }}
         manifests: |
           {{- /*
             Only generate an ingress manifest if there are any routes defined.
@@ -50,16 +63,17 @@ entity:
                           port:
                             number: {{ index $.driver.values.routePorts $index }}
                     {{- end }}
-                {{- if not (or .driver.values.no_tls (eq (.driver.values.tls_secret_name | default "") "")) }}
+                {{- if not (or .driver.values.no_tls (eq .init.tls_secret_name "")) }}
                 tls:
                 - hosts:
                   - {{ .driver.values.host | toRawJson }}
-                  secretName: {{ .driver.values.tls_secret_name | toRawJson }}
+                  secretName: {{ .init.tls_secret_name | quote }}
                 {{- end }}
           {{- end -}}
         outputs: |
           no_tls: {{ .driver.values.no_tls | default false }}
           id: {{ .id }}-ingress
+          tls_secret_name: {{ .init.tls_secret_name }}
 
 
       # The host will be used from the dns resource with the same
