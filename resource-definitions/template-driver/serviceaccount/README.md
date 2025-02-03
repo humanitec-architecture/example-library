@@ -10,8 +10,8 @@ A Resource Graph for a Workload using those Resource Definitions will look like 
 
 ```mermaid
 flowchart LR
-  workloadVirtual[Workload &quot;my-workload&quot;] --> workload(id: modules.my-workload\ntype: workload\nclass: default)
-  workload --> serviceAccount(id: modules.my-workload\ntype: k8s-service-account\nclass: default)
+  workloadVirtual[Workload &quot;my-workload&quot;] --> workload(id: modules.my-workload<br/>type: workload<br/>class: default)
+  workload --> serviceAccount(id: modules.my-workload<br/>type: k8s-service-account<br/>class: default)
 ```
 
 Note that the resource `id` is used in the `k8s-service-account` Resource Definition to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
