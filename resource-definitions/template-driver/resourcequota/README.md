@@ -15,15 +15,15 @@ The Resource Graphs for two Applications, one of which matches the "override" cr
 flowchart LR
     subgraph app2[Resource Graph &quot;my-app&quot;]
         direction LR
-        workload2[Workload] --> baseEnv2(type: base-env\nid: base-env) --> config2("type: config\nid:quota")
+        workload2[Workload] --> baseEnv2(type: base-env<br/>id: base-env) --> config2("type: config<br/>id:quota")
     end
     subgraph app1[Resource Graph &quot;some-app&quot;]
         direction LR
-        workload1[Workload] --> baseEnv1(type: base-env\nid: base-env) --> config1("type: config\nid: quota")
+        workload1[Workload] --> baseEnv1(type: base-env<br/>id: base-env) --> config1("type: config<br/>id: quota")
     end
-    resDefBaseEnv[base-env\nResource Definition]
+    resDefBaseEnv[base-env<br/>Resource Definition]
     resDefBaseEnv -.-> baseEnv1
     resDefBaseEnv -.-> baseEnv2
-    resDefQuotaConfig[config-quota\nResource Definition] -.->|criteria:\n- res_id: quota| config1
-    resDefQuotaConfigOverride[config-quota-override\nResource Definition] -.->|criteria:\n- res_id: quota\n&nbsp;&nbsp;app_id: my-app| config2
+    resDefQuotaConfig[config-quota<br/>Resource Definition] -.->|criteria:<br/>- res_id: quota| config1
+    resDefQuotaConfigOverride[config-quota-override<br/>Resource Definition] -.->|criteria:<br/>- res_id: quota<br/>&nbsp;&nbsp;app_id: my-app| config2
 ```
