@@ -1,0 +1,9 @@
+# This Score Extension file adds an initContainer polling a local service
+apiVersion: humanitec.org/v1b1
+profile: humanitec/default-module
+spec:
+  pod:
+    initContainers:
+    - name: init-myservice
+      image: busybox
+      command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]

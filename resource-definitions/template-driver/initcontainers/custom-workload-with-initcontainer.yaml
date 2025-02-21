@@ -1,0 +1,26 @@
+# This Resource Definition uses the Template Driver to add an init container to a Workload
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: custom-workload-with-initcontainer
+entity:
+  name: custom-workload-with-initcontainer
+  type: workload
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs: |
+          update: 
+          - op: add
+            path: /spec/pod/initContainers
+            value:
+            - command:
+              - sh
+              - -c
+              - until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done
+              image: busybox
+              name: init-myservice
+  # Set matching criteria as required
+  criteria:
+    - app_id: my-app

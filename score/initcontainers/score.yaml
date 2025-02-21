@@ -1,0 +1,14 @@
+# This Score file deploys a sample workload with a service.
+# The initContainer defined through the Score Extension file polls for the existence of this service
+apiVersion: score.dev/v1b1
+metadata:
+  name: myservice
+
+containers:
+  demo:
+    image: nginx
+service:
+  ports:
+    www:
+      port: 8080
+      targetPort: 80
