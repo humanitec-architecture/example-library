@@ -1,10 +1,11 @@
+# This Score file defines a workload declaring a service
 apiVersion: score.dev/v1b1
 metadata:
   name: my-workload
 
 containers:
   demo:
-    image: registry/my-image:1.0.0
+    image: .
 service:
   ports:
     www:
