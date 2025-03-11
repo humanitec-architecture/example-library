@@ -1,0 +1,16 @@
+# This Score file defines a workload accessing another workload through its service
+apiVersion: score.dev/v1b1
+metadata:
+  name: workload-consuming-a-service
+
+containers:
+  demo:
+    image: .
+    variables:
+      # This placeholder will resolve to the K8s-internal DNS name of the other workload's service
+      SERVICE_ADDR: "${resources.my-workload.name}:8080"
+resources:
+  # The name of this resource needs to correspond with the name
+  # of the workload whose service you wish to access
+  my-workload:
+    type: service
