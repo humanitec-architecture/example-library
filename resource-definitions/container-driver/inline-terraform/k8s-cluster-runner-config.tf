@@ -12,7 +12,7 @@ resource "humanitec_resource_definition" "config-container-driver" {
         ]
         "shared_directory" = "/home/runneruser/workspace"
         "namespace"        = "humanitec-runner"
-        "service_account"  = "humanitec-runner-job"
+        "service_account"  = "humanitec-runner"
         "pod_template"     = <<END_OF_TEXT
 spec:
   imagePullSecrets:

@@ -14,7 +14,7 @@ resource "humanitec_resource_definition" "aws-s3" {
         ]
         "shared_directory" = "/home/runneruser/workspace"
         "namespace"        = "humanitec-runner"
-        "service_account"  = "humanitec-container-runner"
+        "service_account"  = "humanitec-runner"
       }
       "cluster" = {
         "account" = "my-org/my-aws-cloud-account"

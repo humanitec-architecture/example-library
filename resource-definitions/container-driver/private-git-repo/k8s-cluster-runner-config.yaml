@@ -19,7 +19,7 @@ entity:
         # Change to the namespace name you created to host the Kubernetes Job created by the Driver.
         namespace: humanitec-runner
         # Change to the service account name with permissions to create secrets/configmaps in the Kubernetes Job namespace you created.
-        service_account: humanitec-runner-job
+        service_account: humanitec-runner
         # This assumes a secret with the given name exists in the desired namespace and it contains the credentials to pull the job image from the private registry.
         pod_template: |
           spec:
