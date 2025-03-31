@@ -23,7 +23,7 @@ entity:
         # Change to the namespace name you created to host the Kubernetes Job created by the Driver.
         namespace: humanitec-runner
         # Change to the service account name with permissions to create secrets/configmaps in the Kubernetes Job namespace you created.
-        service_account: humanitec-container-runner
+        service_account: humanitec-runner
       cluster:
         # Update to your cloud account
         account: my-org/my-aws-cloud-account
