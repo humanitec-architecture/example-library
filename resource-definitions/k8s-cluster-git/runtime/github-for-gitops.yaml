@@ -22,8 +22,7 @@ entity:
       credentials:
         ssh_key: my-git-ssh-key
         # Alternative to ssh_key: password or Personal Account Token
-        # password: my-git-ssh-pat
-  
+        # password: my-git-ssh-pat 
   # To co-provision a non-GitOps cluster resource from which the Orchestrator will fetch runtime info.
   # The provision key specifies `k8s-cluster-runtime` as Resource Id and it must be used in the non-GitOps cluster resource definition Matching Criteria.
   provision:
