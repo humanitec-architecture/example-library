@@ -1,0 +1,30 @@
+# This Resource Definition specifies a `config` Resource to be provisioned through Terraform code read from a private Git repository accessed via an SSH key.
+
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: config-opentofu-container-runner
+entity:
+  name: Config For OpenTofu Container Runner Driver
+  type: config
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        outputs:
+          cluster:
+            account: myOrg/myAccount
+            cluster:
+              name: my-eks-cluster
+              region: eu-north-1
+              cluster_type: eks
+              loadbalancer: 10.10.10.10
+          skip_permission_checks: false
+        secrets: |
+          agent_url: {{ .driver.secrets.agent_url }}
+    secrets:
+      agent_url: ${resources.agent.outputs.url}
+  criteria:
+  # Change to match the name of the development type you want this to apply to    
+  - env_type: development
+    res_id: opentofu-container-runner
