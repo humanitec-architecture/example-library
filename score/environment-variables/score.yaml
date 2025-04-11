@@ -4,6 +4,7 @@ metadata:
 
 containers:
   demo:
+    # Set by pipeline via humctl score deploy --image
     image: .
     variables:
       API_KEY: "${resources.env.API_KEY}"

@@ -9,6 +9,7 @@ service:
       targetPort: 8080
 containers:
   webserver:
+    # Set by pipeline via humctl score deploy --image
     image: .
 resources:
   api-dns:

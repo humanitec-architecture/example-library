@@ -4,6 +4,7 @@ metadata:
 
 containers:
   demo:
+    # Set by pipeline via humctl score deploy --image
     image: .
     livenessProbe:
       httpGet:

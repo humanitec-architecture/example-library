@@ -4,6 +4,7 @@ metadata:
 
 containers:
   demo:
+    # Set by pipeline via humctl score deploy --image
     image: .
     command: ["/bin/sh"]
     args: ["-c", "while true; do printenv && sleep 60; done"]

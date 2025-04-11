@@ -5,6 +5,7 @@ metadata:
 
 containers:
   backend:
+    # Set by pipeline via humctl score deploy --image
     image: .
 
 resources:
