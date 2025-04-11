@@ -1,0 +1,4 @@
+This section contains example Resource Definitions using the [Template Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/template/) for injecting [environment variables](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) in your containers.
+
+* [`inject-env-var-to-workload.yaml`](./inject-env-var-to-workload.yaml): Add the required environment variables to the Workload so they become available inside the containers. This format is for use with the [Humanitec CLI](https://developer.humanitec.com/platform-orchestrator/cli/).
+* [`inject-env-var-to-workload.tf`](./inject-env-var-to-workload.tf):  This format is for use with the [Humanitec Terraform Provider](https://registry.terraform.io/providers/humanitec/humanitec).
