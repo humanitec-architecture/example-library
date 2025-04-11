@@ -1,0 +1,49 @@
+# This Resource Definition specifies an `s3` Resource to be provisioned through Terraform code read from a private Git repository accessed via an SSH key.
+# The backend is defined via an inline file
+
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: my-s3-bucket
+entity:
+  name: S3 Bucket
+  type: s3
+  driver_type: humanitec/opentofu-container-runner
+  driver_account: my-aws-account
+  driver_inputs:
+    values:
+      runner:
+        pod_template: |
+          spec:
+            imagePullSecrets:
+              - name: ghcr-private-registry
+      source:
+        ref: refs/heads/main
+        url: https://my-domain.com/my-org/my-repo.git
+        username: my-git-handler
+        path: path/to/s3
+      variables:
+        bucket: ${context.app.id}-${context.env.id}
+        region: eu-west-3
+      credentials_config:
+        environment:
+          AWS_ACCESS_KEY_ID: AccessKeyId
+          AWS_SECRET_ACCESS_KEY: SecretAccessKey
+      use_default_backend: false
+      files:
+        backend.tf: |
+          terraform {
+            backend "s3" {
+              bucket = "my-s3-to-store-tf-state"
+              key = "${context.res.guresid}/state/terraform.tfstate"
+              region = "eu-west-3"
+            }
+          }
+    secret_refs:
+      source:
+        password:
+          store: my-store
+          ref: path/to/git/password
+  criteria:
+  - env_type: development
+
