@@ -4,6 +4,6 @@ metadata:
 
 containers:
   demo:
-    image: registry/my-image:1.0.0
+    image: .
     command: ["/bin/sh"]
     args: ["-c", "while true; do printenv && sleep 60; done"]

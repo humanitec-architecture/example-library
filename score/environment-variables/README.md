@@ -12,7 +12,7 @@ Define environment variables for a container. There are two ways to configure th
       name: example
     containers:
       main:
-        image: example
+        image: .
         variables:
           KEY_ONE: hello-world
           KEY_TWO: ${resources.env.VALUE}

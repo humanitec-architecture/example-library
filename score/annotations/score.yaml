@@ -6,7 +6,7 @@ metadata:
 
 containers:
   demo:
-    image: registry/my-image:1.0.0
+    image: .
 service:
   ports:
     http:

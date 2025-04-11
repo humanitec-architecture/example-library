@@ -5,7 +5,7 @@ metadata:
 
 containers:
   backend:
-    image: my-be-service:latest
+    image: .
 
 resources:
   # This resource becomes a Shared Resource by assiging it an "id"

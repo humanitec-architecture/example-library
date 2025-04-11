@@ -5,7 +5,7 @@ metadata:
 
 containers:
   frontend:
-    image: my-fe-service:latest
+    image: .
     variables:
       # Inject the DNS name of the backend service as an environment variable
       API_URL: https://${resources.api-dns.host}

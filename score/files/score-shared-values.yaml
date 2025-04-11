@@ -4,7 +4,7 @@ metadata:
 
 containers:
   demo:
-    image: registry/my-image:1.0.0
+    image: .
     files:
       - target: /app/default.config
         mode: "0644"

@@ -9,7 +9,7 @@ service:
       targetPort: 8080
 containers:
   webserver:
-    image: my-webservice:latest
+    image: .
 resources:
   api-dns:
     type: dns
