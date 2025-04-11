@@ -4,7 +4,8 @@ metadata:
 
 containers:
   demo:
-    image: registry/my-image:1.0.0
+    # Set by pipeline via humctl score deploy --image
+    image: .
     files:
       - target: /app/default.config
         mode: "0644"

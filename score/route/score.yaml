@@ -9,7 +9,8 @@ service:
       targetPort: 8080
 containers:
   webserver:
-    image: my-webservice:latest
+    # Set by pipeline via humctl score deploy --image
+    image: .
 resources:
   api-dns:
     type: dns

@@ -5,7 +5,8 @@ metadata:
 
 containers:
   backend:
-    image: my-be-service:latest
+    # Set by pipeline via humctl score deploy --image
+    image: .
 
 resources:
   # This resource becomes a Shared Resource by assiging it an "id"

@@ -1,4 +1,4 @@
-When several Workloads need to use the same real-world Resource, this can be modelled as a [Shared Resource](https://developer.humanitec.com/platform-orchestrator/resources/dependent-resources/#shared-resources-in-score).
+When several Workloads need to use the same real-world Resource, this can be modeled as a [Shared Resource](https://developer.humanitec.com/platform-orchestrator/resources/dependent-resources/#shared-resources-in-score).
 
 Workloads using the Shared Resource will then reference the same node in the Resource Graph.
 

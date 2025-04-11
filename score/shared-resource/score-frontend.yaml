@@ -5,7 +5,8 @@ metadata:
 
 containers:
   frontend:
-    image: my-fe-service:latest
+    # Set by pipeline via humctl score deploy --image
+    image: .
     variables:
       # Inject the DNS name of the backend service as an environment variable
       API_URL: https://${resources.api-dns.host}
