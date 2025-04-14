@@ -2,7 +2,7 @@
 
 The [OpenTofu Container Runner Driver Driver](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/terraform-and-opentofu-container-runner/) provides an easy way to execute [OpenTofu](https://opentofu.org/) code.
 
-This driver handles the runner outputs to be compliant with the [interface expeceted by the Orchestrator](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/container/#contract-between-container-driver-and-runner-image).
+This driver handles the runner outputs to be compliant with the [interface expected by the Orchestrator](https://developer.humanitec.com/integration-and-extensions/drivers/generic-drivers/container/#contract-between-container-driver-and-runner-image).
 
 The example in this section shows:
 
