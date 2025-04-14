@@ -6,21 +6,9 @@ resource "humanitec_resource_definition" "inject-env-var-to-workload" {
   driver_inputs = {
     values_string = jsonencode({
       "templates" = {
-        "outputs" = <<END_OF_TEXT
-update:
-  {{- range $containerId, $value := .resource.spec.containers }}
-  - op: add
-    path: /spec/containers/{{ $containerId }}/env
-    value:
-      - name: MY_ENV_VAR_A
-        value: "my env value A"
-      - name: MY_ENV_VAR_B
-        value: "my env value B"
-      - name: MY_ENV_VAR_C
-        value: "my env value C"
-  {{- end }}
-END_OF_TEXT
+        "outputs" = "update:\n  {{- range $containerId, $value := .resource.spec.containers }}\n  - op: add\n    path: /spec/containers/{{ $containerId }}/env\n    value:\n      - name: MY_ENV_VAR_A\n        value: \"my env value A\"\n      - name: MY_ENV_VAR_B\n        value: \"my env value B\"\n      - name: MY_ENV_VAR_C\n        value: \"my env value C\"\n  {{- end }}"
       }
     })
   }
 }
+
