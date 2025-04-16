@@ -13,11 +13,18 @@ entity:
   driver_inputs:
     values:
       templates:
+        cookie: |
+          # Store the volumeUid in a cookie to be reused for subsequent deployments
+          volumeUid: {{ .init.volumeUid }}
         init: |
           # Generate a unique id for each pv/pvc combination.
           # Every Workload will have a separate pv and pvc created for it,
           # but pointing to the same NFS server endpoint.
+          {{- if and .cookie .cookie.volumeUid }}
+          volumeUid: {{ .cookie.volumeUid }}
+          {{- else }}
           volumeUid: {{ randNumeric 4 }}-{{ randNumeric 4 }}
+          {{- end }}
           pvBaseName: pv-tmpl-
           pvcBaseName: pvc-tmpl-
           volBaseName: vol-tmpl-
