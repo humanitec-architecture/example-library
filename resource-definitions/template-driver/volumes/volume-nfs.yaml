@@ -20,12 +20,11 @@ entity:
           # Generate a unique id for each pv/pvc combination.
           # Every Workload will have a separate pv and pvc created for it,
           # but pointing to the same NFS server endpoint.
-          volumeUid: |
-            {{- if and .cookie .cookie.volumeUid }}
-              {{- .cookie.volumeUid }}
-            {{- else }}
-              {{ randNumeric 4 }}-{{ randNumeric 4 }}
-            {{- end }}
+          {{- if and .cookie .cookie.volumeUid }}
+          volumeUid: {{ .cookie.volumeUid }}
+          {{- else }}
+          volumeUid: {{ randNumeric 4 }}-{{ randNumeric 4 }}
+          {{- end }}
           pvBaseName: pv-tmpl-
           pvcBaseName: pvc-tmpl-
           volBaseName: vol-tmpl-
