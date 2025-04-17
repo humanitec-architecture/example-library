@@ -6,11 +6,19 @@ resource "humanitec_resource_definition" "volume-nfs" {
   driver_inputs = {
     values_string = jsonencode({
       "templates" = {
-        "init" = <<END_OF_TEXT
+        "cookie" = <<END_OF_TEXT
+# Store the volumeUid in a cookie to be reused for subsequent deployments
+volumeUid: {{ .init.volumeUid }}
+END_OF_TEXT
+        "init"   = <<END_OF_TEXT
 # Generate a unique id for each pv/pvc combination.
 # Every Workload will have a separate pv and pvc created for it,
 # but pointing to the same NFS server endpoint.
+{{- if and .cookie .cookie.volumeUid }}
+volumeUid: {{ .cookie.volumeUid }}
+{{- else }}
 volumeUid: {{ randNumeric 4 }}-{{ randNumeric 4 }}
+{{- end }}
 pvBaseName: pv-tmpl-
 pvcBaseName: pvc-tmpl-
 volBaseName: vol-tmpl-
