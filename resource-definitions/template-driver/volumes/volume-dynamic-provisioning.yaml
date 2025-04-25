@@ -1,0 +1,60 @@
+# Using the Template Driver for the dynamic provisioning of
+# a Kubernetes PersistentVolume and PersistentVolumeClaim combination,
+# then adding the volume into the Pod of the Workload.
+# The PVC requests a storageClass "standard-rwo".
+# The volumeMount in the container is defined in the "workload" type Resource Definition.
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-standard-dynamic
+entity:
+  name: volume-standard-dynamic
+  type: volume
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        init: |
+          # Generate a unique id for each pv/pvc combination.
+          # Every Workload will have a separate pv and pvc created for it,
+          # but pointing to the same NFS server endpoint.
+          volumeUid: {{ randNumeric 4 }}-{{ randNumeric 4 }}
+          pvBaseName: pv-tmpl-
+          pvcBaseName: pvc-tmpl-
+          volBaseName: vol-tmpl-
+        manifests:
+          #########################################################################
+          # This template creates the PersistentVolumeClaim in the target namespace
+          #########################################################################
+          app-pvc-tmpl.yaml:
+            location: namespace
+            data: |
+              apiVersion: v1
+              kind: PersistentVolumeClaim
+              metadata:
+                name: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                storageClassName: "standard-rwo"
+                resources:
+                  requests:
+                    storage: 10Gi
+                volumeName: {{ .init.pvBaseName }}{{ .init.volumeUid }}
+
+          ########################################################
+          # This template creates the volume in the Workload's Pod
+          ########################################################
+          app-vol-tmpl.yaml:
+            location: volumes
+            data: |
+              name: {{ .init.volBaseName }}{{ .init.volumeUid }}
+              persistentVolumeClaim:
+                claimName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
+
+        # Make the volume name and pvc name available for other Resources
+        outputs: |
+          volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}
+          pvcName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
+  criteria:
+  - class: standard-rwo

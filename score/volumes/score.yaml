@@ -5,23 +5,30 @@ containers:
   my-container:
     image: .
     volumes:
-    - source: ${resources.my-pvc}
-      target: /target/dir
-    - source: ${resources.my-ebs}
-      target: /ebs-target/dir
     - source: ${resources.my-ephemeral-volume}
-      target: /tmp/dir
-    - source: ${resources.my-nfs}
-      target: /nfs-target/dir
+      target: /tmp/ephemeral-dir
+    - source: ${resources.my-config-volume}
+      target: /var/config
+    - source: ${resources.my-projected-volume}
+      target: /var/all-in-one
+      readOnly: true
+    - source: ${resources.my-dynamic-provisioning-volume}
+      target: /var/dynamic
+    - source: ${resources.my-nfs-volume}
+      target: /var/nfs
 resources:
-  my-pvc:
-    type: volume
-  my-ebs:
-    type: volume
-    class: ebs
   my-ephemeral-volume:
     type: volume
     class: ephemeral
-  my-nfs:
+  my-config-volume:
+    type: volume
+    class: config
+  my-projected-volume:
+    type: volume
+    class: projected
+  my-dynamic-provisioning-volume:
+    type: volume
+    class: standard-rwo
+  my-nfs-volume:
     type: volume
     class: nfs

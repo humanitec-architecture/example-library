@@ -1,0 +1,21 @@
+# This Resource Definition uses the Template Driver to inject an emptyDir volume into the workload
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-emptydir
+entity:
+  name: volume-emptydir
+  type: volume
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests:
+          emptydir.yaml:
+            location: volumes
+            data: |
+              name: ${context.res.guresid}-emptydir
+              emptyDir:
+                sizeLimit: 1024Mi
+  criteria:
+  - class: ephemeral

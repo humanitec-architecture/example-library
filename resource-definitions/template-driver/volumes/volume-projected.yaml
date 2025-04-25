@@ -1,0 +1,33 @@
+# This Resource Definition uses the Template Driver to create a projected volume
+# accessing a ConfigMap and the downwardAPI
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-projected
+entity:
+  name: volume-projected
+  type: volume
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests:
+          projected.yaml:
+            location: volumes
+            data: |
+              name: ${context.res.guresid}-projected
+              projected:
+                sources:
+                - downwardAPI:
+                    items:
+                      - path: "labels"
+                        fieldRef:
+                          fieldPath: metadata.labels
+                - configMap:
+                    # The ConfigMap named here needs to exist. The Resource Definition does not create it
+                    name: log-config
+                    items:
+                      - key: log_level
+                        path: log_level.conf
+  criteria:
+  - class: projected
