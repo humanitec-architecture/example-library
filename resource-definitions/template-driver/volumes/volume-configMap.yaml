@@ -1,0 +1,25 @@
+# This Resource Definition uses the Template Driver to create a volume accessing a ConfigMap
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: volume-configmap
+entity:
+  name: volume-configmap
+  type: volume
+  driver_type: humanitec/template
+  driver_inputs:
+    values:
+      templates:
+        manifests:
+          configmap.yaml:
+            location: volumes
+            data: |
+              name: ${context.res.guresid}-configmap
+              configMap:
+                # The ConfigMap named here needs to exist. The Resource Definition does not create it
+                name: log-config
+                items:
+                  - key: log_level
+                    path: log_level.conf
+  criteria:
+  - class: config

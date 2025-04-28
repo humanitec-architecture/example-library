@@ -1,55 +1,28 @@
-# Using the Template Driver for the static provisioning of
+# Using the Template Driver for the dynamic provisioning of
 # a Kubernetes PersistentVolume and PersistentVolumeClaim combination,
 # then adding the volume into the Pod of the Workload.
+# The PVC requests a storageClass "standard-rwo".
 # The volumeMount in the container is defined in the "workload" type Resource Definition.
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
-  id: volume-nfs
+  id: volume-standard-dynamic
 entity:
-  name: volume-nfs
+  name: volume-standard-dynamic
   type: volume
   driver_type: humanitec/template
   driver_inputs:
     values:
       templates:
-        cookie: |
-          # Store the volumeUid in a cookie to be reused for subsequent deployments
-          volumeUid: {{ .init.volumeUid }}
         init: |
           # Generate a unique id for each pv/pvc combination.
           # Every Workload will have a separate pv and pvc created for it,
           # but pointing to the same NFS server endpoint.
-          {{- if and .cookie .cookie.volumeUid }}
-          volumeUid: {{ .cookie.volumeUid }}
-          {{- else }}
           volumeUid: {{ randNumeric 4 }}-{{ randNumeric 4 }}
-          {{- end }}
           pvBaseName: pv-tmpl-
           pvcBaseName: pvc-tmpl-
           volBaseName: vol-tmpl-
         manifests:
-          ####################################################################
-          # This template creates the PersistentVolume in the target namespace
-          # Modify the nfs server and path to address your NFS server
-          ####################################################################
-          app-pv-tmpl.yaml:
-            location: namespace
-            data: |
-              apiVersion: v1
-              kind: PersistentVolume
-              metadata:
-                name: {{ .init.pvBaseName }}{{ .init.volumeUid }}
-              spec:
-                capacity:
-                  storage: 1Mi
-                accessModes:
-                  - ReadWriteMany
-                nfs:
-                  server: nfs-server.default.svc.cluster.local
-                  path: "/"
-                mountOptions:
-                  - nfsvers=4.2
           #########################################################################
           # This template creates the PersistentVolumeClaim in the target namespace
           #########################################################################
@@ -62,11 +35,11 @@ entity:
                 name: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
               spec:
                 accessModes:
-                  - ReadWriteMany
-                storageClassName: ""
+                  - ReadWriteOnce
+                storageClassName: "standard-rwo"
                 resources:
                   requests:
-                    storage: 1Mi
+                    storage: 10Gi
                 volumeName: {{ .init.pvBaseName }}{{ .init.volumeUid }}
           ########################################################
           # This template creates the volume in the Workload's Pod
@@ -82,4 +55,4 @@ entity:
           volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}
           pvcName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
   criteria:
-  - class: nfs
+  - class: standard-rwo

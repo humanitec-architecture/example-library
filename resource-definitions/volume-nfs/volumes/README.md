@@ -1,0 +1,3 @@
+This section contains Resource Definitions examples for handling Kubernetes [Volumes](https://kubernetes.io/docs/concepts/storage/volumes) by using the [`volume-nfs`](https://developer.humanitec.com/integration-and-extensions/drivers/volume-driver/network-file-system/) Driver. If you have special requirements for your `PersistentVolume` implementation, you can [see this other example using the `template` Driver](https://developer.humanitec.com/examples/resource-definitions/template-driver/volumes/).
+
+You can find a Score file example using the `volume` resource type [here](https://developer.humanitec.com/examples/score/volumes/).
