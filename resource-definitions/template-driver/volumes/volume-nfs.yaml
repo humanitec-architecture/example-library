@@ -50,7 +50,6 @@ entity:
                   path: "/"
                 mountOptions:
                   - nfsvers=4.2
-          
           #########################################################################
           # This template creates the PersistentVolumeClaim in the target namespace
           #########################################################################
@@ -69,7 +68,6 @@ entity:
                   requests:
                     storage: 1Mi
                 volumeName: {{ .init.pvBaseName }}{{ .init.volumeUid }}
-
           ########################################################
           # This template creates the volume in the Workload's Pod
           ########################################################
@@ -79,7 +77,6 @@ entity:
               name: {{ .init.volBaseName }}{{ .init.volumeUid }}
               persistentVolumeClaim:
                 claimName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
-
         # Make the volume name and pvc name available for other Resources
         outputs: |
           volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}

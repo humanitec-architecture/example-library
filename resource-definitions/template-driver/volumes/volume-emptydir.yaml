@@ -1,3 +1,4 @@
+# This Resource Definition uses the Template Driver to inject an emptyDir volume into the workload
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:

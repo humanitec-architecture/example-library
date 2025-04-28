@@ -41,7 +41,6 @@ entity:
                   requests:
                     storage: 10Gi
                 volumeName: {{ .init.pvBaseName }}{{ .init.volumeUid }}
-
           ########################################################
           # This template creates the volume in the Workload's Pod
           ########################################################
@@ -51,7 +50,6 @@ entity:
               name: {{ .init.volBaseName }}{{ .init.volumeUid }}
               persistentVolumeClaim:
                 claimName: {{ .init.pvcBaseName }}{{ .init.volumeUid }}
-
         # Make the volume name and pvc name available for other Resources
         outputs: |
           volumeName: {{ .init.volBaseName }}{{ .init.volumeUid }}
