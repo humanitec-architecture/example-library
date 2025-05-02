@@ -19,9 +19,6 @@ The examples demonstrates two alternative approaches:
 For option 1, a Resource Graph for a Workload using those Resource Definitions will look like this:
 
 ```mermaid
----
-title: Option 1: Separate Kubernetes ServiceAccount for each Workload
----
 flowchart LR
   workloadVirtual1[Workload &quot;my-workload-1&quot;<br/>defined via Score] -.-> workload1(id: modules.my-workload-1<br/>type: workload<br/>class: default)
   workload1 --> serviceAccount1(id: modules.my-workload-1<br/>type: k8s-service-account<br/>class: default)
@@ -35,9 +32,6 @@ flowchart LR
 For option 2, a Resource Graph for a Workload using those Resource Definitions will look like this:
 
 ```mermaid
----
-title: Option 2: Single Kubernetes ServiceAccount for all Workloads
----
 flowchart LR
   workloadVirtual1[Workload &quot;my-workload-1&quot;<br/>defined via Score] -.-> workload1(id: modules.my-workload-1<br/>type: workload<br/>class: default)
   workload1 --> serviceAccount(id: ksa<br/>type: k8s-service-account<br/>class: default)
