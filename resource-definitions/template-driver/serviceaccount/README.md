@@ -6,12 +6,48 @@ The [`workload` Resource Type](https://developer.humanitec.com/platform-orchestr
 
 This `workload` Resource Definition adds the `serviceAccountName` item to the Pod spec and references a [`k8s-service-account` type Resource](https://developer.humanitec.com/platform-orchestrator/reference/resource-types/#k8s-service-account), causing it to be provisioned. The `k8s-service-account` Resource Definition generates the Kubernetes manifest for the actual ServiceAccount.
 
-A Resource Graph for a Workload using those Resource Definitions will look like this:
+The examples demonstrates two alternative approaches:
+
+1. Providing a separate Kubernetes ServiceAccount for each Workload
+
+    This approach lets you fine tune the permissions obtained via the ServiceAccount for each Workload, but create more objects in the Resource Graph and on the cluster.
+
+2. Providing a single Kubernetes ServiceAccount for all Workloads in the same Application Environment
+
+    This approach results in unified permissions for each Workload and less objects in the Resource Graph and on the cluster
+
+For option 1, a Resource Graph for a Workload using those Resource Definitions will look like this:
 
 ```mermaid
+---
+title: Option 1: Separate Kubernetes ServiceAccount for each Workload
+---
 flowchart LR
-  workloadVirtual[Workload &quot;my-workload&quot;] --> workload(id: modules.my-workload<br/>type: workload<br/>class: default)
-  workload --> serviceAccount(id: modules.my-workload<br/>type: k8s-service-account<br/>class: default)
+  workloadVirtual1[Workload &quot;my-workload-1&quot;<br/>defined via Score] -.-> workload1(id: modules.my-workload-1<br/>type: workload<br/>class: default)
+  workload1 --> serviceAccount1(id: modules.my-workload-1<br/>type: k8s-service-account<br/>class: default)
+  workloadVirtual2[Workload &quot;my-workload-2&quot;<br/>defined via Score] -.-> workload2(id: modules.my-workload-2<br/>type: workload<br/>class: default)
+  workload2 --> serviceAccount2(id: modules.my-workload-2<br/>type: k8s-service-account<br/>class: default)
+
+  classDef dotted stroke-dasharray: 5 5;
+  class workloadVirtual1,workloadVirtual2 dotted
 ```
 
-Note that the resource `id` is used in the `k8s-service-account` Resource Definition to derive the name of the actual Kubernetes ServiceAccount. Check the code for details.
+For option 2, a Resource Graph for a Workload using those Resource Definitions will look like this:
+
+```mermaid
+---
+title: Option 2: Single Kubernetes ServiceAccount for all Workloads
+---
+flowchart LR
+  workloadVirtual1[Workload &quot;my-workload-1&quot;<br/>defined via Score] -.-> workload1(id: modules.my-workload-1<br/>type: workload<br/>class: default)
+  workload1 --> serviceAccount(id: ksa<br/>type: k8s-service-account<br/>class: default)
+  workloadVirtual2[Workload &quot;my-workload-2&quot;<br/>defined via Score] -.-> workload2(id: modules.my-workload-2<br/>type: workload<br/>class: default)
+  workload2 --> serviceAccount
+
+  classDef dotted stroke-dasharray: 5 5;
+  class workloadVirtual1,workloadVirtual2 dotted
+```
+
+Check the code in the Resource Definitions to activate the option you wish to use.
+
+In both cases, the resource `id` is used in the `k8s-service-account` Resource Definition to derive the name of the Kubernetes ServiceAccount.
