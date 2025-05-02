@@ -16,7 +16,7 @@ The examples demonstrates two alternative approaches:
 
     This approach results in unified permissions for each Workload and less objects in the Resource Graph and on the cluster
 
-For option 1, a Resource Graph for a Workload using those Resource Definitions will look like this:
+For option 1, a Resource Graph for Workloads using those Resource Definitions will look like this:
 
 ```mermaid
 flowchart LR
@@ -29,7 +29,7 @@ flowchart LR
   class workloadVirtual1,workloadVirtual2 dotted
 ```
 
-For option 2, a Resource Graph for a Workload using those Resource Definitions will look like this:
+For option 2, a Resource Graph for Workloads using those Resource Definitions will look like this:
 
 ```mermaid
 flowchart LR
