@@ -1,0 +1,70 @@
+name: Approval before Promotion
+
+on:
+  deployment_request: {}
+
+concurrency:
+  group: myGroup-${{ inputs.env_id }}
+
+permissions:
+  application: developer
+  env-types:
+    development: deployer
+    production: deployer
+
+jobs:
+  deploy-to-dev:
+    steps:
+    - if: ${{ ! inputs.set_id }}
+      name: Create Deployment Set
+      id: create-deployment-set
+      uses: actions/humanitec/apply@v1
+      with:
+        delta_id: ${{ inputs.delta_id }}
+        env_id: ${{ inputs.env_id }}
+    - name: Deploy Set To Environment
+      uses: actions/humanitec/deploy@v1
+      id: deploy-deployment-set
+      with:
+        set_id: ${{ inputs.set_id || steps.create-deployment-set.outputs.set_id }}
+        value_set_version_id: ${{ inputs.value_set_version_id }}
+        env_id: ${{ inputs.env_id }}
+        message: ${{ inputs.comment }}
+    outputs:
+      # Provide the deployment ID as an output to use for the production deployment
+      deployment_id: ${{ steps.deploy-deployment-set.outputs.deployment_id }}
+
+  wait-for-approval:
+    # increase the timeout to 24 hours for this Job
+    timeout-minutes: 1440
+    needs:
+    - deploy-to-dev
+    steps:
+    - uses: actions/humanitec/approve@v1
+      with:
+        env_id: production
+        message: Promotion of ${{ inputs.env_id }} to production
+
+  deploy-to-production:
+    # This job needs to name the "deploy-to-dev" Job as a dependency so it can use its outputs
+    # It also names the "wait-for-approval" Job as a dependency so it does not start before approval is given
+    needs:
+    - deploy-to-dev
+    - wait-for-approval
+    steps:
+    - name: Clone Set from Environment
+      uses: actions/humanitec/clone@v1
+      id: clone-deployment-set
+      with:
+        from_env_id: ${{ inputs.env_id }}
+        to_env_id: production
+        # Use the "deployment_id" output from the "deploy-to-dev" Job to ensure the proper Deployment is cloned
+        from_deployment_id: ${{ needs.deploy-to-dev.outputs.deployment_id }}
+        
+    - name: Deploy Set To Environment
+      uses: actions/humanitec/deploy@v1
+      id: deploy-deployment-set
+      with:
+        set_id: ${{ steps.clone-deployment-set.outputs.set_id }}
+        env_id: production
+        message: ${{ inputs.comment }}
