@@ -1,4 +1,4 @@
-# This Resource Definition provisions the equivalent of the humanitec/ingress driver
+# This Resource Definition provisions the equivalent of the humanitec/ingress driver with tls
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
@@ -50,15 +50,12 @@ entity:
                           port:
                             number: {{ index $.driver.values.routePorts $index }}
                     {{- end }}
-                {{- if not (or .driver.values.no_tls (eq (.driver.values.tls_secret_name | default "") "")) }}
                 tls:
                 - hosts:
                   - {{ .driver.values.host | toRawJson }}
-                  secretName: {{ .driver.values.tls_secret_name | toRawJson }}
-                {{- end }}
+                  secretName: {{ .driver.values.tlsSecretName | toRawJson }}
           {{- end -}}
         outputs: |
-          no_tls: {{ .driver.values.no_tls | default false }}
           id: {{ .id }}-ingress
 
 
@@ -72,6 +69,7 @@ entity:
       routePorts: ${resources.dns<route.outputs.port}
       routeServices: ${resources.dns<route.outputs.service}
 
+      tlsSecretName: ${resources.tls-cert.outputs.tls_secret_name}
 
       # The following fields can be set based on the documented driver inputs
       # for humanitec/ingress.
@@ -80,7 +78,5 @@ entity:
       # annotations: {}
       # class: nginx
       # labels: {}
-      # no_tls: true
       # path_type: Prefix
-      # tls_secret_name: ""
 

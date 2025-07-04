@@ -46,12 +46,10 @@ ingress.yaml:
                 port:
                   number: {{ index $.driver.values.routePorts $index }}
           {{- end }}
-      {{- if not (or .driver.values.no_tls (eq (.driver.values.tls_secret_name | default "") "")) }}
       tls:
       - hosts:
         - {{ .driver.values.host | toRawJson }}
-        secretName: {{ .driver.values.tls_secret_name | toRawJson }}
-      {{- end }}
+        secretName: {{ .driver.values.tlsSecretName | toRawJson }}
 {{- end -}}
 END_OF_TEXT
         "outputs"   = <<END_OF_TEXT
@@ -63,6 +61,7 @@ END_OF_TEXT
       "routePaths"    = "$${resources.dns<route.outputs.path}"
       "routePorts"    = "$${resources.dns<route.outputs.port}"
       "routeServices" = "$${resources.dns<route.outputs.service}"
+      "tlsSecretName" = "$${resources.tls-cert.outputs.tls_secret_name}"
     })
   }
 }
