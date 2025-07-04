@@ -1,4 +1,4 @@
-# This Resource Definition provisions the equivalent of the humanitec/ingress driver
+# This Resource Definition provisions the equivalent of the humanitec/ingress driver with tls
 apiVersion: entity.humanitec.io/v1b1
 kind: Definition
 metadata:
