@@ -52,10 +52,7 @@ ingress.yaml:
         secretName: {{ .driver.values.tlsSecretName | toRawJson }}
 {{- end -}}
 END_OF_TEXT
-        "outputs"   = <<END_OF_TEXT
-no_tls: {{ .driver.values.no_tls | default false }}
-id: {{ .id }}-ingress
-END_OF_TEXT
+        "outputs"   = "id: {{ .id }}-ingress\n"
       }
       "host"          = "$${resources.dns.outputs.host}"
       "routePaths"    = "$${resources.dns<route.outputs.path}"
