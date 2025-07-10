@@ -18,18 +18,24 @@ ingress.yaml:
     kind: Ingress
     metadata:
       {{- if hasKey .driver.values "annotations" }}
-      annotations: {{ .driver.values.annotations | toRawJson }}
+      annotations:
+        {{- range $k, $v := .driver.values.annotations }}
+        {{ $k | quote }}: {{ $v | quote }}
+        {{- end}}
       {{- end}}
       {{- if hasKey .driver.values "labels" }}
-      labels: {{ .driver.values.labels | toRawJson }}
+      labels:
+        {{- range $k, $v := .driver.values.labels }}
+        {{ $k | quote }}: {{ $v | quote }}
+        {{- end}}
       {{- end}}
       name: {{ .id }}-ingress
     spec:
       {{- if .driver.values.class }}
-      ingressClassName: {{ .driver.values.class | toRawJson }}
+      ingressClassName: {{ .driver.values.class | quote }}
       {{- end }}
       rules:
-      - host: {{ .driver.values.host | toRawJson }}
+      - host: {{ .driver.values.host | quote }}
         http:
           paths:
           {{- /*
@@ -38,18 +44,18 @@ ingress.yaml:
             to deal with the empty condition.
           */ -}}
           {{- range $index, $path := .driver.values.routePaths }}
-          - path: {{ $path | toRawJson }}
-            pathType: {{ $.driver.values.path_type | default "Prefix" | toRawJson }}
+          - path: {{ $path | quote }}
+            pathType: {{ $.driver.values.path_type | default "Prefix" | quote }}
             backend:
               service:
-                name: {{ index $.driver.values.routeServices $index  | toRawJson }}
+                name: {{ index $.driver.values.routeServices $index  | quote }}
                 port:
                   number: {{ index $.driver.values.routePorts $index }}
           {{- end }}
       tls:
       - hosts:
-        - {{ .driver.values.host | toRawJson }}
-        secretName: {{ .driver.values.tlsSecretName | toRawJson }}
+        - {{ .driver.values.host | quote }}
+        secretName: {{ .driver.values.tlsSecretName | quote }}
 {{- end -}}
 END_OF_TEXT
         "outputs"   = "id: {{ .id }}-ingress\n"
