@@ -20,22 +20,22 @@ ingress.yaml:
       {{- if hasKey .driver.values "annotations" }}
       annotations:
         {{- range $k, $v := .driver.values.annotations }}
-        {{ $k | quote }}: {{ $v | quote }}
+        {{ $k | toRawJson }}: {{ $v | toRawJson }}
         {{- end}}
       {{- end}}
       {{- if hasKey .driver.values "labels" }}
       labels:
         {{- range $k, $v := .driver.values.labels }}
-        {{ $k | quote }}: {{ $v | quote }}
+        {{ $k | toRawJson }}: {{ $v | toRawJson }}
         {{- end}}
       {{- end}}
       name: {{ .id }}-ingress
     spec:
       {{- if .driver.values.class }}
-      ingressClassName: {{ .driver.values.class | quote }}
+      ingressClassName: {{ .driver.values.class | toRawJson }}
       {{- end }}
       rules:
-      - host: {{ .driver.values.host | quote }}
+      - host: {{ .driver.values.host | toRawJson }}
         http:
           paths:
           {{- /*
@@ -44,18 +44,18 @@ ingress.yaml:
             to deal with the empty condition.
           */ -}}
           {{- range $index, $path := .driver.values.routePaths }}
-          - path: {{ $path | quote }}
-            pathType: {{ $.driver.values.path_type | default "Prefix" | quote }}
+          - path: {{ $path | toRawJson }}
+            pathType: {{ $.driver.values.path_type | default "Prefix" | toRawJson }}
             backend:
               service:
-                name: {{ index $.driver.values.routeServices $index  | quote }}
+                name: {{ index $.driver.values.routeServices $index  | toRawJson }}
                 port:
                   number: {{ index $.driver.values.routePorts $index }}
           {{- end }}
       tls:
       - hosts:
-        - {{ .driver.values.host | quote }}
-        secretName: {{ .driver.values.tlsSecretName | quote }}
+        - {{ .driver.values.host | toRawJson }}
+        secretName: {{ .driver.values.tlsSecretName | toRawJson }}
 {{- end -}}
 END_OF_TEXT
         "outputs"   = "id: {{ .id }}-ingress\n"
