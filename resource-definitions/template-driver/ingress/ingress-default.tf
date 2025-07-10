@@ -18,10 +18,16 @@ ingress.yaml:
     kind: Ingress
     metadata:
       {{- if hasKey .driver.values "annotations" }}
-      annotations: {{ .driver.values.annotations | toRawJson }}
+      annotations:
+        {{- range $k, $v := .driver.values.annotations }}
+        {{ $k | toRawJson }}: {{ $v | toRawJson }}
+        {{- end}}
       {{- end}}
       {{- if hasKey .driver.values "labels" }}
-      labels: {{ .driver.values.labels | toRawJson }}
+      labels:
+        {{- range $k, $v := .driver.values.labels }}
+        {{ $k | toRawJson }}: {{ $v | toRawJson }}
+        {{- end}}
       {{- end}}
       name: {{ .id }}-ingress
     spec:
