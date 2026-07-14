@@ -30,5 +30,6 @@ resource "humanitec_resource_definition" "config-opentofu-container-runner" {
 resource "humanitec_resource_definition_criteria" "config-opentofu-container-runner_criteria_0" {
   resource_definition_id = resource.humanitec_resource_definition.config-opentofu-container-runner.id
   env_type               = "development"
+  class                  = "default"
   res_id                 = "opentofu-container-runner"
 }
