@@ -75,6 +75,12 @@ def json2hcl(prefix; escape_placeholders):
                 else
                   ""
                 end
+              ) + (
+                if .value | has("params") then
+                  "      params = jsonencode(\( .value.params | json2hcl("      "; true) ))\n"
+                else
+                  ""
+                end
               ) +
               "    }\n"
             )
