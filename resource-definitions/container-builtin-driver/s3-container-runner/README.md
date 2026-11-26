@@ -1,4 +1,4 @@
-This example shows how to provision an AWS S3 bucket with the [Container (builtin) Driver](https://developer.humanitec.com/platform-orchestrator/docs/integration-and-extensions/drivers/container-builtin/) and the [s3-container-runner](https://github.com/humanitec/s3-container-runner) image. The runner calls the S3 API directly, without Terraform or the AWS CLI.
+This example shows how to provision an AWS S3 bucket with the [Container (builtin) Driver](https://developer.humanitec.com/platform-orchestrator/docs/integration-and-extensions/drivers/container-builtin/) and the [s3-container-runner](https://github.com/humanitec-architecture/s3-container-runner) image. The runner calls the S3 API directly, without Terraform or the AWS CLI.
 
 The example is made up of this file:
 

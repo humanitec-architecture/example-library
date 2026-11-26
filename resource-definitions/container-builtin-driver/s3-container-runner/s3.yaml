@@ -14,7 +14,7 @@ entity:
   driver_inputs:
     values:
       job:
-        image: ghcr.io/humanitec/s3-container-runner:0.1.0
+        image: ghcr.io/humanitec-architecture/s3-container-runner:0.1.0
         # Change to the namespace you created to host the Kubernetes Job created by the Driver.
         namespace: humanitec-runner
         # Change to the service account the Job runs with.
