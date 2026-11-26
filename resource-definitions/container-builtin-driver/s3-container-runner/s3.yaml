@@ -1,0 +1,58 @@
+# This Resource Definition provisions an `s3` Resource with the s3-container-runner image,
+# run by the Humanitec Operator's built-in Container Driver as a Kubernetes Job in your cluster.
+#
+# The bucket name is generated once by the templates, kept in the Resource state,
+# and reused on every later deployment and on destroy. The runner never generates names.
+apiVersion: entity.humanitec.io/v1b1
+kind: Definition
+metadata:
+  id: container-builtin-s3
+entity:
+  name: container-builtin-s3
+  type: s3
+  driver_type: humanitec/container-builtin
+  driver_inputs:
+    values:
+      job:
+        image: ghcr.io/humanitec-architecture/s3-container-runner:0.1.0
+        # Change to the namespace you created to host the Kubernetes Job created by the Driver.
+        namespace: humanitec-runner
+        # Change to the service account the Job runs with.
+        # By default, the runner authenticates to AWS with this service account's IAM role (IRSA or EKS Pod Identity).
+        service_account: humanitec-runner
+        shared_directory: /home/runner/workspace
+        variables:
+          # Change to the region of your choice.
+          AWS_REGION: eu-west-1
+      templates:
+        # Reuse the name stored in state; generate it only on the first run.
+        # S3 names are global: lowercase, 3-63 characters. "hum-" + 20 random characters is 24.
+        init: |
+          {{- if and $.state (hasKey $.state "bucket") }}
+          bucket: {{ $.state.bucket }}
+          {{- else }}
+          bucket: hum-{{ randAlphaNum 20 | lower }}
+          {{- end }}
+        # Persisted with the Resource and exposed as $.state on the next run.
+        state: |
+          bucket: {{ $.init.bucket }}
+        outputs:
+          # Inject the bucket name into the Job as BUCKET_NAME.
+          job: |
+            {{- $job := deepCopy $.driver.values.job -}}
+            {{- $_ := set $job.variables "BUCKET_NAME" $.init.bucket -}}
+            {{ $job | toRawJson }}
+    # Alternative to the service account's IAM role: static keys of an IAM user, read from a secret store.
+    # Never set them in `values.job.variables`: those end up in clear text in the Job spec.
+    # secret_refs:
+    #   job:
+    #     variables:
+    #       AWS_ACCESS_KEY_ID:
+    #         store: my-secret-store
+    #         ref: aws/s3-runner/access-key-id
+    #       AWS_SECRET_ACCESS_KEY:
+    #         store: my-secret-store
+    #         ref: aws/s3-runner/secret-access-key
+  # Adjust matching criteria as required
+  criteria:
+    - class: default
